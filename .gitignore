@@ -22,3 +22,8 @@ erl_crash.dump
 # Ignore package tarball (built via "mix hex.build").
 rdf_xml-*.tar
 
+# Dialyzer
+/priv/plts/*.plt
+/priv/plts/*.plt.hash
+
+.tool-versions*
