@@ -12,7 +12,7 @@ defmodule RDF.XML.Decoder.ElementNode do
     :language
   ]
 
-  alias RDF.{PrefixMap, Graph, IRI, BlankNode}
+  alias RDF.{PrefixMap, Graph, IRI}
 
   @type t :: %__MODULE__{
           name: String.t(),
@@ -110,7 +110,7 @@ defmodule RDF.XML.Decoder.ElementNode do
   end
 
   def attribute({"rdf:ID", value}, _, base), do: {:id, rdf_id(value, base)}
-  def attribute({"rdf:nodeID", value}, _, _), do: {:node_id, BlankNode.new(value)}
+  def attribute({"rdf:nodeID", value}, _, _), do: {:node_id, value}
   def attribute({"rdf:about", value}, ns, base), do: {:about, uri_reference(value, ns, base)}
 
   def attribute({"rdf:resource", value}, ns, base),

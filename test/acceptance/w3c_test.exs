@@ -20,7 +20,7 @@ defmodule RDF.XML.W3C.Test do
 
       assert RDF.Graph.equal?(
                TestSuite.test_input_file_path(test_case)
-               |> RDF.XML.read_file!(base: base),
+               |> RDF.XML.read_file!(base: base, bnode_prefix: "j"),
                TestSuite.test_result_file_path(test_case)
                |> NTriples.read_file!()
              )

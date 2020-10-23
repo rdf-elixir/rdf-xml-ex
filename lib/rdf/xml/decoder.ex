@@ -11,7 +11,7 @@ defmodule RDF.XML.Decoder do
   def decode(content, opts \\ [])
 
   def decode(content, opts) do
-    with {:ok, {_, graph}} <-
+    with {:ok, {_, graph, _}} <-
            Saxy.parse_string(
              content,
              EventHandler,

@@ -5,10 +5,11 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   @type t :: module
   @type context :: %{:__struct__ => t(), :children => any(), optional(atom()) => any()}
 
-  @callback at_start(context(), Graph.t()) :: {:ok, context()} | {:error, any}
+  @callback at_start(context(), Graph.t(), RDF.BlankNode.Increment.state()) ::
+              {:ok, context()} | {:error, any}
 
   # should return the result which should be set on the children field of the parent
-  @callback at_end(context(), Graph.t()) ::
+  @callback at_end(context(), Graph.t(), RDF.BlankNode.Increment.state()) ::
               {:ok, result :: any, Graph.t()} | {:error, any}
 
   # should return update Rule struct
@@ -27,37 +28,37 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
     end
   end
 
-  def apply_production(%rule{} = cxt, new_element, graph) do
-    apply_production(cxt, rule.select_production(rule, new_element), new_element, graph)
+  def apply_production(%rule{} = cxt, new_element, graph, bnodes) do
+    apply_production(cxt, rule.select_production(rule, new_element), new_element, graph, bnodes)
   end
 
-  def apply_production(%rule{} = cxt, nil, new_element, _) do
+  def apply_production(%rule{} = cxt, nil, new_element, _, _) do
     # TODO: proper ParseError
     {:error, "element #{inspect(new_element)} is not applicable in #{rule.element(cxt).name}"}
   end
 
-  def apply_production(cxt, alt_rules, new_element, graph) when is_list(alt_rules) do
-    map_while_ok(alt_rules, &apply_production(cxt, &1, new_element, graph))
+  def apply_production(cxt, alt_rules, new_element, graph, bnodes) when is_list(alt_rules) do
+    map_while_ok(alt_rules, &apply_production(cxt, &1, new_element, graph, bnodes))
   end
 
-  def apply_production(cxt, next_rule, new_element, graph) do
-    with {:ok, next_cxt} <-
+  def apply_production(cxt, next_rule, new_element, graph, bnodes) do
+    with {:ok, next_cxt, new_bnodes} <-
            cxt
            |> next_rule.new(element: new_element)
-           |> next_rule.at_start(graph) do
+           |> next_rule.at_start(graph, bnodes) do
       if next_rule.element_rule? do
-        {:ok, next_cxt}
+        {:ok, next_cxt, new_bnodes}
       else
-        apply_production(next_cxt, new_element, graph)
+        apply_production(next_cxt, new_element, graph, new_bnodes)
       end
     end
   end
 
-  def end_element(%rule{} = cxt, name, graph, element_deleted \\ false) do
-    with {:ok, result, graph} <- rule.at_end(cxt, graph) do
+  def end_element(%rule{} = cxt, name, graph, bnodes, element_deleted \\ false) do
+    with {:ok, result, graph, new_bnodes} <- rule.at_end(cxt, graph, bnodes) do
       case cxt.parent_cxt do
         nil ->
-          {:ok, nil, graph}
+          {:ok, nil, graph, new_bnodes}
 
         %parent_rule{} = parent_cxt ->
           cascaded_end(
@@ -65,27 +66,41 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
             parent_rule.cascaded_end?,
             update_children(parent_cxt, result),
             name,
-            graph
+            graph,
+            new_bnodes
           )
       end
     end
   end
 
-  defp cascaded_end(element_deleted, cascaded_end_rule, cxt, name, graph)
-  defp cascaded_end(false, _, cxt, name, graph), do: end_element(cxt, name, graph, false)
-  defp cascaded_end(true, true, cxt, name, graph), do: end_element(cxt, name, graph, true)
-  defp cascaded_end(true, false, cxt, name, graph), do: {:ok, cxt, graph}
+  defp cascaded_end(element_deleted, cascaded_end_rule, cxt, name, graph, bnodes)
+
+  defp cascaded_end(false, _, cxt, name, graph, bnodes),
+    do: end_element(cxt, name, graph, bnodes, false)
+
+  defp cascaded_end(true, true, cxt, name, graph, bnodes),
+    do: end_element(cxt, name, graph, bnodes, true)
+
+  defp cascaded_end(true, false, cxt, name, graph, bnodes), do: {:ok, cxt, graph, bnodes}
 
   defp update_children(%{children: nil} = cxt, result), do: %{cxt | children: [result]}
   defp update_children(cxt, result), do: %{cxt | children: [result | cxt.children]}
 
   defmodule Shared do
-    alias RDF.{Description, Literal, LangString}
+    alias RDF.{Description, BlankNode, Literal, LangString}
 
     @rdf_type Elixir.RDF.type()
 
     def resolve(string, element) do
       ElementNode.uri_reference(string, element.ns_declarations, element.base_uri)
+    end
+
+    def generated_blank_node_id(bnodes) do
+      BlankNode.Increment.generate(bnodes)
+    end
+
+    def bnodeid(value, bnodes) do
+      BlankNode.Increment.generate_for(value, bnodes)
     end
 
     def ws?(characters) do
@@ -142,7 +157,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
       def no_children?, do: unquote(no_children)
 
       @impl true
-      def at_start(cxt, _), do: {:ok, cxt}
+      def at_start(cxt, _, bnodes), do: {:ok, cxt, bnodes}
 
       @impl true
       def characters(characters, cxt) do

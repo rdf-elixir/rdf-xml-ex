@@ -1,5 +1,5 @@
 defmodule RDF.XML.Decoder.Grammar.Rules do
-  alias RDF.XML.Decoder.Grammar.{ElementRule, AlternationRule, SequenceRule, Rule}
+  alias RDF.XML.Decoder.Grammar.{ElementRule, AlternationRule, SequenceRule}
   alias RDF.{Graph, Description, Literal, LangString}
 
   alias __MODULE__
@@ -11,8 +11,8 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     def select_production(_, %{name: "rdf:RDF"}), do: Rules.RDF
     def select_production(_, _), do: Rules.NodeElement
 
-    def at_end(cxt, graph) do
-      {:ok, cxt, graph}
+    def at_end(cxt, graph, bnodes) do
+      {:ok, cxt, graph, bnodes}
     end
   end
 
@@ -25,8 +25,8 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
 
     def uri_constraint(uri), do: uri == "rdf:RDF"
 
-    def at_end(cxt, graph) do
-      {:ok, cxt, Graph.add_prefixes(graph, cxt.element.ns_declarations)}
+    def at_end(cxt, graph, bnodes) do
+      {:ok, cxt, Graph.add_prefixes(graph, cxt.element.ns_declarations), bnodes}
     end
   end
 
@@ -34,8 +34,8 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     use SequenceRule,
       production: Rules.NodeElement
 
-    def at_end(%{children: node_element_list}, graph) do
-      {:ok, node_element_list, graph}
+    def at_end(%{children: node_element_list}, graph, bnodes) do
+      {:ok, node_element_list, graph, bnodes}
     end
   end
 
@@ -44,26 +44,26 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       production: Rules.PropertyEltList,
       struct: [:subject]
 
-    def at_start(cxt, graph) do
-      subject =
+    def at_start(cxt, graph, bnodes) do
+      {subject, new_bnodes} =
         cond do
           id = cxt.element.rdf_attributes[:id] ->
-            id
+            {id, bnodes}
 
           node_id = cxt.element.rdf_attributes[:node_id] ->
-            node_id
+            bnodeid(node_id, bnodes)
 
           about = cxt.element.rdf_attributes[:about] ->
-            resolve(about, cxt.element)
+            {resolve(about, cxt.element), bnodes}
 
           true ->
-            raise "TODO: generated-blank-node-id()"
+            generated_blank_node_id(bnodes)
         end
 
-      {:ok, %{cxt | subject: subject}}
+      {:ok, %{cxt | subject: subject}, new_bnodes}
     end
 
-    def at_end(cxt, graph) do
+    def at_end(cxt, graph, bnodes) do
       description = Description.new(cxt.subject)
 
       description =
@@ -75,15 +75,15 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
 
       description = description_from_property_attrs(cxt, description)
 
-      {:ok, cxt, Graph.add(graph, description)}
+      {:ok, cxt, Graph.add(graph, description), bnodes}
     end
   end
 
   defmodule PropertyEltList do
     use SequenceRule, production: Rules.PropertyElt
 
-    def at_end(%{children: property_element_list}, graph) do
-      {:ok, property_element_list, graph}
+    def at_end(%{children: property_element_list}, graph, bnodes) do
+      {:ok, property_element_list, graph, bnodes}
     end
   end
 
@@ -99,8 +99,8 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
         Rules.EmptyPropertyElt
       ]
 
-    def at_end(%{children: [property_element]}, graph) do
-      {:ok, property_element, graph}
+    def at_end(%{children: [property_element]}, graph, bnodes) do
+      {:ok, property_element, graph, bnodes}
     end
   end
 
@@ -121,7 +121,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       {:ok, %{cxt | t: characters}}
     end
 
-    def at_end(cxt, graph) do
+    def at_end(cxt, graph, bnodes) do
       o =
         cond do
           cxt.element.rdf_attributes[:datatype] ->
@@ -135,7 +135,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
         end
 
       # TODO: If the rdf:ID attribute a is given, the above statement is reified ...
-      {:ok, cxt, Graph.add(graph, {parent(cxt).subject, cxt.element.uri, o})}
+      {:ok, cxt, Graph.add(graph, {parent(cxt).subject, cxt.element.uri, o}), bnodes}
     end
   end
 
@@ -148,9 +148,9 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
         Map.keys(element.rdf_attributes) in [[], [:id]]
     end
 
-    def at_end(%{children: [n]} = cxt, graph) do
+    def at_end(%{children: [n]} = cxt, graph, bnodes) do
       # TODO: If the rdf:ID attribute a is given, the above statement is reified ...
-      {:ok, cxt, Graph.add(graph, {parent(cxt).subject, cxt.element.uri, n.subject})}
+      {:ok, cxt, Graph.add(graph, {parent(cxt).subject, cxt.element.uri, n.subject}), bnodes}
     end
   end
 
@@ -171,30 +171,26 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
         |> Enum.count() <= 1
     end
 
-    def at_end(cxt, graph) do
+    def at_end(cxt, graph, bnodes) do
       # TODO: If there are no attributes or only the optional rdf:ID attribute i then ...
-      r =
+      {r, new_bnodes} =
         cond do
           resource = cxt.element.rdf_attributes[:resource] ->
-            resolve(resource, cxt.element)
+            {resolve(resource, cxt.element), bnodes}
 
           node_id = cxt.element.rdf_attributes[:node_id] ->
-            #            BlankNode.new(node_id)
-            node_id
+            bnodeid(node_id, bnodes)
 
           true ->
-            raise "TODO: generated-blank-node-id()"
+            generated_blank_node_id(bnodes)
         end
 
       statements = description_from_property_attrs(cxt, r)
 
       # TODO: and then if rdf:ID attribute i is given
 
-      {:ok, cxt,
-       Graph.add(graph, [
-         statements,
-         {parent(cxt).subject, cxt.element.uri, r}
-       ])}
+      {:ok, cxt, Graph.add(graph, [statements, {parent(cxt).subject, cxt.element.uri, r}]),
+       new_bnodes}
     end
   end
 
