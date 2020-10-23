@@ -66,13 +66,17 @@ defmodule RDF.XML.Decoder.Grammar do
             {cxt, graph, bnodes}, {branches, _, _} -> {[cxt | branches], graph, bnodes}
           end)
         }
+
+      %{} ->
+        # TODO: proper ParseError
+        {:error, "no rule matches"}
     end
   end
 
   def apply_production(:start_element, {name, attributes}, {%current_rule{} = cxt, graph, bnodes}) do
     with {:ok, element} <-
            ElementNode.new(name, attributes, current_rule.element(cxt), graph),
-         {:ok, next_cxt, new_bnodes} <-
+         {:ok, {next_cxt, new_bnodes}} <-
            Rule.apply_production(cxt, element, graph, bnodes) do
       {:ok, {next_cxt, graph, new_bnodes}}
     end

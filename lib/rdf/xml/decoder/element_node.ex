@@ -81,8 +81,10 @@ defmodule RDF.XML.Decoder.ElementNode do
         {:cont, {:ok, attrs, ns_declarations, value, language}}
 
       {"xmlns:" <> prefix, value}, {:ok, attrs, ns_declarations, base_uri, language} ->
-        # TODO: must these possibly resolved against the base URI?
         {:cont, {:ok, attrs, PrefixMap.put(ns_declarations, prefix, value), base_uri, language}}
+
+      {"xmlns", value}, {:ok, attrs, ns_declarations, base_uri, language} ->
+        {:cont, {:ok, attrs, PrefixMap.put(ns_declarations, nil, value), base_uri, language}}
 
       {name, value}, {:ok, attrs, ns_declarations, base_uri, language} ->
         {:cont, {:ok, Map.put(attrs, name, value), ns_declarations, base_uri, language}}
@@ -125,11 +127,13 @@ defmodule RDF.XML.Decoder.ElementNode do
   def attribute({"rdf:parseType", value}, _, _), do: {:parseOther, value}
 
   def attribute({property_attribute_name, value}, ns, base) do
-    if property_attribute_uri = PrefixMap.prefixed_name_to_iri(ns, property_attribute_name) do
-      {property_attribute_uri, value}
-    else
-      # Unrecognized attributes in the xml namespace should be ignored.
-      {property_attribute_name, :ignore}
+    case qname_to_iri(property_attribute_name, ns, base) do
+      {:ok, property_attribute_uri} ->
+        {property_attribute_uri, value}
+
+      {:error, _} ->
+        # Unrecognized attributes in the xml namespace should be ignored.
+        {property_attribute_name, :ignore}
     end
   end
 

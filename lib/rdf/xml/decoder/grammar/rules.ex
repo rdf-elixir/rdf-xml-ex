@@ -44,7 +44,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       production: Rules.PropertyEltList,
       struct: [:subject]
 
-    def at_start(cxt, graph, bnodes) do
+    def at_start(cxt, _graph, bnodes) do
       {subject, new_bnodes} =
         cond do
           id = cxt.element.rdf_attributes[:id] ->
@@ -111,7 +111,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
 
     def conform?(element) do
       Rules.property_element_uri?(element.name) &&
-        Enum.empty?(element.property_attributes()) &&
+        Enum.empty?(element.property_attributes) &&
         element.rdf_attributes
         |> Map.keys()
         |> Enum.all?(&(&1 in @allowed_attributes))
@@ -122,16 +122,18 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     end
 
     def at_end(cxt, graph, bnodes) do
+      t = cxt.t || ""
+
       o =
         cond do
           cxt.element.rdf_attributes[:datatype] ->
-            Literal.new(cxt.t, datatype: cxt.element.rdf_attributes.datatype)
+            Literal.new(t, datatype: cxt.element.rdf_attributes.datatype)
 
           cxt.element.language ->
-            LangString.new(cxt.t, language: cxt.element.language)
+            LangString.new(t, language: cxt.element.language)
 
           true ->
-            cxt.t
+            t
         end
 
       # TODO: If the rdf:ID attribute a is given, the above statement is reified ...
@@ -144,8 +146,12 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
 
     def conform?(element) do
       Rules.property_element_uri?(element.name) &&
-        Enum.empty?(element.property_attributes()) &&
+        Enum.empty?(element.property_attributes) &&
         Map.keys(element.rdf_attributes) in [[], [:id]]
+    end
+
+    def at_end(%{children: nil}, _, _) do
+      {:error, "this case should happen only during elimination of alternative productions"}
     end
 
     def at_end(%{children: [n]} = cxt, graph, bnodes) do

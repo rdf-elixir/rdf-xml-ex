@@ -1,6 +1,5 @@
 defmodule RDF.XML.Decoder.Grammar.Rule do
   alias RDF.XML.Decoder.ElementNode
-  import RDF.Utils
 
   @type t :: module
   @type context :: %{:__struct__ => t(), :children => any(), optional(atom()) => any()}
@@ -21,7 +20,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   def parent_element_cxt(%{parent_cxt: nil}), do: nil
 
   def parent_element_cxt(%{parent_cxt: %parent_rule{} = parent_cxt}) do
-    if parent_rule.element_rule? do
+    if parent_rule.element_rule?() do
       parent_cxt
     else
       parent_element_cxt(parent_cxt)
@@ -34,11 +33,23 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
 
   def apply_production(%rule{} = cxt, nil, new_element, _, _) do
     # TODO: proper ParseError
-    {:error, "element #{inspect(new_element)} is not applicable in #{rule.element(cxt).name}"}
+    {:error, "element #{new_element.name} is not applicable in #{rule.element(cxt).name}"}
   end
 
   def apply_production(cxt, alt_rules, new_element, graph, bnodes) when is_list(alt_rules) do
-    map_while_ok(alt_rules, &apply_production(cxt, &1, new_element, graph, bnodes))
+    alt_rules
+    |> Enum.reduce({[], bnodes}, fn rule, {cxts, bnodes} ->
+      case apply_production(cxt, rule, new_element, graph, bnodes) do
+        {:ok, {cxt, bnodes}} -> {[cxt | cxts], bnodes}
+        {:error, _} -> {cxts, bnodes}
+      end
+    end)
+    |> case do
+      # TODO: proper ParseError
+      {[], _} -> {:error, "no rule matches for alternatives: #{inspect(alt_rules)}"}
+      {[result], bnodes} -> {:ok, {result, bnodes}}
+      {results, bnodes} -> {:ok, {results, bnodes}}
+    end
   end
 
   def apply_production(cxt, next_rule, new_element, graph, bnodes) do
@@ -46,8 +57,8 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
            cxt
            |> next_rule.new(element: new_element)
            |> next_rule.at_start(graph, bnodes) do
-      if next_rule.element_rule? do
-        {:ok, next_cxt, new_bnodes}
+      if next_rule.element_rule?() do
+        {:ok, {next_cxt, new_bnodes}}
       else
         apply_production(next_cxt, new_element, graph, new_bnodes)
       end
@@ -62,8 +73,8 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
 
         %parent_rule{} = parent_cxt ->
           cascaded_end(
-            element_deleted || rule.element_rule?,
-            parent_rule.cascaded_end?,
+            element_deleted || rule.element_rule?(),
+            parent_rule.cascaded_end?(),
             update_children(parent_cxt, result),
             name,
             graph,
@@ -81,7 +92,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   defp cascaded_end(true, true, cxt, name, graph, bnodes),
     do: end_element(cxt, name, graph, bnodes, true)
 
-  defp cascaded_end(true, false, cxt, name, graph, bnodes), do: {:ok, cxt, graph, bnodes}
+  defp cascaded_end(true, false, cxt, _name, graph, bnodes), do: {:ok, cxt, graph, bnodes}
 
   defp update_children(%{children: nil} = cxt, result), do: %{cxt | children: [result]}
   defp update_children(cxt, result), do: %{cxt | children: [result | cxt.children]}
