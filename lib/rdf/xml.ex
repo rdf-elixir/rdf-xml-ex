@@ -1,18 +1,19 @@
 defmodule RDF.XML do
   @moduledoc """
-  Documentation for `RDF.XML`.
+  An implementation of the RDF 1.1 XML Syntax.
+
+  It is implemented as a `RDF.Serialization.Format`, so it can be used like any other
+  serialization format of RDF.ex.
+
+  see <http://www.w3.org/TR/rdf-syntax-grammar/>
   """
 
-  @doc """
-  Hello world.
+  use RDF.Serialization.Format
 
-  ## Examples
+  import RDF.Sigils
 
-      iex> RDF.XML.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
+  @id ~I<http://www.w3.org/ns/formats/RDF_XML>
+  @name :rdf_xml
+  @extension "rdf"
+  @media_type "application/rdf+xml"
 end
