@@ -1,9 +1,26 @@
 defmodule RDF.XML.Decoder.Grammar.ControlRule do
-  alias RDF.XML.Decoder.Grammar.Rule
+  alias RDF.XML.Decoder.Grammar.{Rule, ElementNode}
+
+  @callback at_start(ElementNode.t(), Rule.context(), Graph.t(), RDF.BlankNode.Increment.state()) ::
+              {:ok, ElementNode.t(), Rule.context(), RDF.BlankNode.Increment.state()}
+              | {:error, any}
+
+  def apply(%rule{} = new_cxt, new_element, graph, bnodes) do
+    with {:ok, new_element, new_cxt, new_bnodes} <-
+           rule.at_start(new_element, new_cxt, graph, bnodes) do
+      Rule.apply_production(new_cxt, new_element, graph, new_bnodes)
+    end
+  end
 
   defmacro __using__(opts) do
     quote do
+      @behaviour unquote(__MODULE__)
       use Rule, unquote(opts)
+
+      @impl true
+      def at_start(element, cxt, _, bnodes), do: {:ok, element, cxt, bnodes}
+
+      defoverridable unquote(__MODULE__)
 
       def element_rule?, do: false
 

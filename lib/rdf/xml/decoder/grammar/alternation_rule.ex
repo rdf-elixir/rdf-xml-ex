@@ -3,6 +3,8 @@ defmodule RDF.XML.Decoder.Grammar.AlternationRule do
 
   @callback select_production(Rule.context(), ElementNode.t()) :: Rule.t() | [Rule.t()]
 
+  defdelegate apply(new_cxt, new_element, graph, bnodes), to: ControlRule
+
   defmacro __using__(opts) do
     quote do
       @behaviour unquote(__MODULE__)

@@ -4,12 +4,9 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   @type t :: module
   @type context :: %{:__struct__ => t(), :children => any(), optional(atom()) => any()}
 
-  @callback at_start(context(), Graph.t(), RDF.BlankNode.Increment.state()) ::
-              {:ok, context()} | {:error, any}
-
   # should return the result which should be set on the children field of the parent
   @callback at_end(context(), Graph.t(), RDF.BlankNode.Increment.state()) ::
-              {:ok, result :: any, Graph.t()} | {:error, any}
+              {:ok, result :: any, Graph.t(), RDF.BlankNode.Increment.state()} | {:error, any}
 
   # should return update Rule struct
   @callback characters(characters :: String.t(), context()) ::
@@ -53,16 +50,10 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   end
 
   def apply_production(cxt, next_rule, new_element, graph, bnodes) do
-    with {:ok, next_cxt, new_bnodes} <-
-           cxt
-           |> next_rule.new(element: new_element)
-           |> next_rule.at_start(graph, bnodes) do
-      if next_rule.element_rule?() do
-        {:ok, {next_cxt, new_bnodes}}
-      else
-        apply_production(next_cxt, new_element, graph, new_bnodes)
-      end
-    end
+    cxt
+    # Note that the new_element becomes only part of the new cxt on ElementRules (:element is not a member of the non-ElementRule-structs)
+    |> next_rule.new(element: new_element)
+    |> next_rule.type.apply(new_element, graph, bnodes)
   end
 
   def end_element(%rule{} = cxt, name, graph, bnodes, element_deleted \\ false) do
@@ -166,9 +157,6 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
       def production, do: @production
 
       def no_children?, do: unquote(no_children)
-
-      @impl true
-      def at_start(cxt, _, bnodes), do: {:ok, cxt, bnodes}
 
       @impl true
       def characters(characters, cxt) do

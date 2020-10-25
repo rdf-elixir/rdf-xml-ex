@@ -1,9 +1,18 @@
 defmodule RDF.XML.Decoder.Grammar.ElementRule do
   alias RDF.XML.Decoder.Grammar.{Rule, ElementNode}
 
+  @callback at_start(Rule.context(), Graph.t(), RDF.BlankNode.Increment.state()) ::
+              {:ok, Rule.context(), RDF.BlankNode.Increment.state()} | {:error, any}
+
   @callback conform?(element :: ElementNode.t()) :: boolean
 
   @default_attributes [:element]
+
+  def apply(%rule{} = new_cxt, _, graph, bnodes) do
+    with {:ok, new_cxt, new_bnodes} <- rule.at_start(new_cxt, graph, bnodes) do
+      {:ok, {new_cxt, new_bnodes}}
+    end
+  end
 
   defmacro __using__(opts) do
     opts =
@@ -16,6 +25,9 @@ defmodule RDF.XML.Decoder.Grammar.ElementRule do
       @behaviour unquote(__MODULE__)
 
       use Rule, unquote(opts)
+
+      @impl true
+      def at_start(cxt, _, bnodes), do: {:ok, cxt, bnodes}
 
       @impl true
       def conform?(element_node), do: true

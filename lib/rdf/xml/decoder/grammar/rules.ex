@@ -1,5 +1,6 @@
 defmodule RDF.XML.Decoder.Grammar.Rules do
   alias RDF.XML.Decoder.Grammar.{ElementRule, AlternationRule, SequenceRule}
+  alias RDF.XML.Decoder.ElementNode
   alias RDF.{Graph, Description, Literal, LangString}
 
   alias __MODULE__
@@ -98,6 +99,22 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
         Rules.ResourcePropertyElt,
         Rules.EmptyPropertyElt
       ]
+
+    def at_start(element, cxt, _graph, bnodes) do
+      if element.name == "rdf:li" do
+        {li_counter, new_cxt} =
+          get_and_update_in(cxt.parent_cxt.parent_cxt.element.li_counter, &{&1, &1 + 1})
+
+        {
+          :ok,
+          ElementNode.update_name(element, "rdf:_#{li_counter}"),
+          new_cxt,
+          bnodes
+        }
+      else
+        {:ok, element, cxt, bnodes}
+      end
+    end
 
     def at_end(%{children: [property_element]}, graph, bnodes) do
       {:ok, property_element, graph, bnodes}

@@ -9,7 +9,8 @@ defmodule RDF.XML.Decoder.ElementNode do
     :property_attributes,
     :base_uri,
     :ns_declarations,
-    :language
+    :language,
+    :li_counter
   ]
 
   alias RDF.{PrefixMap, Graph, IRI}
@@ -21,14 +22,15 @@ defmodule RDF.XML.Decoder.ElementNode do
           property_attributes: %{RDF.IRI.t() => any},
           base_uri: String.t() | nil,
           ns_declarations: PrefixMap.t(),
-          language: String.t() | nil
+          language: String.t() | nil,
+          li_counter: pos_integer
         }
 
   def new(name, attributes, parent_element, graph) do
     with {:ok, attributes, ns_declarations, base_uri, language} <-
            extract_xml_namespaces(attributes, parent_element, graph),
          {:ok, base_uri} <- normalize_base_uri(base_uri),
-         {:ok, uri} <- qname_to_iri(name, ns_declarations, base_uri),
+         {:ok, uri} <- qname_to_iri(name, ns_declarations),
          {:ok, rdf_attributes, property_attributes} <-
            attributes(attributes, ns_declarations, base_uri) do
       {:ok,
@@ -39,8 +41,20 @@ defmodule RDF.XML.Decoder.ElementNode do
          property_attributes: property_attributes,
          ns_declarations: ns_declarations,
          base_uri: base_uri,
-         language: language
+         language: language,
+         li_counter: 1
        }}
+    end
+  end
+
+  def update_name(element, name) do
+    case qname_to_iri(name, element.ns_declarations) do
+      {:ok, uri} ->
+        %{
+          element
+          | name: name,
+            uri: uri
+        }
     end
   end
 
@@ -127,7 +141,7 @@ defmodule RDF.XML.Decoder.ElementNode do
   def attribute({"rdf:parseType", value}, _, _), do: {:parseOther, value}
 
   def attribute({property_attribute_name, value}, ns, base) do
-    case qname_to_iri(property_attribute_name, ns, base) do
+    case qname_to_iri(property_attribute_name, ns) do
       {:ok, property_attribute_uri} ->
         {property_attribute_uri, value}
 
@@ -154,13 +168,13 @@ defmodule RDF.XML.Decoder.ElementNode do
     base <> "#" <> value
   end
 
-  defp qname_to_iri(name, ns_declarations, base_uri) do
+  defp qname_to_iri(name, ns_declarations) do
     cond do
       iri = PrefixMap.prefixed_name_to_iri(ns_declarations, name) ->
         {:ok, iri}
 
-      not IRI.absolute?(name) ->
-        {:ok, IRI.absolute(name, base_uri)}
+      iri = PrefixMap.prefixed_name_to_iri(ns_declarations, ":" <> name) ->
+        {:ok, iri}
 
       true ->
         {:error, "can't resolve name #{inspect(name)} to URI reference"}
