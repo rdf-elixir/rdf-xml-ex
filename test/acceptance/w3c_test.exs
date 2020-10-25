@@ -27,18 +27,6 @@ defmodule RDF.XML.W3C.Test do
     end
 
     if TestSuite.test_name(test_case) in [
-         "rdfms-empty-property-elements-test004",
-         "rdfms-empty-property-elements-test006",
-         "rdfms-empty-property-elements-test010",
-         "rdfms-empty-property-elements-test012",
-         "rdf-ns-prefix-confusion-test0005",
-         "rdf-containers-syntax-vs-schema-test004",
-         "rdfms-seq-representation-test001",
-       ] do
-      @tag skip: "TODO: parseType=Resource"
-    end
-
-    if TestSuite.test_name(test_case) in [
          "rdfms-seq-representation-test001"
        ] do
       @tag skip: "TODO: parseType=Collection"
@@ -55,6 +43,7 @@ defmodule RDF.XML.W3C.Test do
          "xmlbase-test004",
          "rdf-charmod-literals-test001",
          "rdf-element-not-mandatory-test001",
+         "rdf-ns-prefix-confusion-test0005",
          "rdfms-uri-substructure-test001",
          "rdfms-not-id-and-resource-attr-test001",
          "rdfms-not-id-and-resource-attr-test002",

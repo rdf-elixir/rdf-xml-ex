@@ -92,9 +92,9 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     use AlternationRule,
       production: [
         # TODO: Rules.ParseTypeLiteralPropertyElt,
-        # TODO: Rules.ParseTypeResourcePropertyElt,
         # TODO: Rules.ParseTypeCollectionPropertyElt,
         # TODO: Rules.ParseTypeOtherPropertyElt,
+        Rules.ParseTypeResourcePropertyElt,
         Rules.LiteralPropertyElt,
         Rules.ResourcePropertyElt,
         Rules.EmptyPropertyElt
@@ -236,6 +236,37 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
         end
 
       {:ok, cxt, Graph.add(graph, statements), new_bnodes}
+    end
+  end
+
+  defmodule ParseTypeResourcePropertyElt do
+    use ElementRule,
+      production: Rules.PropertyEltList,
+      struct: [:subject]
+
+    def conform?(element) do
+      element.rdf_attributes[:parseResource] &&
+        Rules.property_element_uri?(element.name) &&
+        Enum.empty?(element.property_attributes) &&
+        element.rdf_attributes |> Map.drop(~w[id parseResource]a) |> Map.keys() |> Enum.empty?()
+    end
+
+    def at_start(cxt, graph, bnodes) do
+      {n, new_bnodes} = generated_blank_node_id(bnodes)
+      {:ok, %{cxt | subject: n}, new_bnodes}
+    end
+
+    def at_end(cxt, graph, bnodes) do
+      statement = {parent(cxt).subject, cxt.element.uri, cxt.subject}
+
+      statements =
+        if rdf_id = cxt.element.rdf_attributes[:id] do
+          [statement, reify(statement, rdf_id)]
+        else
+          statement
+        end
+
+      {:ok, cxt, Graph.add(graph, statements), bnodes}
     end
   end
 
