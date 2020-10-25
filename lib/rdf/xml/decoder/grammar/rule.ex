@@ -105,6 +105,14 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
       BlankNode.Increment.generate_for(value, bnodes)
     end
 
+    def reify({subject, predicate, object}, id) do
+      id
+      |> RDF.type(RDF.Statement)
+      |> RDF.subject(subject)
+      |> RDF.predicate(predicate)
+      |> RDF.object(object)
+    end
+
     def ws?(characters) do
       # TODO: This seems to recognize more characters as whitespace " \t\n\r\v..."
       #       according to the spec: space (#x20) characters, carriage returns, line feeds, or tabs

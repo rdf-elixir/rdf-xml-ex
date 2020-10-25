@@ -27,36 +27,26 @@ defmodule RDF.XML.W3C.Test do
     end
 
     if TestSuite.test_name(test_case) in [
-         "rdf-containers-syntax-vs-schema-test004",
-         "rdfms-not-id-and-resource-attr-test001",
-         "rdfms-not-id-and-resource-attr-test004",
-         "rdfms-not-id-and-resource-attr-test005",
-         "rdfms-empty-property-elements-test005",
-         "rdfms-empty-property-elements-test011",
-         "rdfms-syntax-incomplete-test004"
-       ] do
-      @tag skip: "TODO: reification"
-    end
-
-    if TestSuite.test_name(test_case) in [
-         "rdf-ns-prefix-confusion-test0005",
          "rdfms-empty-property-elements-test004",
          "rdfms-empty-property-elements-test006",
          "rdfms-empty-property-elements-test010",
          "rdfms-empty-property-elements-test012",
-         "rdfms-syntax-incomplete-test002"
+         "rdf-ns-prefix-confusion-test0005",
+         "rdf-containers-syntax-vs-schema-test004",
+         "rdfms-seq-representation-test001",
        ] do
       @tag skip: "TODO: parseType=Resource"
     end
 
     if TestSuite.test_name(test_case) in [
-      "rdfms-seq-representation-test001"
-    ] do
+         "rdfms-seq-representation-test001"
+       ] do
       @tag skip: "TODO: parseType=Collection"
     end
 
     if TestSuite.test_name(test_case) in [
-         "xml-canon-test001"
+         "xml-canon-test001",
+         "rdf-containers-syntax-vs-schema-test004"
        ] do
       @tag skip: "TODO: parseType=Literal"
     end
@@ -66,8 +56,13 @@ defmodule RDF.XML.W3C.Test do
          "rdf-charmod-literals-test001",
          "rdf-element-not-mandatory-test001",
          "rdfms-uri-substructure-test001",
+         "rdfms-not-id-and-resource-attr-test001",
          "rdfms-not-id-and-resource-attr-test002",
+         "rdfms-not-id-and-resource-attr-test004",
+         "rdfms-not-id-and-resource-attr-test005",
+         "rdfms-syntax-incomplete-test002",
          "rdfms-syntax-incomplete-test003",
+         "rdfms-syntax-incomplete-test004",
          "rdfms-empty-property-elements-test014",
          "rdfms-empty-property-elements-test015",
          "rdf-containers-syntax-vs-schema-test001",

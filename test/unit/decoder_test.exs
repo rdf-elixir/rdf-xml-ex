@@ -162,6 +162,39 @@ defmodule RDF.XML.DecoderTest do
            """) == {:ok, example_graph}
   end
 
+  # Note: This tests reification via the ResourcePropertyElt rule which is not covered in the W3C test suite
+  test "single reified triple with a resource as object in a nested node" do
+    example_graph =
+      """
+      @prefix eric:    <http://www.w3.org/People/EM/contact#> .
+      @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
+      @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+      eric:me contact:mailbox <mailto:e.miller123(at)example> .
+
+      <#reify> a rdf:Statement ;
+          rdf:subject eric:me ;
+          rdf:predicate contact:mailbox ;
+          rdf:object <mailto:e.miller123(at)example> .
+      """
+      |> RDF.Turtle.read_string!(base: "http://example.org/")
+
+    assert RDF.XML.Decoder.decode(
+             """
+             <?xml version="1.0" encoding="utf-8"?>
+             <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+               <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
+                 <contact:mailbox rdf:ID="reify">
+                   <rdf:Description rdf:about="mailto:e.miller123(at)example">
+                   </rdf:Description>
+                 </contact:mailbox>
+               </rdf:Description>
+             </rdf:RDF>
+             """,
+             base: "http://example.org/#"
+           ) == {:ok, example_graph}
+  end
+
   test "short description form" do
     example_graph =
       """

@@ -153,8 +153,16 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
             t
         end
 
-      # TODO: If the rdf:ID attribute a is given, the above statement is reified ...
-      {:ok, cxt, Graph.add(graph, {parent(cxt).subject, cxt.element.uri, o}), bnodes}
+      statement = {parent(cxt).subject, cxt.element.uri, o}
+
+      statements =
+        if rdf_id = cxt.element.rdf_attributes[:id] do
+          [statement, reify(statement, rdf_id)]
+        else
+          statement
+        end
+
+      {:ok, cxt, Graph.add(graph, statements), bnodes}
     end
   end
 
@@ -172,8 +180,16 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     end
 
     def at_end(%{children: [n]} = cxt, graph, bnodes) do
-      # TODO: If the rdf:ID attribute a is given, the above statement is reified ...
-      {:ok, cxt, Graph.add(graph, {parent(cxt).subject, cxt.element.uri, n.subject}), bnodes}
+      statement = {parent(cxt).subject, cxt.element.uri, n.subject}
+
+      statements =
+        if rdf_id = cxt.element.rdf_attributes[:id] do
+          [statement, reify(statement, rdf_id)]
+        else
+          statement
+        end
+
+      {:ok, cxt, Graph.add(graph, statements), bnodes}
     end
   end
 
@@ -195,7 +211,6 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     end
 
     def at_end(cxt, graph, bnodes) do
-      # TODO: If there are no attributes or only the optional rdf:ID attribute i then ...
       {r, new_bnodes} =
         cond do
           resource = cxt.element.rdf_attributes[:resource] ->
@@ -208,12 +223,19 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
             generated_blank_node_id(bnodes)
         end
 
-      statements = description_from_property_attrs(cxt, r)
+      statements = [
+        statement = {parent(cxt).subject, cxt.element.uri, r},
+        description_from_property_attrs(cxt, r)
+      ]
 
-      # TODO: and then if rdf:ID attribute i is given
+      statements =
+        if rdf_id = cxt.element.rdf_attributes[:id] do
+          [reify(statement, rdf_id) | statements]
+        else
+          statements
+        end
 
-      {:ok, cxt, Graph.add(graph, [statements, {parent(cxt).subject, cxt.element.uri, r}]),
-       new_bnodes}
+      {:ok, cxt, Graph.add(graph, statements), new_bnodes}
     end
   end
 
