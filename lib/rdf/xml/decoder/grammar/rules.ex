@@ -92,9 +92,9 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     use AlternationRule,
       production: [
         # TODO: Rules.ParseTypeLiteralPropertyElt,
-        # TODO: Rules.ParseTypeCollectionPropertyElt,
         # TODO: Rules.ParseTypeOtherPropertyElt,
         Rules.ParseTypeResourcePropertyElt,
+        Rules.ParseTypeCollectionPropertyElt,
         Rules.LiteralPropertyElt,
         Rules.ResourcePropertyElt,
         Rules.EmptyPropertyElt
@@ -251,7 +251,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
         element.rdf_attributes |> Map.drop(~w[id parseResource]a) |> Map.keys() |> Enum.empty?()
     end
 
-    def at_start(cxt, graph, bnodes) do
+    def at_start(cxt, _graph, bnodes) do
       {n, new_bnodes} = generated_blank_node_id(bnodes)
       {:ok, %{cxt | subject: n}, new_bnodes}
     end
@@ -267,6 +267,85 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
         end
 
       {:ok, cxt, Graph.add(graph, statements), bnodes}
+    end
+  end
+
+  defmodule ParseTypeCollectionPropertyElt do
+    use ElementRule,
+      production: Rules.NodeElementList
+
+    @rdf_first Elixir.RDF.first()
+    @rdf_rest Elixir.RDF.rest()
+    @rdf_nil Elixir.RDF.nil()
+
+    def conform?(element) do
+      element.rdf_attributes[:parseCollection] &&
+        Rules.property_element_uri?(element.name) &&
+        Enum.empty?(element.property_attributes) &&
+        element.rdf_attributes |> Map.drop(~w[id parseCollection]a) |> Map.keys() |> Enum.empty?()
+    end
+
+    def at_end(cxt, graph, bnodes) do
+      {n, bnodes} = generated_blank_node_id(bnodes)
+
+      {graph, bnodes} =
+        if Enum.empty?(cxt.children) do
+          statement = {parent(cxt).subject, cxt.element.uri, RDF.nil()}
+
+          statements =
+            if rdf_id = cxt.element.rdf_attributes[:id] do
+              [statement, reify(statement, rdf_id)]
+            else
+              statement
+            end
+
+          {
+            Graph.add(graph, statements),
+            bnodes
+          }
+        else
+          statement = {parent(cxt).subject, cxt.element.uri, n}
+
+          statements =
+            if rdf_id = cxt.element.rdf_attributes[:id] do
+              [statement, reify(statement, rdf_id)]
+            else
+              statement
+            end
+
+          add_as_rdf_collection(
+            Enum.reverse(cxt.children),
+            n,
+            Graph.add(graph, statements),
+            bnodes
+          )
+        end
+
+      {:ok, cxt, graph, bnodes}
+    end
+
+    def add_as_rdf_collection([first], n, graph, bnodes) do
+      {
+        Graph.add(graph, [
+          {n, @rdf_first, first.subject},
+          {n, @rdf_rest, @rdf_nil}
+        ]),
+        bnodes
+      }
+    end
+
+    def add_as_rdf_collection([first | rest], n, graph, bnodes) do
+      {o, bnodes} = generated_blank_node_id(bnodes)
+
+      add_as_rdf_collection(
+        rest,
+        o,
+        Graph.add(graph, [
+          {n, @rdf_first, first.subject},
+          {n, @rdf_rest, o}
+        ]),
+        bnodes
+      )
     end
   end
 

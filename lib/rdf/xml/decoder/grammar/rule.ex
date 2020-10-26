@@ -92,7 +92,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
 
   defp cascaded_end(true, false, cxt, _name, graph, bnodes), do: {:ok, cxt, graph, bnodes}
 
-  defp update_children(%{children: nil} = cxt, result), do: %{cxt | children: [result]}
+  defp update_children(%{children: nil} = cxt, result), do: %{cxt | children: List.wrap(result)}
   defp update_children(cxt, result), do: %{cxt | children: [result | cxt.children]}
 
   defmodule Shared do

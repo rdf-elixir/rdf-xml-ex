@@ -27,12 +27,6 @@ defmodule RDF.XML.W3C.Test do
     end
 
     if TestSuite.test_name(test_case) in [
-         "rdfms-seq-representation-test001"
-       ] do
-      @tag skip: "TODO: parseType=Collection"
-    end
-
-    if TestSuite.test_name(test_case) in [
          "xml-canon-test001",
          "rdf-containers-syntax-vs-schema-test004"
        ] do
@@ -40,7 +34,6 @@ defmodule RDF.XML.W3C.Test do
     end
 
     if TestSuite.test_name(test_case) in [
-         "xmlbase-test004",
          "rdf-charmod-literals-test001",
          "rdf-element-not-mandatory-test001",
          "rdf-ns-prefix-confusion-test0005",
@@ -52,8 +45,13 @@ defmodule RDF.XML.W3C.Test do
          "rdfms-syntax-incomplete-test002",
          "rdfms-syntax-incomplete-test003",
          "rdfms-syntax-incomplete-test004",
+         "rdfms-empty-property-elements-test004",
+         "rdfms-empty-property-elements-test006",
+         "rdfms-empty-property-elements-test010",
+         "rdfms-empty-property-elements-test012",
          "rdfms-empty-property-elements-test014",
          "rdfms-empty-property-elements-test015",
+         "rdfms-seq-representation-test001",
          "rdf-containers-syntax-vs-schema-test001",
          "rdf-containers-syntax-vs-schema-test002",
          "rdf-containers-syntax-vs-schema-test003",
