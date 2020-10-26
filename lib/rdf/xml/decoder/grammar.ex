@@ -46,10 +46,6 @@ defmodule RDF.XML.Decoder.Grammar do
       fn {_, state_or_error} -> state_or_error end
     )
     |> case do
-      %{ok: []} ->
-        # TODO: proper ParseError
-        {:error, "no rule matches"}
-
       %{ok: [state]} ->
         {:ok, state}
 
@@ -68,8 +64,7 @@ defmodule RDF.XML.Decoder.Grammar do
         }
 
       %{} ->
-        # TODO: proper ParseError
-        {:error, "no rule matches"}
+        {:error, %RDF.XML.ParseError{message: "no rule matches"}}
     end
   end
 

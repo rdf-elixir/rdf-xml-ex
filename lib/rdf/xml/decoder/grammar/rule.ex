@@ -29,8 +29,10 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   end
 
   def apply_production(%rule{} = cxt, nil, new_element, _, _) do
-    # TODO: proper ParseError
-    {:error, "element #{new_element.name} is not applicable in #{rule.element(cxt).name}"}
+    {:error,
+     %RDF.XML.ParseError{
+       message: "element #{new_element.name} is not applicable in #{rule.element(cxt).name}"
+     }}
   end
 
   def apply_production(cxt, alt_rules, new_element, graph, bnodes) when is_list(alt_rules) do
@@ -42,10 +44,15 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
       end
     end)
     |> case do
-      # TODO: proper ParseError
-      {[], _} -> {:error, "no rule matches for alternatives: #{inspect(alt_rules)}"}
-      {[result], bnodes} -> {:ok, {result, bnodes}}
-      {results, bnodes} -> {:ok, {results, bnodes}}
+      {[], _} ->
+        {:error,
+         %RDF.XML.ParseError{message: "no rule matches for alternatives: #{inspect(alt_rules)}"}}
+
+      {[result], bnodes} ->
+        {:ok, {result, bnodes}}
+
+      {results, bnodes} ->
+        {:ok, {results, bnodes}}
     end
   end
 
@@ -115,7 +122,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
 
     def ws?(characters) do
       # TODO: This seems to recognize more characters as whitespace " \t\n\r\v..."
-      #       according to the spec: space (#x20) characters, carriage returns, line feeds, or tabs
+      #       according to the spec whitespace are only: space (#x20) characters, carriage returns, line feeds, or tabs
       String.trim(characters) == ""
     end
 
@@ -171,8 +178,10 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
         if ws?(characters) do
           {:ok, cxt}
         else
-          # TODO: proper ParseError
-          {:error, "unexpected characters in element #{inspect(cxt)}: #{characters}"}
+          {:error,
+           %RDF.XML.ParseError{
+             message: "unexpected characters in element #{inspect(cxt)}: #{characters}"
+           }}
         end
       end
 

@@ -62,7 +62,7 @@ defmodule RDF.XML.Decoder.ElementNode do
     case String.split(base_uri, "#") do
       [base_uri] -> {:ok, base_uri}
       [base_uri, _fragment] -> {:ok, base_uri}
-      _ -> {:error, "invalid base URI: #{base_uri}"}
+      _ -> {:error, %RDF.XML.ParseError{message: "invalid base URI: #{base_uri}"}}
     end
   end
 
@@ -109,7 +109,6 @@ defmodule RDF.XML.Decoder.ElementNode do
     Enum.reduce_while(attributes, {:ok, %{}, %{}}, fn
       attribute, {:ok, rdf_attributes, property_attrs} ->
         case attribute(attribute, ns_declarations, base_uri) do
-          # TODO: proper ParseError
           {name, {:error, error}} ->
             {:halt, {:error, error}}
 
@@ -161,7 +160,11 @@ defmodule RDF.XML.Decoder.ElementNode do
 
   def rdf_id(value, nil) do
     {:error,
-     "use of rdf:ID without a base URI #{value}; specify one in the RDF/XML document or provide one on the decoder call with the :base opt"}
+     %RDF.XML.ParseError{
+       message: "use of rdf:ID without a base URI #{value}",
+       help:
+         "specify one in the RDF/XML document or provide one on the decoder call with the :base opt"
+     }}
   end
 
   def rdf_id(value, base) do
@@ -177,7 +180,11 @@ defmodule RDF.XML.Decoder.ElementNode do
         {:ok, iri}
 
       true ->
-        {:error, "can't resolve name #{inspect(name)} to URI reference"}
+        {:error,
+         %RDF.XML.ParseError{
+           message: "can't resolve name #{inspect(name)} to URI reference",
+           help: "provide a xmlns declaration"
+         }}
     end
   end
 end
