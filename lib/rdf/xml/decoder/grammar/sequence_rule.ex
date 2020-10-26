@@ -9,6 +9,8 @@ defmodule RDF.XML.Decoder.Grammar.SequenceRule do
 
       def type, do: unquote(__MODULE__)
 
+      def result_elements(%__MODULE__{children: elements}), do: elements
+
       def cascaded_end?, do: false
 
       # We assume every SequenceRule has just one rule as production

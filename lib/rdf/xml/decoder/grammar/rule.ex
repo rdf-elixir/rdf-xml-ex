@@ -6,7 +6,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
 
   # should return the result which should be set on the children field of the parent
   @callback at_end(context(), Graph.t(), RDF.BlankNode.Increment.state()) ::
-              {:ok, result :: any, Graph.t(), RDF.BlankNode.Increment.state()} | {:error, any}
+              {:ok, Graph.t(), RDF.BlankNode.Increment.state()} | {:error, any}
 
   # should return update Rule struct
   @callback characters(characters :: String.t(), context()) ::
@@ -64,7 +64,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   end
 
   def end_element(%rule{} = cxt, name, graph, bnodes, element_deleted \\ false) do
-    with {:ok, result, graph, new_bnodes} <- rule.at_end(cxt, graph, bnodes) do
+    with {:ok, graph, new_bnodes} <- rule.at_end(cxt, graph, bnodes) do
       case cxt.parent_cxt do
         nil ->
           {:ok, nil, graph, new_bnodes}
@@ -73,7 +73,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
           cascaded_end(
             element_deleted || rule.element_rule?(),
             parent_rule.cascaded_end?(),
-            update_children(parent_cxt, result),
+            update_children(parent_cxt, rule.result_elements(cxt)),
             name,
             graph,
             new_bnodes
@@ -93,6 +93,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   defp cascaded_end(true, false, cxt, _name, graph, bnodes), do: {:ok, cxt, graph, bnodes}
 
   defp update_children(%{children: nil} = cxt, result), do: %{cxt | children: List.wrap(result)}
+  # Note, that we're adding the children here in reverse order for performance reasons.
   defp update_children(cxt, result), do: %{cxt | children: [result | cxt.children]}
 
   defmodule Shared do
@@ -172,6 +173,11 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
       def production, do: @production
 
       def no_children?, do: unquote(no_children)
+
+      @impl true
+      def at_end(_cxt, graph, bnodes) do
+        {:ok, graph, bnodes}
+      end
 
       @impl true
       def characters(characters, cxt) do

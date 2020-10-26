@@ -11,10 +11,6 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
 
     def select_production(_, %{name: "rdf:RDF"}), do: Rules.RDF
     def select_production(_, _), do: Rules.NodeElement
-
-    def at_end(cxt, graph, bnodes) do
-      {:ok, cxt, graph, bnodes}
-    end
   end
 
   defmodule RDF do
@@ -27,17 +23,13 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     def uri_constraint(uri), do: uri == "rdf:RDF"
 
     def at_end(cxt, graph, bnodes) do
-      {:ok, cxt, Graph.add_prefixes(graph, cxt.element.ns_declarations), bnodes}
+      {:ok, Graph.add_prefixes(graph, cxt.element.ns_declarations), bnodes}
     end
   end
 
   defmodule NodeElementList do
     use SequenceRule,
       production: Rules.NodeElement
-
-    def at_end(%{children: node_element_list}, graph, bnodes) do
-      {:ok, node_element_list, graph, bnodes}
-    end
   end
 
   defmodule NodeElement do
@@ -76,16 +68,12 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
 
       description = description_from_property_attrs(cxt, description)
 
-      {:ok, cxt, Graph.add(graph, description), bnodes}
+      {:ok, Graph.add(graph, description), bnodes}
     end
   end
 
   defmodule PropertyEltList do
     use SequenceRule, production: Rules.PropertyElt
-
-    def at_end(%{children: property_element_list}, graph, bnodes) do
-      {:ok, property_element_list, graph, bnodes}
-    end
   end
 
   defmodule PropertyElt do
@@ -114,10 +102,6 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       else
         {:ok, element, cxt, bnodes}
       end
-    end
-
-    def at_end(%{children: [property_element]}, graph, bnodes) do
-      {:ok, property_element, graph, bnodes}
     end
   end
 
@@ -162,7 +146,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
           statement
         end
 
-      {:ok, cxt, Graph.add(graph, statements), bnodes}
+      {:ok, Graph.add(graph, statements), bnodes}
     end
   end
 
@@ -189,7 +173,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
           statement
         end
 
-      {:ok, cxt, Graph.add(graph, statements), bnodes}
+      {:ok, Graph.add(graph, statements), bnodes}
     end
   end
 
@@ -235,7 +219,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
           statements
         end
 
-      {:ok, cxt, Graph.add(graph, statements), new_bnodes}
+      {:ok, Graph.add(graph, statements), new_bnodes}
     end
   end
 
@@ -266,7 +250,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
           statement
         end
 
-      {:ok, cxt, Graph.add(graph, statements), bnodes}
+      {:ok, Graph.add(graph, statements), bnodes}
     end
   end
 
@@ -314,6 +298,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
             end
 
           add_as_rdf_collection(
+            # We need to reverse children, since they are stored in reverse order. See RDF.XML.Decoder.Grammar.Rule.update_children/2
             Enum.reverse(cxt.children),
             n,
             Graph.add(graph, statements),
@@ -321,7 +306,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
           )
         end
 
-      {:ok, cxt, graph, bnodes}
+      {:ok, graph, bnodes}
     end
 
     def add_as_rdf_collection([first], n, graph, bnodes) do

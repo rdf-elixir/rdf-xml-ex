@@ -27,6 +27,8 @@ defmodule RDF.XML.Decoder.Grammar.AlternationRule do
 
       def type, do: unquote(__MODULE__)
 
+      def result_elements(%__MODULE__{children: [element]}), do: element
+
       def cascaded_end?, do: true
     end
   end

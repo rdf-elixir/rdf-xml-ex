@@ -40,6 +40,8 @@ defmodule RDF.XML.Decoder.Grammar.ElementRule do
 
       def element_cxt(cxt), do: cxt
 
+      def result_elements(cxt), do: cxt
+
       def cascaded_end?, do: false
 
       # We assume every ElementRule has just one rule as production
