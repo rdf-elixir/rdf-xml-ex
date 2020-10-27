@@ -73,7 +73,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
           cascaded_end(
             element_deleted || rule.element_rule?(),
             parent_rule.cascaded_end?(),
-            update_children(parent_cxt, rule.result_elements(cxt)),
+            update_children(parent_cxt, cxt |> rule.result_elements() |> finish()),
             name,
             graph,
             new_bnodes
@@ -95,6 +95,9 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   defp update_children(%{children: nil} = cxt, result), do: %{cxt | children: List.wrap(result)}
   # Note, that we're adding the children here in reverse order for performance reasons.
   defp update_children(cxt, result), do: %{cxt | children: [result | cxt.children]}
+
+  def finish(list) when is_list(list), do: list
+  def finish(cxt), do: %{cxt | parent_cxt: nil}
 
   defmodule Shared do
     alias RDF.{Description, BlankNode, Literal, LangString}
