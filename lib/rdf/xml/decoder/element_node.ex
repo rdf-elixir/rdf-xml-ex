@@ -31,7 +31,7 @@ defmodule RDF.XML.Decoder.ElementNode do
            extract_xml_namespaces(attributes, parent_element, graph),
          {:ok, base_uri} <- normalize_base_uri(base_uri),
          {:ok, uri} <- qname_to_iri(name, ns_declarations),
-         {:ok, rdf_attributes, property_attributes} <-
+         {:ok, rdf_attributes, property_attributes, _} <-
            attributes(attributes, ns_declarations, base_uri) do
       {:ok,
        %__MODULE__{
@@ -86,12 +86,12 @@ defmodule RDF.XML.Decoder.ElementNode do
     )
   end
 
-  def extract_xml_namespaces(attributes, parent_ns_declarations, parent_base_uri, graph) do
+  def extract_xml_namespaces(attributes, parent_ns_declarations, parent_base_uri, _graph) do
     Enum.reduce_while(attributes, {:ok, %{}, parent_ns_declarations, parent_base_uri, nil}, fn
-      {"xml:lang", value}, {:ok, attrs, ns_declarations, base_uri, language} ->
+      {"xml:lang", value}, {:ok, attrs, ns_declarations, base_uri, _} ->
         {:cont, {:ok, attrs, ns_declarations, base_uri, value}}
 
-      {"xml:base", value}, {:ok, attrs, ns_declarations, base_uri, language} ->
+      {"xml:base", value}, {:ok, attrs, ns_declarations, _, language} ->
         {:cont, {:ok, attrs, ns_declarations, value, language}}
 
       {"xmlns:" <> prefix, value}, {:ok, attrs, ns_declarations, base_uri, language} ->
@@ -105,24 +105,37 @@ defmodule RDF.XML.Decoder.ElementNode do
     end)
   end
 
+  @exclusive_attributes ~w[node_id about id]a
+
   def attributes(attributes, ns_declarations, base_uri) do
-    Enum.reduce_while(attributes, {:ok, %{}, %{}}, fn
-      attribute, {:ok, rdf_attributes, property_attrs} ->
+    Enum.reduce_while(attributes, {:ok, %{}, %{}, false}, fn
+      attribute, {:ok, rdf_attributes, property_attrs, excl_attr_present} ->
         case attribute(attribute, ns_declarations, base_uri) do
-          {name, {:error, error}} ->
+          {_name, {:error, error}} ->
             {:halt, {:error, error}}
 
           {_, :ignore} ->
-            {:cont, {:ok, rdf_attributes, property_attrs}}
+            {:cont, {:ok, rdf_attributes, property_attrs, excl_attr_present}}
 
           {name, value} when is_atom(name) ->
-            {:cont, {:ok, Map.put(rdf_attributes, name, value), property_attrs}}
+            excl_attr = name in @exclusive_attributes
+
+            if excl_attr_present and excl_attr do
+              {:halt, {:error, "rdf:nodeID can't be used with rdf:ID and rdf:about"}}
+            else
+              {:cont,
+               {:ok, Map.put(rdf_attributes, name, value), property_attrs,
+                excl_attr_present || excl_attr}}
+            end
 
           {name, value} ->
-            {:cont, {:ok, rdf_attributes, Map.put(property_attrs, name, value)}}
+            {:cont,
+             {:ok, rdf_attributes, Map.put(property_attrs, name, value), excl_attr_present}}
         end
     end)
   end
+
+  @old_terms ~w[rdf:aboutEach rdf:aboutEachPrefix rdf:bagID]
 
   def attribute({"rdf:ID", value}, _, base), do: {:id, rdf_id(value, base)}
   def attribute({"rdf:nodeID", value}, _, _), do: {:node_id, value}
@@ -139,7 +152,13 @@ defmodule RDF.XML.Decoder.ElementNode do
   def attribute({"rdf:parseType", "Collection"}, _, _), do: {:parseCollection, true}
   def attribute({"rdf:parseType", value}, _, _), do: {:parseOther, value}
 
-  def attribute({property_attribute_name, value}, ns, base) do
+  def attribute({"rdf:li", _}, _, _),
+    do: {:li, {:error, %RDF.XML.ParseError{message: "rdf:li is not allowed as as an attribute"}}}
+
+  def attribute({term, _}, _, _) when term in @old_terms,
+    do: {term, {:error, %RDF.XML.ParseError{message: "#{term} not supported in RDF/XML 1.1"}}}
+
+  def attribute({property_attribute_name, value}, ns, _base) do
     case qname_to_iri(property_attribute_name, ns) do
       {:ok, property_attribute_uri} ->
         {property_attribute_uri, value}
@@ -150,7 +169,7 @@ defmodule RDF.XML.Decoder.ElementNode do
     end
   end
 
-  def uri_reference(value, ns_decl, base) do
+  def uri_reference(value, _ns_decl, base) do
     if IRI.absolute?(value) do
       RDF.iri(value)
     else

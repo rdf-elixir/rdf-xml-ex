@@ -57,18 +57,23 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     end
 
     def at_end(cxt, graph, bnodes) do
-      description = Description.new(cxt.subject)
+      if cxt.element.name == "rdf:li" do
+        {:error, %Elixir.RDF.XML.ParseError{message: "rdf:li is not allowed as a typed node"}}
+      else
+        description = Description.new(cxt.subject)
 
-      description =
-        unless cxt.element.name == "rdf:Description" do
-          Description.add(description, {Elixir.RDF.type(), cxt.element.uri})
-        else
-          description
-        end
+        description =
+          unless cxt.element.name == "rdf:Description" do
+            # unless cxt.element.uri == @rdf_description do
+            Description.add(description, {Elixir.RDF.type(), cxt.element.uri})
+          else
+            description
+          end
 
-      description = description_from_property_attrs(cxt, description)
+        description = description_from_property_attrs(cxt, description)
 
-      {:ok, Graph.add(graph, description), bnodes}
+        {:ok, Graph.add(graph, description), bnodes}
+      end
     end
   end
 

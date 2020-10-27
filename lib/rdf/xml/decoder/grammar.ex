@@ -40,8 +40,8 @@ defmodule RDF.XML.Decoder.Grammar do
     |> Enum.map(&apply_production(event_name, event_data, {&1, graph, bnodes}))
     |> Enum.group_by(
       fn
-        {:ok, state} -> :ok
-        {:error, error} -> :stop
+        {:ok, _state} -> :ok
+        {:error, _error} -> :stop
       end,
       fn {_, state_or_error} -> state_or_error end
     )
