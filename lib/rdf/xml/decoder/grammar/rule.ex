@@ -189,7 +189,8 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
         else
           {:error,
            %RDF.XML.ParseError{
-             message: "unexpected characters in element #{inspect(cxt)}: #{characters}"
+             message:
+               "unexpected characters in element #{inspect(cxt.element.name)}: #{characters}"
            }}
         end
       end
