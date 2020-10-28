@@ -61,9 +61,42 @@ defmodule RDF.XML.EncoderTest do
   end
 
   test "resource URI against base" do
+    assert Graph.new({EX.S, EX.p(), EX.O}, prefixes: [ex: EX])
+           |> RDF.XML.Encoder.encode!(base_iri: EX) ==
+             xml_description_with_base(~S[<ex:p rdf:resource="O"/>])
+
     assert Graph.new({EX.S, EX.p(), EX.O}, prefixes: [ex: EX], base_iri: EX)
            |> RDF.XML.Encoder.encode!() ==
              xml_description_with_base(~S[<ex:p rdf:resource="O"/>])
+  end
+
+  test "resource URI against base with use_rdf_id: true" do
+    assert Graph.new({EX.__base_iri__() <> "#S", EX.p(), RDF.iri(EX.__base_iri__() <> "#O")},
+             prefixes: [ex: EX],
+             base_iri: EX
+           )
+           |> RDF.XML.Encoder.encode!(use_rdf_id: true) ==
+             xml_description_with_base(~S[<ex:p rdf:resource="#O"/>],
+               subject: ~S[rdf:ID="S"]
+             )
+  end
+
+  test "when base URI contains fragments (which are essentially ignored)" do
+    assert Graph.new({EX.S, EX.p(), EX.O},
+             prefixes: [ex: EX],
+             base_iri: EX.__base_iri__() <> "#foo"
+           )
+           |> RDF.XML.Encoder.encode!() ==
+             xml_description_with_base(~S[<ex:p rdf:resource="O"/>])
+
+    assert Graph.new({EX.__base_iri__() <> "#S", EX.p(), RDF.iri(EX.__base_iri__() <> "#O")},
+             prefixes: [ex: EX],
+             base_iri: EX.__base_iri__() <> "#foo"
+           )
+           |> RDF.XML.Encoder.encode!(use_rdf_id: true) ==
+             xml_description_with_base(~S[<ex:p rdf:resource="#O"/>],
+               subject: ~S[rdf:ID="S"]
+             )
   end
 
   test "string literal" do
@@ -95,10 +128,13 @@ defmodule RDF.XML.EncoderTest do
       ~S[</rdf:RDF>]
   end
 
-  def xml_description_with_base(triples) do
+  def xml_description_with_base(triples, opts \\ []) do
+    base = Keyword.get(opts, :base, EX.__base_iri__())
+    subject = Keyword.get(opts, :subject, ~S[rdf:about="S"])
+
     ~S[<?xml version="1.0" encoding="utf-8"?>] <>
-      ~s[<rdf:RDF xml:base="#{EX.__base_iri__()}" xmlns:ex="http://example.com/">] <>
-      ~S[<rdf:Description rdf:about="S">] <>
+      ~s[<rdf:RDF xml:base="#{base}" xmlns:ex="http://example.com/">] <>
+      ~s[<rdf:Description #{subject}>] <>
       triples <>
       ~S[</rdf:Description>] <>
       ~S[</rdf:RDF>]

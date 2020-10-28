@@ -8,33 +8,24 @@ defmodule RDF.XML.Encoder do
   @impl RDF.Serialization.Encoder
   @spec encode(Graph.t(), keyword) :: {:ok, String.t()} | {:error, any}
   def encode(data, opts \\ []) do
+    base = Keyword.get(opts, :base, Keyword.get(opts, :base_iri)) |> base_iri(data)
     prefixes = Keyword.get(opts, :prefixes) |> prefix_map(data)
+    use_rdf_id = Keyword.get(opts, :use_rdf_id, false)
 
-    with {:ok, base} <-
-           opts
-           |> Keyword.get(:base, Keyword.get(opts, :base_iri))
-           |> base_iri(data),
-         {:ok, root} <- document(data, base, prefixes, opts) do
+    with {:ok, root} <- document(data, base, prefixes, use_rdf_id) do
       {:ok, Saxy.encode!(root, version: "1.0", encoding: :utf8)}
     end
   end
 
-  defp base_iri(nil, %Graph{base_iri: base_iri}) when not is_nil(base_iri),
-    do: {:ok, to_string(base_iri)}
-
+  defp base_iri(nil, %Graph{base_iri: base}) when not is_nil(base), do: validate_base_iri(base)
   defp base_iri(nil, _), do: RDF.default_base_iri() |> validate_base_iri()
   defp base_iri(base_iri, _), do: base_iri |> IRI.coerce_base() |> validate_base_iri()
 
-  defp validate_base_iri(nil), do: {:ok, nil}
+  defp validate_base_iri(nil), do: nil
 
   defp validate_base_iri(base_iri) do
-    base_iri = to_string(base_iri)
-
-    if String.ends_with?(base_iri, ~w[/ #]) do
-      {:ok, base_iri}
-    else
-      {:error, "invalid base_iri: #{base_iri}"}
-    end
+    uri = base_iri |> to_string() |> URI.parse()
+    to_string(%{uri | fragment: nil})
   end
 
   defp prefix_map(nil, %Graph{prefixes: prefixes}) when not is_nil(prefixes), do: prefixes
@@ -62,8 +53,8 @@ defmodule RDF.XML.Encoder do
     [{"xml:base", to_string(base)} | ns_declarations(prefixes, nil)]
   end
 
-  defp document(%Graph{} = graph, base, prefixes, opts) do
-    with {:ok, descriptions} <- descriptions(graph, base, prefixes, opts) do
+  defp document(%Graph{} = graph, base, prefixes, use_rdf_id) do
+    with {:ok, descriptions} <- descriptions(graph, base, prefixes, use_rdf_id) do
       {:ok,
        element(
          "rdf:RDF",
@@ -73,72 +64,82 @@ defmodule RDF.XML.Encoder do
     end
   end
 
-  defp descriptions(%Graph{} = graph, base, prefixes, opts) do
+  defp descriptions(%Graph{} = graph, base, prefixes, use_rdf_id) do
     graph
     |> Graph.descriptions()
-    |> map_while_ok(&description(&1, graph, base, prefixes, opts))
+    |> map_while_ok(&description(&1, graph, base, prefixes, use_rdf_id))
   end
 
-  defp description(description, graph, base, prefixes, opts) do
-    {type_node, description} = type_node(description, graph, base, prefixes, opts)
-    {property_attributes, description} = property_attributes(description, base, prefixes, opts)
+  defp description(description, graph, base, prefixes, use_rdf_id) do
+    {type_node, description} = type_node(description, graph, base, prefixes)
+    {property_attributes, description} = property_attributes(description, base, prefixes)
 
-    with {:ok, predications} <- predications(description, base, prefixes, opts) do
+    with {:ok, predications} <- predications(description, base, prefixes) do
       {:ok,
        element(
          type_node || "rdf:Description",
          property_attributes
-         |> add_description_id(description.subject, base, opts),
+         |> add_description_id(description.subject, base, use_rdf_id),
          predications
        )}
     end
   end
 
-  defp type_node(description, graph, base, prefixes, opts) do
+  defp type_node(description, graph, base, prefixes) do
     # TODO: typed node
     {nil, description}
   end
 
-  defp property_attributes(description, base, prefixes, opts) do
+  defp property_attributes(description, base, prefixes) do
     # TODO: Property attributes
     {[], description}
   end
 
-  defp add_description_id(attributes, %BlankNode{value: bnode}, _base, _opts) do
+  defp add_description_id(attributes, %BlankNode{value: bnode}, _base, _) do
     [{"rdf:nodeID", bnode} | attributes]
   end
 
-  defp add_description_id(attributes, %IRI{value: uri}, base, _opts) do
+  defp add_description_id(attributes, %IRI{value: uri}, base, true) do
+    [
+      case attr_val_uri(uri, base) do
+        "#" <> value -> {"rdf:ID", value}
+        value -> {"rdf:about", value}
+      end
+      | attributes
+    ]
+  end
+
+  defp add_description_id(attributes, %IRI{value: uri}, base, false) do
     [{"rdf:about", attr_val_uri(uri, base)} | attributes]
   end
 
-  def predications(description, base, prefixes, opts) do
+  def predications(description, base, prefixes) do
     flat_map_while_ok(description.predications, fn {predicate, objects} ->
-      predications_for_property(predicate, objects, base, prefixes, opts)
+      predications_for_property(predicate, objects, base, prefixes)
     end)
   end
 
-  def predications_for_property(property, objects, base, prefixes, opts) do
+  def predications_for_property(property, objects, base, prefixes) do
     if property_name = qname(property, prefixes) do
       {:ok,
        objects
        |> Map.keys()
-       |> Enum.map(&statement(property_name, &1, base, prefixes, opts))}
+       |> Enum.map(&statement(property_name, &1, base, prefixes))}
     else
       {:error,
        %RDF.XML.EncodeError{message: "no namespace declaration for property #{property} found"}}
     end
   end
 
-  defp statement(property_name, %IRI{value: uri}, base, _, _opts) do
+  defp statement(property_name, %IRI{value: uri}, base, _) do
     element(property_name, [{"rdf:resource", attr_val_uri(uri, base)}], [])
   end
 
-  defp statement(property_name, %BlankNode{value: value}, _base, _, _opts) do
+  defp statement(property_name, %BlankNode{value: value}, _base, _) do
     element(property_name, [{"rdf:nodeID", value}], [])
   end
 
-  defp statement(property_name, %Literal{} = literal, base, _, _opts) do
+  defp statement(property_name, %Literal{} = literal, base, _) do
     element(property_name, literal_attributes(literal, base), Literal.lexical(literal))
   end
 
