@@ -4,3 +4,7 @@ defmodule RDF.XML.ParseError do
   def message(%{message: message, help: nil}), do: message
   def message(%{message: message, help: help}), do: message <> "; " <> help
 end
+
+defmodule RDF.XML.EncodeError do
+  defexception [:message]
+end
