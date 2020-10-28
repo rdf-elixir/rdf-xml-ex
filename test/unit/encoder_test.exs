@@ -43,12 +43,11 @@ defmodule RDF.XML.EncoderTest do
                ~S[<rdfs:comment xml:lang="de">Kommentar</rdfs:comment>] <>
                ~S[<rdfs:comment>Comment</rdfs:comment>] <>
                ~S[</rdf:Description>] <>
-               ~S[<rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">] <>
-               ~S[<rdf:type rdf:resource="http://www.w3.org/2000/10/swap/pim/contact#Person"/>] <>
+               ~S[<contact:Person rdf:about="http://www.w3.org/People/EM/contact#me">] <>
                ~S[<contact:fullName>Eric Miller</contact:fullName>] <>
                ~S[<contact:mailbox rdf:resource="mailto:e.miller123(at)example"/>] <>
                ~S[<contact:personalTitle>Dr.</contact:personalTitle>] <>
-               ~S[</rdf:Description>] <>
+               ~S[</contact:Person>] <>
                ~S[</rdf:RDF>]
 
     assert RDF.XML.Decoder.decode(result) == {:ok, example_graph}

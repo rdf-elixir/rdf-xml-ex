@@ -1,7 +1,7 @@
 defmodule RDF.XML.Encoder do
   use RDF.Serialization.Encoder
 
-  alias RDF.{Graph, Dataset, IRI, BlankNode, Literal, LangString, XSD, PrefixMap}
+  alias RDF.{Description, Graph, Dataset, IRI, BlankNode, Literal, LangString, XSD, PrefixMap}
   import RDF.Utils
   import Saxy.XML
 
@@ -67,50 +67,50 @@ defmodule RDF.XML.Encoder do
   defp descriptions(%Graph{} = graph, base, prefixes, use_rdf_id) do
     graph
     |> Graph.descriptions()
-    |> map_while_ok(&description(&1, graph, base, prefixes, use_rdf_id))
+    |> map_while_ok(&description(&1, base, prefixes, use_rdf_id))
   end
 
-  defp description(description, graph, base, prefixes, use_rdf_id) do
-    {type_node, description} = type_node(description, graph, base, prefixes)
-    {property_attributes, description} = property_attributes(description, base, prefixes)
+  defp description(description, base, prefixes, use_rdf_id) do
+    {type_node, description} = type_node(description, prefixes)
 
     with {:ok, predications} <- predications(description, base, prefixes) do
       {:ok,
        element(
          type_node || "rdf:Description",
-         property_attributes
-         |> add_description_id(description.subject, base, use_rdf_id),
+         [description_id(description.subject, base, use_rdf_id)],
          predications
        )}
     end
   end
 
-  defp type_node(description, graph, base, prefixes) do
-    # TODO: typed node
-    {nil, description}
-  end
-
-  defp property_attributes(description, base, prefixes) do
-    # TODO: Property attributes
-    {[], description}
-  end
-
-  defp add_description_id(attributes, %BlankNode{value: bnode}, _base, _) do
-    [{"rdf:nodeID", bnode} | attributes]
-  end
-
-  defp add_description_id(attributes, %IRI{value: uri}, base, true) do
-    [
-      case attr_val_uri(uri, base) do
-        "#" <> value -> {"rdf:ID", value}
-        value -> {"rdf:about", value}
+  defp type_node(description, prefixes) do
+    description
+    |> Description.get(RDF.type())
+    |> List.wrap()
+    |> Enum.find_value(fn object ->
+      if qname = qname(object, prefixes) do
+        {qname, object}
       end
-      | attributes
-    ]
+    end)
+    |> case do
+      nil -> {nil, description}
+      {qname, type} -> {qname, Description.delete(description, {RDF.type(), type})}
+    end
   end
 
-  defp add_description_id(attributes, %IRI{value: uri}, base, false) do
-    [{"rdf:about", attr_val_uri(uri, base)} | attributes]
+  defp description_id(%BlankNode{value: bnode}, _base, _) do
+    {"rdf:nodeID", bnode}
+  end
+
+  defp description_id(%IRI{value: uri}, base, true) do
+    case attr_val_uri(uri, base) do
+      "#" <> value -> {"rdf:ID", value}
+      value -> {"rdf:about", value}
+    end
+  end
+
+  defp description_id(%IRI{value: uri}, base, false) do
+    {"rdf:about", attr_val_uri(uri, base)}
   end
 
   def predications(description, base, prefixes) do
