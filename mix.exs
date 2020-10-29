@@ -67,7 +67,8 @@ defmodule RDF.XML.MixProject do
       {:saxy, "~> 1.2"},
       {:dialyxir, "~> 1.0", only: :dev, runtime: false},
       {:ex_doc, "~> 0.23", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.13", only: :test}
+      {:excoveralls, "~> 0.13", only: :test},
+      {:benchee, "~> 1.0", only: :dev}
     ]
   end
 

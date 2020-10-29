@@ -17,6 +17,25 @@ defmodule RDF.XML.Encoder do
     end
   end
 
+  @spec stream(Graph.t(), keyword) :: Enumerable.t()
+  def stream(data, opts \\ []) do
+    base = Keyword.get(opts, :base, Keyword.get(opts, :base_iri)) |> base_iri(data)
+    prefixes = Keyword.get(opts, :prefixes) |> prefix_map(data)
+    use_rdf_id = Keyword.get(opts, :use_rdf_id, false)
+    stream_mode = Keyword.get(opts, :mode, :string)
+
+    {rdf_close, rdf_open} =
+      Saxy.encode_to_iodata!({"rdf:RDF", ns_declarations(prefixes, base), ["\n"]})
+      |> List.pop_at(-1)
+
+    Stream.concat([
+      [~s[<?xml version="1.0" encoding="utf-8"?>\n]],
+      [rdf_open],
+      description_stream(data, base, prefixes, use_rdf_id, stream_mode),
+      [rdf_close]
+    ])
+  end
+
   defp base_iri(nil, %Graph{base_iri: base}) when not is_nil(base), do: validate_base_iri(base)
   defp base_iri(nil, _), do: RDF.default_base_iri() |> validate_base_iri()
   defp base_iri(base_iri, _), do: base_iri |> IRI.coerce_base() |> validate_base_iri()
@@ -68,6 +87,23 @@ defmodule RDF.XML.Encoder do
     graph
     |> Graph.descriptions()
     |> map_while_ok(&description(&1, base, prefixes, use_rdf_id))
+  end
+
+  defp description_stream(%Graph{} = graph, base, prefixes, use_rdf_id, stream_mode) do
+    graph
+    |> Graph.descriptions()
+    |> Stream.map(fn description ->
+      case description(description, base, prefixes, use_rdf_id) do
+        {:ok, simple_form} when stream_mode == :string ->
+          [Saxy.encode!(simple_form) | "\n"]
+
+        {:ok, simple_form} when stream_mode == :iodata ->
+          [Saxy.encode_to_iodata!(simple_form) | "\n"]
+
+        {:error, error} ->
+          raise error
+      end
+    end)
   end
 
   defp description(description, base, prefixes, use_rdf_id) do

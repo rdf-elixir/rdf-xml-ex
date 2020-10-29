@@ -24,7 +24,7 @@ defmodule RDF.XML.TestSuite do
   alias RDF
   alias NS.MF
 
-  alias RDF.{Turtle, Graph, Description, IRI}
+  alias RDF.{Turtle, Graph, Description}
 
   def file(filename), do: @dir |> Path.join(filename)
   def manifest_path(), do: file("manifest.ttl")

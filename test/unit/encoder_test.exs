@@ -118,6 +118,59 @@ defmodule RDF.XML.EncoderTest do
              )
   end
 
+  describe "stream/2" do
+    example_graph =
+      """
+      @prefix eric:    <http://www.w3.org/People/EM/contact#> .
+      @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
+      @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+      @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+      eric:me
+        rdf:type contact:Person ;
+        contact:fullName "Eric Miller" ;
+        contact:mailbox <mailto:e.miller123(at)example> ;
+        contact:personalTitle "Dr."
+      .
+
+      <http://example.com/Foo>
+        rdf:type <http://example.com/Bar>, <http://example.com/Baz> ;
+        rdfs:comment "Comment", "Kommentar"@de
+      .
+      """
+      |> RDF.Turtle.read_string!()
+
+    expected_result =
+      ~s[<?xml version="1.0" encoding="utf-8"?>\n] <>
+        ~S[<rdf:RDF ] <>
+        ~S[xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" ] <>
+        ~S[xmlns:eric="http://www.w3.org/People/EM/contact#" ] <>
+        ~S[xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" ] <>
+        ~s[xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">\n] <>
+        ~S[<rdf:Description rdf:about="http://example.com/Foo">] <>
+        ~S[<rdf:type rdf:resource="http://example.com/Bar"/>] <>
+        ~S[<rdf:type rdf:resource="http://example.com/Baz"/>] <>
+        ~S[<rdfs:comment xml:lang="de">Kommentar</rdfs:comment>] <>
+        ~S[<rdfs:comment>Comment</rdfs:comment>] <>
+        ~s[</rdf:Description>\n] <>
+        ~S[<contact:Person rdf:about="http://www.w3.org/People/EM/contact#me">] <>
+        ~S[<contact:fullName>Eric Miller</contact:fullName>] <>
+        ~S[<contact:mailbox rdf:resource="mailto:e.miller123(at)example"/>] <>
+        ~S[<contact:personalTitle>Dr.</contact:personalTitle>] <>
+        ~s[</contact:Person>\n] <>
+        ~S[</rdf:RDF>]
+
+    assert RDF.XML.Encoder.stream(example_graph, mode: :string)
+           |> Enum.to_list()
+           |> IO.iodata_to_binary() ==
+             expected_result
+
+    assert RDF.XML.Encoder.stream(example_graph, mode: :iodata)
+           |> Enum.to_list()
+           |> IO.iodata_to_binary() ==
+             expected_result
+  end
+
   def xml_description(triples) do
     ~S[<?xml version="1.0" encoding="utf-8"?>] <>
       ~S[<rdf:RDF xmlns:ex="http://example.com/">] <>
