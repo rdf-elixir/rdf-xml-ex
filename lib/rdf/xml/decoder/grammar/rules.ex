@@ -20,7 +20,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       # which isn't needed and would just consume potentially a lot of memory
       no_children: true
 
-    def uri_constraint(uri), do: uri == "rdf:RDF"
+    def conform?(element), do: element.name == "rdf:RDF"
 
     def at_end(cxt, graph, bnodes) do
       {:ok, Graph.add_prefixes(graph, cxt.element.ns_declarations), bnodes}
@@ -36,6 +36,8 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     use ElementRule,
       production: Rules.PropertyEltList,
       struct: [:subject]
+
+    def conform?(element), do: Rules.node_element_uri?(element.name)
 
     def at_start(cxt, _graph, bnodes) do
       {subject, new_bnodes} =
@@ -84,14 +86,45 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
   defmodule PropertyElt do
     use AlternationRule,
       production: [
-        # TODO: Rules.ParseTypeLiteralPropertyElt,
-        # TODO: Rules.ParseTypeOtherPropertyElt,
         Rules.ParseTypeResourcePropertyElt,
         Rules.ParseTypeCollectionPropertyElt,
+        # TODO: Rules.ParseTypeLiteralPropertyElt,
+        # TODO: Rules.ParseTypeOtherPropertyElt,
         Rules.LiteralPropertyElt,
         Rules.ResourcePropertyElt,
         Rules.EmptyPropertyElt
       ]
+
+    # TODO: not implemented yet
+    def select_production(_, %{rdf_attributes: %{parseLiteral: true}}), do: []
+
+    # TODO: not implemented yet
+    def select_production(_, %{rdf_attributes: %{parseOther: true}}), do: []
+
+    def select_production(_, %{rdf_attributes: %{parseResource: true}}),
+      do: Rules.ParseTypeResourcePropertyElt
+
+    def select_production(_, %{rdf_attributes: %{parseCollection: true}}),
+      do: Rules.ParseTypeCollectionPropertyElt
+
+    def select_production(_, %{rdf_attributes: %{resource: resource}})
+        when not is_nil(resource),
+        do: Rules.EmptyPropertyElt
+
+    def select_production(_, %{rdf_attributes: %{node_id: node_id}})
+        when not is_nil(node_id),
+        do: Rules.EmptyPropertyElt
+
+    def select_production(_, %{property_attributes: attr})
+        when map_size(attr) > 0,
+        do: Rules.EmptyPropertyElt
+
+    def select_production(_, %{rdf_attributes: %{datatype: datatype}})
+        when not is_nil(datatype),
+        do: [Rules.LiteralPropertyElt, Rules.EmptyPropertyElt]
+
+    def select_production(_, _),
+      do: [Rules.LiteralPropertyElt, Rules.ResourcePropertyElt, Rules.EmptyPropertyElt]
 
     def at_start(element, cxt, _graph, bnodes) do
       if element.name == "rdf:li" do

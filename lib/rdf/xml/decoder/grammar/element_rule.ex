@@ -8,9 +8,16 @@ defmodule RDF.XML.Decoder.Grammar.ElementRule do
 
   @default_attributes [:element]
 
-  def apply(%rule{} = new_cxt, _, graph, bnodes) do
-    with {:ok, new_cxt, new_bnodes} <- rule.at_start(new_cxt, graph, bnodes) do
-      {:ok, {new_cxt, new_bnodes}}
+  def apply(%rule{} = new_cxt, element, graph, bnodes) do
+    if rule.conform?(element) do
+      with {:ok, new_cxt, new_bnodes} <- rule.at_start(new_cxt, graph, bnodes) do
+        {:ok, {new_cxt, new_bnodes}}
+      end
+    else
+      {:error,
+       %RDF.XML.ParseError{
+         message: "element #{element.name} is not conform with rule #{rule}"
+       }}
     end
   end
 
@@ -43,9 +50,6 @@ defmodule RDF.XML.Decoder.Grammar.ElementRule do
       def result_elements(cxt), do: cxt
 
       def cascaded_end?, do: false
-
-      # We assume every ElementRule has just one rule as production
-      def select_production(cxt, _), do: cxt.production
 
       defdelegate parent_element_cxt(cxt), to: Rule
       defdelegate parent(cxt), to: Rule, as: :parent_element_cxt

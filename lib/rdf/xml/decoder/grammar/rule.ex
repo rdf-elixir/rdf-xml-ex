@@ -12,6 +12,8 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   @callback characters(characters :: String.t(), context()) ::
               {:ok, t} | {:error, any}
 
+  @callback select_production(context(), ElementNode.t()) :: t() | [t()]
+
   @default_attributes [:parent_cxt, :children]
 
   def parent_element_cxt(%{parent_cxt: nil}), do: nil
@@ -193,6 +195,9 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
            }}
         end
       end
+
+      @impl true
+      def select_production(cxt, _), do: cxt.production
 
       defoverridable unquote(__MODULE__)
 

@@ -12,9 +12,6 @@ defmodule RDF.XML.Decoder.Grammar.SequenceRule do
       def result_elements(%__MODULE__{children: elements}), do: elements
 
       def cascaded_end?, do: false
-
-      # We assume every SequenceRule has just one rule as production
-      def select_production(cxt, _), do: cxt.production
     end
   end
 end
