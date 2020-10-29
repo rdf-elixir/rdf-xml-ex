@@ -8,29 +8,28 @@ defmodule RDF.XML.EncoderTest do
   use RDF.Vocabulary.Namespace
   defvocab EX, base_iri: "http://example.com/", terms: [], strict: false
 
+  @example_graph """
+                 @prefix eric:    <http://www.w3.org/People/EM/contact#> .
+                 @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
+                 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+                 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+
+                 eric:me
+                   rdf:type contact:Person ;
+                   contact:fullName "Eric Miller" ;
+                   contact:mailbox <mailto:e.miller123(at)example> ;
+                   contact:personalTitle "Dr."
+                 .
+
+                 <http://example.com/Foo>
+                   rdf:type <http://example.com/Bar>, <http://example.com/Baz> ;
+                   rdfs:comment "Comment", "Kommentar"@de
+                 .
+                 """
+                 |> RDF.Turtle.read_string!()
+
   test "full example" do
-    example_graph =
-      """
-      @prefix eric:    <http://www.w3.org/People/EM/contact#> .
-      @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
-      @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-      @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
-
-      eric:me
-        rdf:type contact:Person ;
-        contact:fullName "Eric Miller" ;
-        contact:mailbox <mailto:e.miller123(at)example> ;
-        contact:personalTitle "Dr."
-      .
-
-      <http://example.com/Foo>
-        rdf:type <http://example.com/Bar>, <http://example.com/Baz> ;
-        rdfs:comment "Comment", "Kommentar"@de
-      .
-      """
-      |> RDF.Turtle.read_string!()
-
-    assert (result = RDF.XML.Encoder.encode!(example_graph)) ==
+    assert (result = RDF.XML.Encoder.encode!(@example_graph)) ==
              ~S[<?xml version="1.0" encoding="utf-8"?>] <>
                ~S[<rdf:RDF ] <>
                ~S[xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" ] <>
@@ -50,7 +49,66 @@ defmodule RDF.XML.EncoderTest do
                ~S[</contact:Person>] <>
                ~S[</rdf:RDF>]
 
-    assert RDF.XML.Decoder.decode(result) == {:ok, example_graph}
+    assert RDF.XML.Decoder.decode(result) == {:ok, @example_graph}
+  end
+
+  test "with custom input function" do
+    input_fun = fn graph ->
+      {first, rest} = Graph.pop(graph, ~I<http://www.w3.org/People/EM/contact#me>)
+      Stream.concat([first], Graph.descriptions(rest))
+    end
+
+    assert (result = RDF.XML.Encoder.encode!(@example_graph, input: input_fun)) ==
+             ~S[<?xml version="1.0" encoding="utf-8"?>] <>
+               ~S[<rdf:RDF ] <>
+               ~S[xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" ] <>
+               ~S[xmlns:eric="http://www.w3.org/People/EM/contact#" ] <>
+               ~S[xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" ] <>
+               ~S[xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">] <>
+               ~S[<contact:Person rdf:about="http://www.w3.org/People/EM/contact#me">] <>
+               ~S[<contact:fullName>Eric Miller</contact:fullName>] <>
+               ~S[<contact:mailbox rdf:resource="mailto:e.miller123(at)example"/>] <>
+               ~S[<contact:personalTitle>Dr.</contact:personalTitle>] <>
+               ~S[</contact:Person>] <>
+               ~S[<rdf:Description rdf:about="http://example.com/Foo">] <>
+               ~S[<rdf:type rdf:resource="http://example.com/Bar"/>] <>
+               ~S[<rdf:type rdf:resource="http://example.com/Baz"/>] <>
+               ~S[<rdfs:comment xml:lang="de">Kommentar</rdfs:comment>] <>
+               ~S[<rdfs:comment>Comment</rdfs:comment>] <>
+               ~S[</rdf:Description>] <>
+               ~S[</rdf:RDF>]
+
+    assert RDF.XML.Decoder.decode(result) == {:ok, @example_graph}
+
+    expected_stream_result =
+      ~s[<?xml version="1.0" encoding="utf-8"?>\n] <>
+        ~S[<rdf:RDF ] <>
+        ~S[xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" ] <>
+        ~S[xmlns:eric="http://www.w3.org/People/EM/contact#" ] <>
+        ~S[xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" ] <>
+        ~s[xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">\n] <>
+        ~S[<contact:Person rdf:about="http://www.w3.org/People/EM/contact#me">] <>
+        ~S[<contact:fullName>Eric Miller</contact:fullName>] <>
+        ~S[<contact:mailbox rdf:resource="mailto:e.miller123(at)example"/>] <>
+        ~S[<contact:personalTitle>Dr.</contact:personalTitle>] <>
+        ~s[</contact:Person>\n] <>
+        ~S[<rdf:Description rdf:about="http://example.com/Foo">] <>
+        ~S[<rdf:type rdf:resource="http://example.com/Bar"/>] <>
+        ~S[<rdf:type rdf:resource="http://example.com/Baz"/>] <>
+        ~S[<rdfs:comment xml:lang="de">Kommentar</rdfs:comment>] <>
+        ~S[<rdfs:comment>Comment</rdfs:comment>] <>
+        ~s[</rdf:Description>\n] <>
+        ~S[</rdf:RDF>]
+
+    assert RDF.XML.Encoder.stream(@example_graph, input: input_fun, mode: :string)
+           |> Enum.to_list()
+           |> IO.iodata_to_binary() ==
+             expected_stream_result
+
+    assert RDF.XML.Encoder.stream(@example_graph, input: input_fun, mode: :iodata)
+           |> Enum.to_list()
+           |> IO.iodata_to_binary() ==
+             expected_stream_result
   end
 
   test "resource URI" do
@@ -119,27 +177,6 @@ defmodule RDF.XML.EncoderTest do
   end
 
   describe "stream/2" do
-    example_graph =
-      """
-      @prefix eric:    <http://www.w3.org/People/EM/contact#> .
-      @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
-      @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-      @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
-
-      eric:me
-        rdf:type contact:Person ;
-        contact:fullName "Eric Miller" ;
-        contact:mailbox <mailto:e.miller123(at)example> ;
-        contact:personalTitle "Dr."
-      .
-
-      <http://example.com/Foo>
-        rdf:type <http://example.com/Bar>, <http://example.com/Baz> ;
-        rdfs:comment "Comment", "Kommentar"@de
-      .
-      """
-      |> RDF.Turtle.read_string!()
-
     expected_result =
       ~s[<?xml version="1.0" encoding="utf-8"?>\n] <>
         ~S[<rdf:RDF ] <>
@@ -160,12 +197,12 @@ defmodule RDF.XML.EncoderTest do
         ~s[</contact:Person>\n] <>
         ~S[</rdf:RDF>]
 
-    assert RDF.XML.Encoder.stream(example_graph, mode: :string)
+    assert RDF.XML.Encoder.stream(@example_graph, mode: :string)
            |> Enum.to_list()
            |> IO.iodata_to_binary() ==
              expected_result
 
-    assert RDF.XML.Encoder.stream(example_graph, mode: :iodata)
+    assert RDF.XML.Encoder.stream(@example_graph, mode: :iodata)
            |> Enum.to_list()
            |> IO.iodata_to_binary() ==
              expected_result

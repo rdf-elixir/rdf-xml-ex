@@ -12,7 +12,7 @@ defmodule RDF.XML.Encoder do
     prefixes = Keyword.get(opts, :prefixes) |> prefix_map(data)
     use_rdf_id = Keyword.get(opts, :use_rdf_id, false)
 
-    with {:ok, root} <- document(data, base, prefixes, use_rdf_id) do
+    with {:ok, root} <- document(data, base, prefixes, use_rdf_id, opts) do
       {:ok, Saxy.encode!(root, version: "1.0", encoding: :utf8)}
     end
   end
@@ -23,6 +23,7 @@ defmodule RDF.XML.Encoder do
     prefixes = Keyword.get(opts, :prefixes) |> prefix_map(data)
     use_rdf_id = Keyword.get(opts, :use_rdf_id, false)
     stream_mode = Keyword.get(opts, :mode, :string)
+    input = input(data, opts)
 
     {rdf_close, rdf_open} =
       Saxy.encode_to_iodata!({"rdf:RDF", ns_declarations(prefixes, base), ["\n"]})
@@ -31,9 +32,16 @@ defmodule RDF.XML.Encoder do
     Stream.concat([
       [~s[<?xml version="1.0" encoding="utf-8"?>\n]],
       [rdf_open],
-      description_stream(data, base, prefixes, use_rdf_id, stream_mode),
+      description_stream(input, base, prefixes, use_rdf_id, stream_mode),
       [rdf_close]
     ])
+  end
+
+  def input(data, opts) do
+    case Keyword.get(opts, :input) do
+      fun when is_function(fun) -> fun.(data)
+      nil -> data
+    end
   end
 
   defp base_iri(nil, %Graph{base_iri: base}) when not is_nil(base), do: validate_base_iri(base)
@@ -72,8 +80,11 @@ defmodule RDF.XML.Encoder do
     [{"xml:base", to_string(base)} | ns_declarations(prefixes, nil)]
   end
 
-  defp document(%Graph{} = graph, base, prefixes, use_rdf_id) do
-    with {:ok, descriptions} <- descriptions(graph, base, prefixes, use_rdf_id) do
+  defp document(graph, base, prefixes, use_rdf_id, opts) do
+    with {:ok, descriptions} <-
+           graph
+           |> input(opts)
+           |> descriptions(base, prefixes, use_rdf_id) do
       {:ok,
        element(
          "rdf:RDF",
@@ -86,13 +97,21 @@ defmodule RDF.XML.Encoder do
   defp descriptions(%Graph{} = graph, base, prefixes, use_rdf_id) do
     graph
     |> Graph.descriptions()
-    |> map_while_ok(&description(&1, base, prefixes, use_rdf_id))
+    |> descriptions(base, prefixes, use_rdf_id)
+  end
+
+  defp descriptions(input, base, prefixes, use_rdf_id) do
+    map_while_ok(input, &description(&1, base, prefixes, use_rdf_id))
   end
 
   defp description_stream(%Graph{} = graph, base, prefixes, use_rdf_id, stream_mode) do
     graph
     |> Graph.descriptions()
-    |> Stream.map(fn description ->
+    |> description_stream(base, prefixes, use_rdf_id, stream_mode)
+  end
+
+  defp description_stream(input, base, prefixes, use_rdf_id, stream_mode) do
+    Stream.map(input, fn description ->
       case description(description, base, prefixes, use_rdf_id) do
         {:ok, simple_form} when stream_mode == :string ->
           [Saxy.encode!(simple_form) | "\n"]
@@ -106,7 +125,7 @@ defmodule RDF.XML.Encoder do
     end)
   end
 
-  defp description(description, base, prefixes, use_rdf_id) do
+  defp description(%Description{} = description, base, prefixes, use_rdf_id) do
     {type_node, description} = type_node(description, prefixes)
 
     with {:ok, predications} <- predications(description, base, prefixes) do
