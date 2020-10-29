@@ -201,7 +201,7 @@ defmodule RDF.XML.Decoder.ElementNode do
       true ->
         {:error,
          %RDF.XML.ParseError{
-           message: "can't resolve name #{inspect(name)} to URI reference",
+           message: "can't resolve name #{name} to URI reference",
            help: "provide a xmlns declaration"
          }}
     end
