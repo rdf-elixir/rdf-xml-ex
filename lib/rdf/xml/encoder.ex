@@ -71,8 +71,9 @@ defmodule RDF.XML.Encoder do
   defp prefix_map(prefixes, _), do: PrefixMap.new(prefixes)
 
   defp ns_declarations(prefixes, nil) do
-    Enum.map(prefixes, fn {prefix, namespace} ->
-      {"xmlns:#{prefix}", to_string(namespace)}
+    Enum.map(prefixes, fn
+      {nil, namespace} -> {"xmlns", to_string(namespace)}
+      {prefix, namespace} -> {"xmlns:#{prefix}", to_string(namespace)}
     end)
   end
 
@@ -215,6 +216,10 @@ defmodule RDF.XML.Encoder do
   end
 
   defp qname(iri, prefixes) do
-    PrefixMap.prefixed_name(prefixes, iri)
+    case PrefixMap.prefixed_name(prefixes, iri) do
+      nil -> nil
+      ":" <> name -> name
+      name -> name
+    end
   end
 end

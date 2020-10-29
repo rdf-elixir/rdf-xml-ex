@@ -176,6 +176,17 @@ defmodule RDF.XML.EncoderTest do
              )
   end
 
+  test "empty xmlns" do
+    assert Graph.new([{EX.S, EX.p(), EX.O}, {EX.S, RDF.type(), EX.Class}], prefixes: [nil: EX])
+           |> RDF.XML.Encoder.encode!() ==
+             ~S[<?xml version="1.0" encoding="utf-8"?>] <>
+               ~s[<rdf:RDF xmlns="#{EX.__base_iri__()}">] <>
+               ~s[<Class rdf:about="#{IRI.to_string(EX.S)}">] <>
+               ~s[<p rdf:resource="#{IRI.to_string(EX.O)}"/>] <>
+               ~S[</Class>] <>
+               ~S[</rdf:RDF>]
+  end
+
   describe "stream/2" do
     expected_result =
       ~s[<?xml version="1.0" encoding="utf-8"?>\n] <>
