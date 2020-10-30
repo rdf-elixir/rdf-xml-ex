@@ -1,7 +1,13 @@
 defmodule RDF.XML.Decoder.Grammar.ControlRule do
-  alias RDF.XML.Decoder.Grammar.{Rule, ElementNode}
+  alias RDF.XML.Decoder.Grammar.Rule
+  alias RDF.XML.Decoder.ElementNode
 
-  @callback at_start(ElementNode.t(), Rule.context(), Graph.t(), RDF.BlankNode.Increment.state()) ::
+  @callback at_start(
+              ElementNode.t(),
+              Rule.context(),
+              RDF.Graph.t(),
+              RDF.BlankNode.Increment.state()
+            ) ::
               {:ok, ElementNode.t(), Rule.context(), RDF.BlankNode.Increment.state()}
               | {:error, any}
 

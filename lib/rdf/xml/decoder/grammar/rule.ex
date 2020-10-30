@@ -5,12 +5,12 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   @type context :: %{:__struct__ => t(), :children => any(), optional(atom()) => any()}
 
   # should return the result which should be set on the children field of the parent
-  @callback at_end(context(), Graph.t(), RDF.BlankNode.Increment.state()) ::
-              {:ok, Graph.t(), RDF.BlankNode.Increment.state()} | {:error, any}
+  @callback at_end(context(), RDF.Graph.t(), RDF.BlankNode.Increment.state()) ::
+              {:ok, RDF.Graph.t(), RDF.BlankNode.Increment.state()} | {:error, any}
 
   # should return update Rule struct
   @callback characters(characters :: String.t(), context()) ::
-              {:ok, t} | {:error, any}
+              {:ok, context} | {:error, any}
 
   @callback select_production(context(), ElementNode.t()) :: t() | [t()]
 

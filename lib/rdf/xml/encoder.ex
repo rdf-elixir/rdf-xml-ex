@@ -26,7 +26,7 @@ defmodule RDF.XML.Encoder do
     input = input(data, opts)
 
     {rdf_close, rdf_open} =
-      Saxy.encode_to_iodata!({"rdf:RDF", ns_declarations(prefixes, base), ["\n"]})
+      Saxy.encode_to_iodata!({"rdf:RDF", ns_declarations(prefixes, base), [{:characters, "\n"}]})
       |> List.pop_at(-1)
 
     Stream.concat([
@@ -196,7 +196,11 @@ defmodule RDF.XML.Encoder do
   end
 
   defp statement(property_name, %Literal{} = literal, base, _) do
-    element(property_name, literal_attributes(literal, base), Literal.lexical(literal))
+    element(
+      property_name,
+      literal_attributes(literal, base),
+      [{:characters, Literal.lexical(literal)}]
+    )
   end
 
   defp literal_attributes(%Literal{literal: %LangString{language: language}}, _),
