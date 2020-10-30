@@ -15,13 +15,13 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
 
   defmodule Doc do
     use AlternationRule,
-      production: [Rules.RDF, Rules.NodeElement]
+      production: [Rules.OuterRDF, Rules.NodeElement]
 
-    def select_production(_, %{name: "rdf:RDF"}), do: Rules.RDF
+    def select_production(_, %{name: "rdf:RDF"}), do: Rules.OuterRDF
     def select_production(_, _), do: Rules.NodeElement
   end
 
-  defmodule RDF do
+  defmodule OuterRDF do
     use ElementRule,
       production: Rules.NodeElementList,
       # we don't store the children, since this would mean building up a tree of the whole document,
@@ -77,7 +77,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
 
       description =
         unless cxt.element.name == "rdf:Description" do
-          Description.add(description, {Elixir.RDF.type(), cxt.element.uri})
+          Description.add(description, {RDF.type(), cxt.element.uri})
         else
           description
         end
@@ -305,9 +305,9 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     use ElementRule,
       production: Rules.NodeElementList
 
-    @rdf_first Elixir.RDF.first()
-    @rdf_rest Elixir.RDF.rest()
-    @rdf_nil Elixir.RDF.nil()
+    @rdf_first RDF.first()
+    @rdf_rest RDF.rest()
+    @rdf_nil RDF.nil()
 
     def conform?(element) do
       element.rdf_attributes[:parseCollection] &&

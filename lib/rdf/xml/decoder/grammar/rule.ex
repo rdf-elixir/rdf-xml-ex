@@ -104,7 +104,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   defmodule Shared do
     alias RDF.{Description, BlankNode, Literal, LangString}
 
-    @rdf_type Elixir.RDF.type()
+    @rdf_type RDF.type()
 
     def resolve(string, element) do
       ElementNode.uri_reference(string, element.ns_declarations, element.base_uri)
