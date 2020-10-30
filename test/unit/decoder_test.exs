@@ -271,7 +271,8 @@ defmodule RDF.XML.DecoderTest do
            """) == {:ok, example_graph}
   end
 
-  @tag skip: "TODO: unfortunately Saxy doesn't raise an error but silently ignores the first occurrences"
+  @tag skip:
+         "TODO: unfortunately Saxy doesn't raise an error but silently ignores the first occurrences"
   test "multiple occurrences of the same attribute in an element lead to an error" do
     assert {:error, _} =
              RDF.XML.Decoder.decode("""

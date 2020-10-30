@@ -14,6 +14,7 @@ defmodule RDF.XML.Decoder.ElementNode do
   ]
 
   alias RDF.{PrefixMap, Graph, IRI}
+  alias RDF.XML.Decoder
 
   @type t :: %__MODULE__{
           name: String.t(),
@@ -152,14 +153,21 @@ defmodule RDF.XML.Decoder.ElementNode do
   def attribute({"rdf:parseType", "Collection"}, _, _), do: {:parseCollection, true}
   def attribute({"rdf:parseType", value}, _, _), do: {:parseOther, value}
 
-  @old_terms ~w[rdf:aboutEach rdf:aboutEachPrefix rdf:bagID]
-  @invalid_attr ~w[rdf:li rdf:RDF rdf:Description]
+  ~w[rdf:li rdf:RDF rdf:Description]
+  |> Enum.each(fn term ->
+    def attribute({unquote(term), _}, _, _) do
+      {unquote(term),
+       {:error,
+        %RDF.XML.ParseError{message: "#{unquote(term)} is not allowed as as an attribute"}}}
+    end
+  end)
 
-  def attribute({term, _}, _, _) when term in @invalid_attr,
-    do: {:li, {:error, %RDF.XML.ParseError{message: "#{term} is not allowed as as an attribute"}}}
-
-  def attribute({term, _}, _, _) when term in @old_terms,
-    do: {term, {:error, %RDF.XML.ParseError{message: "#{term} not supported in RDF/XML 1.1"}}}
+  Enum.each(Decoder.old_terms(), fn term ->
+    def attribute({unquote(term), _}, _, _) do
+      {unquote(term),
+       {:error, %RDF.XML.ParseError{message: "#{unquote(term)} not supported in RDF/XML 1.1"}}}
+    end
+  end)
 
   def attribute({property_attribute_name, value}, ns, _base) do
     case qname_to_iri(property_attribute_name, ns) do

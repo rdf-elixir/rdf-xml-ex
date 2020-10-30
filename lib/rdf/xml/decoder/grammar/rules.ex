@@ -1,9 +1,17 @@
 defmodule RDF.XML.Decoder.Grammar.Rules do
-  alias RDF.XML.Decoder.Grammar.{ElementRule, AlternationRule, SequenceRule}
+  alias RDF.XML.Decoder
   alias RDF.XML.Decoder.ElementNode
+  alias RDF.XML.Decoder.Grammar.{ElementRule, AlternationRule, SequenceRule}
   alias RDF.{Graph, Description, Literal, LangString}
 
   alias __MODULE__
+
+  ["rdf:Description" | Decoder.core_syntax_terms() ++ Decoder.old_terms()]
+  |> Enum.each(fn term ->
+    def property_element_uri?(unquote(term)), do: false
+  end)
+
+  def property_element_uri?(_), do: true
 
   defmodule Doc do
     use AlternationRule,
@@ -20,7 +28,8 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       # which isn't needed and would just consume potentially a lot of memory
       no_children: true
 
-    def conform?(element), do: element.name == "rdf:RDF"
+    def conform?(%{name: "rdf:RDF"}), do: true
+    def conform?(_), do: false
 
     def at_end(cxt, graph, bnodes) do
       {:ok, Graph.add_prefixes(graph, cxt.element.ns_declarations), bnodes}
@@ -37,7 +46,12 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       production: Rules.PropertyEltList,
       struct: [:subject]
 
-    def conform?(element), do: Rules.node_element_uri?(element.name)
+    ["rdf:li" | Decoder.core_syntax_terms() ++ Decoder.old_terms()]
+    |> Enum.each(fn term ->
+      def conform?(%{name: unquote(term)}), do: false
+    end)
+
+    def conform?(_), do: true
 
     def at_start(cxt, _graph, bnodes) do
       {subject, new_bnodes} =
@@ -59,23 +73,18 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     end
 
     def at_end(cxt, graph, bnodes) do
-      if cxt.element.name == "rdf:li" do
-        {:error, %Elixir.RDF.XML.ParseError{message: "rdf:li is not allowed as a typed node"}}
-      else
-        description = Description.new(cxt.subject)
+      description = Description.new(cxt.subject)
 
-        description =
-          unless cxt.element.name == "rdf:Description" do
-            # unless cxt.element.uri == @rdf_description do
-            Description.add(description, {Elixir.RDF.type(), cxt.element.uri})
-          else
-            description
-          end
+      description =
+        unless cxt.element.name == "rdf:Description" do
+          Description.add(description, {Elixir.RDF.type(), cxt.element.uri})
+        else
+          description
+        end
 
-        description = description_from_property_attrs(cxt, description)
+      description = description_from_property_attrs(cxt, description)
 
-        {:ok, Graph.add(graph, description), bnodes}
-      end
+      {:ok, Graph.add(graph, description), bnodes}
     end
   end
 
@@ -372,21 +381,4 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     end
   end
 
-  @core_syntax_terms ~w[rdf:RDF rdf:ID rdf:about rdf:parseType rdf:resource rdf:nodeID rdf:datatype]
-  @syntax_terms ~w[rdf:Description rdf:li] ++ @core_syntax_terms
-  @old_terms ~w[rdf:aboutEach rdf:aboutEachPrefix rdf:bagID]
-
-  def core_syntax_term?(term), do: term in @core_syntax_terms
-  def syntax_term?(term), do: term in @syntax_terms
-  def old_term?(term), do: term in @old_terms
-
-  def node_element_uri?("rdf:li"), do: false
-  def node_element_uri?(uri), do: uri not in @core_syntax_terms and uri not in @old_terms
-
-  def property_element_uri?("rdf:Description"), do: false
-  def property_element_uri?(uri), do: uri not in @core_syntax_terms and uri not in @old_terms
-
-  def property_attribute_uri?("rdf:Description"), do: false
-  def property_attribute_uri?("rdf:li"), do: false
-  def property_attribute_uri?(uri), do: uri not in @core_syntax_terms and uri not in @old_terms
 end
