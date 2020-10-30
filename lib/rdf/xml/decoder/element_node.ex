@@ -121,7 +121,9 @@ defmodule RDF.XML.Decoder.ElementNode do
             excl_attr = name in @exclusive_attributes
 
             if excl_attr_present and excl_attr do
-              {:halt, {:error, "rdf:nodeID can't be used with rdf:ID and rdf:about"}}
+              {:halt,
+               {:error,
+                %RDF.XML.ParseError{message: "rdf:nodeID can't be used with rdf:ID and rdf:about"}}}
             else
               {:cont,
                {:ok, Map.put(rdf_attributes, name, value), property_attrs,
