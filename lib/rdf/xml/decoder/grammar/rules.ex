@@ -155,14 +155,8 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
   defmodule LiteralPropertyElt do
     use ElementRule, struct: [:t]
 
-    @allowed_attributes ~w[id datatype]a
-
     def conform?(element) do
-      Rules.property_element_uri?(element.name) &&
-        Enum.empty?(element.property_attributes) &&
-        element.rdf_attributes
-        |> Map.keys()
-        |> Enum.all?(&(&1 in @allowed_attributes))
+      Rules.property_element_uri?(element.name)
     end
 
     def characters(characters, cxt) do
@@ -201,9 +195,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     use ElementRule, production: Rules.NodeElement
 
     def conform?(element) do
-      Rules.property_element_uri?(element.name) &&
-        Enum.empty?(element.property_attributes) &&
-        Map.keys(element.rdf_attributes) in [[], [:id]]
+      Rules.property_element_uri?(element.name)
     end
 
     def at_end(%{children: nil}, _, _) do
@@ -229,13 +221,9 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
 
     # TODO: Where is the allowed datatype attribute used?
     @one_of ~w[resource node_id datatype]a
-    @allowed_attributes [:id | @one_of]
 
     def conform?(element) do
       Rules.property_element_uri?(element.name) &&
-        element.rdf_attributes
-        |> Map.keys()
-        |> Enum.all?(&(&1 in @allowed_attributes)) &&
         element.rdf_attributes
         |> Map.take(@one_of)
         |> Enum.count() <= 1
@@ -276,10 +264,12 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       struct: [:subject]
 
     def conform?(element) do
-      element.rdf_attributes[:parseResource] &&
-        Rules.property_element_uri?(element.name) &&
+      Rules.property_element_uri?(element.name) &&
         Enum.empty?(element.property_attributes) &&
-        element.rdf_attributes |> Map.drop(~w[id parseResource]a) |> Map.keys() |> Enum.empty?()
+        element.rdf_attributes
+        |> Map.drop(~w[id parseResource]a)
+        |> Map.keys()
+        |> Enum.empty?()
     end
 
     def at_start(cxt, _graph, bnodes) do
@@ -310,10 +300,12 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     @rdf_nil RDF.nil()
 
     def conform?(element) do
-      element.rdf_attributes[:parseCollection] &&
-        Rules.property_element_uri?(element.name) &&
+      Rules.property_element_uri?(element.name) &&
         Enum.empty?(element.property_attributes) &&
-        element.rdf_attributes |> Map.drop(~w[id parseCollection]a) |> Map.keys() |> Enum.empty?()
+        element.rdf_attributes
+        |> Map.drop(~w[id parseCollection]a)
+        |> Map.keys()
+        |> Enum.empty?()
     end
 
     def at_end(cxt, graph, bnodes) do
