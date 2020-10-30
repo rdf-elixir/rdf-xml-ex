@@ -34,10 +34,22 @@ defmodule RDF.XML.Decoder.Grammar do
         ) :: {:ok, state} | {:error, any}
   def apply_production(event_name, event_data, state)
 
-  def apply_production(event_name, event_data, {alt_branches, graph, bnodes})
+  def apply_production(:start_element, {name, attributes}, {cxt, graph, bnodes}) do
+    parent_element =
+      case cxt do
+        [%rule{} = first | _] -> rule.element(first)
+        %rule{} = cxt -> rule.element(cxt)
+      end
+
+    with {:ok, element} <- ElementNode.new(name, attributes, parent_element, graph) do
+      apply_production(:start_element, element, {cxt, graph, bnodes})
+    end
+  end
+
+  def apply_production(event_name, element, {alt_branches, graph, bnodes})
       when is_list(alt_branches) do
     alt_branches
-    |> Enum.map(&apply_production(event_name, event_data, {&1, graph, bnodes}))
+    |> Enum.map(&apply_production(event_name, element, {&1, graph, bnodes}))
     |> Enum.group_by(
       fn
         {:ok, _state} -> :ok
@@ -68,10 +80,8 @@ defmodule RDF.XML.Decoder.Grammar do
     end
   end
 
-  def apply_production(:start_element, {name, attributes}, {%current_rule{} = cxt, graph, bnodes}) do
-    with {:ok, element} <-
-           ElementNode.new(name, attributes, current_rule.element(cxt), graph),
-         {:ok, {next_cxt, new_bnodes}} <-
+  def apply_production(:start_element, element, {cxt, graph, bnodes}) do
+    with {:ok, {next_cxt, new_bnodes}} <-
            Rule.apply_production(cxt, element, graph, bnodes) do
       {:ok, {next_cxt, graph, new_bnodes}}
     end
