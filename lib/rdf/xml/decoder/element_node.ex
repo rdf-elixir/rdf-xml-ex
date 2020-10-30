@@ -137,8 +137,6 @@ defmodule RDF.XML.Decoder.ElementNode do
     end)
   end
 
-  @old_terms ~w[rdf:aboutEach rdf:aboutEachPrefix rdf:bagID]
-
   def attribute({"rdf:ID", value}, _, base), do: {:id, rdf_id(value, base)}
   def attribute({"rdf:nodeID", value}, _, _), do: {:node_id, value}
   def attribute({"rdf:about", value}, ns, base), do: {:about, uri_reference(value, ns, base)}
@@ -154,8 +152,11 @@ defmodule RDF.XML.Decoder.ElementNode do
   def attribute({"rdf:parseType", "Collection"}, _, _), do: {:parseCollection, true}
   def attribute({"rdf:parseType", value}, _, _), do: {:parseOther, value}
 
-  def attribute({"rdf:li", _}, _, _),
-    do: {:li, {:error, %RDF.XML.ParseError{message: "rdf:li is not allowed as as an attribute"}}}
+  @old_terms ~w[rdf:aboutEach rdf:aboutEachPrefix rdf:bagID]
+  @invalid_attr ~w[rdf:li rdf:RDF rdf:Description]
+
+  def attribute({term, _}, _, _) when term in @invalid_attr,
+    do: {:li, {:error, %RDF.XML.ParseError{message: "#{term} is not allowed as as an attribute"}}}
 
   def attribute({term, _}, _, _) when term in @old_terms,
     do: {term, {:error, %RDF.XML.ParseError{message: "#{term} not supported in RDF/XML 1.1"}}}
