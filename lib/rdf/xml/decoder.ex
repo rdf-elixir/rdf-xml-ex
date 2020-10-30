@@ -26,7 +26,7 @@ defmodule RDF.XML.Decoder do
     do: do_decode(&Saxy.parse_stream/3, stream, opts)
 
   defp do_decode(decoder_fun, input, opts) do
-    with {:ok, {_, graph, _}} <-
+    with {:ok, {_, graph, _, _}} <-
            decoder_fun.(
              input,
              EventHandler,
