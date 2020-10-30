@@ -139,7 +139,14 @@ defmodule RDF.XML.Decoder.ElementNode do
   end
 
   def attribute({"rdf:ID", value}, _, base), do: {:id, rdf_id(value, base)}
-  def attribute({"rdf:nodeID", value}, _, _), do: {:node_id, value}
+
+  def attribute({"rdf:nodeID", value}, _, _) do
+    {:node_id,
+     with {:ok, name} <- nc_name(value) do
+       name
+     end}
+  end
+
   def attribute({"rdf:about", value}, ns, base), do: {:about, uri_reference(value, ns, base)}
 
   def attribute({"rdf:resource", value}, ns, base),
@@ -198,7 +205,9 @@ defmodule RDF.XML.Decoder.ElementNode do
   end
 
   def rdf_id(value, base) do
-    base <> "#" <> value
+    with {:ok, name} <- nc_name(value) do
+      base <> "#" <> name
+    end
   end
 
   defp qname_to_iri(name, ns_declarations) do
@@ -215,6 +224,15 @@ defmodule RDF.XML.Decoder.ElementNode do
            message: "can't resolve name #{name} to URI reference",
            help: "provide a xmlns declaration"
          }}
+    end
+  end
+
+  defp nc_name(name) do
+    # TODO: NCNames are actually more restrictive; see https://www.w3.org/TR/REC-xml-names/#NT-NCName
+    if String.match?(name, ~r/^[a-zA-Z_]/) and not String.contains?(name, ~w[: /]) do
+      {:ok, name}
+    else
+      {:error, %RDF.XML.ParseError{message: "invalid NCName #{name}"}}
     end
   end
 end
