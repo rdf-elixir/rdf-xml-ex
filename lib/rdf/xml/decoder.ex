@@ -16,13 +16,19 @@ defmodule RDF.XML.Decoder do
   def old_terms, do: @old_terms
 
   @impl RDF.Serialization.Decoder
-  @spec decode(String.t(), keyword) :: {:ok, Graph.t()} | {:error, any}
-  def decode(content, opts \\ [])
+  @spec decode(String.t() | Enumerable.t(), keyword) :: {:ok, Graph.t()} | {:error, any}
+  def decode(input, opts \\ [])
 
-  def decode(content, opts) do
+  def decode(string, opts) when is_binary(string),
+    do: do_decode(&Saxy.parse_string/3, string, opts)
+
+  def decode(stream, opts),
+    do: do_decode(&Saxy.parse_stream/3, stream, opts)
+
+  defp do_decode(decoder_fun, input, opts) do
     with {:ok, {_, graph, _}} <-
-           Saxy.parse_string(
-             content,
+           decoder_fun.(
+             input,
              EventHandler,
              Grammar.initial_state(opts)
            ) do

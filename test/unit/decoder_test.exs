@@ -283,4 +283,36 @@ defmodule RDF.XML.DecoderTest do
              </rdf:RDF>
              """)
   end
+
+  test "decode from stream" do
+    example_graph =
+      """
+      @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+      @prefix eric:    <http://www.w3.org/People/EM/contact#> .
+      @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
+
+      eric:me
+        contact:fullName "Eric Miller" ;
+        contact:personalTitle "Dr."
+      .
+      """
+      |> RDF.Turtle.read_string!()
+
+    assert """
+           <?xml version="1.0" encoding="utf-8"?>
+           <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+             <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
+               <contact:fullName>Eric Miller</contact:fullName>
+               <contact:personalTitle>Dr.</contact:personalTitle>
+             </rdf:Description>
+           </rdf:RDF>
+           """
+           |> string_to_stream()
+           |> RDF.XML.Decoder.decode() == {:ok, example_graph}
+  end
+
+  defp string_to_stream(string) do
+    {:ok, pid} = StringIO.open(string)
+    IO.binstream(pid, :line)
+  end
 end
