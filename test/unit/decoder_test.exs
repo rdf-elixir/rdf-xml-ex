@@ -250,4 +250,36 @@ defmodule RDF.XML.DecoderTest do
            </rdf:RDF>
            """) == {:ok, example_graph}
   end
+
+  test "property attributes" do
+    example_graph =
+      """
+      @prefix eric:    <http://www.w3.org/People/EM/contact#> .
+      @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
+      @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+      eric:me contact:fullName "Eric Miller" .
+      """
+      |> RDF.Turtle.read_string!()
+
+    assert RDF.XML.Decoder.decode("""
+           <?xml version="1.0" encoding="utf-8"?>
+           <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+             <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me" contact:fullName="Eric Miller">
+             </rdf:Description>
+           </rdf:RDF>
+           """) == {:ok, example_graph}
+  end
+
+  @tag skip: "TODO: unfortunately Saxy doesn't raise an error but silently ignores the first occurrences"
+  test "multiple occurrences of the same attribute in an element lead to an error" do
+    assert {:error, _} =
+             RDF.XML.Decoder.decode("""
+             <?xml version="1.0" encoding="utf-8"?>
+             <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+               <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me" contact:fullName="Eric Miller" contact:fullName="Foo">
+               </rdf:Description>
+             </rdf:RDF>
+             """)
+  end
 end
