@@ -1,6 +1,4 @@
 defmodule RDF.XML.Decoder do
-  @moduledoc false
-
   use RDF.Serialization.Decoder
 
   alias RDF.XML.Decoder.{Grammar, EventHandler}

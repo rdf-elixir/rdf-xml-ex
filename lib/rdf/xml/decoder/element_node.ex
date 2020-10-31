@@ -59,6 +59,7 @@ defmodule RDF.XML.Decoder.ElementNode do
     end
   end
 
+  @doc false
   def normalize_base_uri(base_uri = "http" <> _) do
     case String.split(base_uri, "#") do
       [base_uri] -> {:ok, base_uri}
@@ -69,7 +70,7 @@ defmodule RDF.XML.Decoder.ElementNode do
 
   def normalize_base_uri(base_uri), do: {:ok, base_uri}
 
-  def extract_xml_namespaces(attributes, nil, graph) do
+  defp extract_xml_namespaces(attributes, nil, graph) do
     extract_xml_namespaces(
       attributes,
       PrefixMap.new(),
@@ -78,7 +79,7 @@ defmodule RDF.XML.Decoder.ElementNode do
     )
   end
 
-  def extract_xml_namespaces(attributes, parent_element, graph) do
+  defp extract_xml_namespaces(attributes, parent_element, graph) do
     extract_xml_namespaces(
       attributes,
       parent_element.ns_declarations,
@@ -87,7 +88,7 @@ defmodule RDF.XML.Decoder.ElementNode do
     )
   end
 
-  def extract_xml_namespaces(attributes, parent_ns_declarations, parent_base_uri, _graph) do
+  defp extract_xml_namespaces(attributes, parent_ns_declarations, parent_base_uri, _graph) do
     Enum.reduce_while(attributes, {:ok, %{}, parent_ns_declarations, parent_base_uri, nil}, fn
       {"xml:lang", value}, {:ok, attrs, ns_declarations, base_uri, _} ->
         {:cont, {:ok, attrs, ns_declarations, base_uri, value}}
@@ -108,7 +109,7 @@ defmodule RDF.XML.Decoder.ElementNode do
 
   @exclusive_attributes ~w[node_id about id]a
 
-  def attributes(attributes, ns_declarations, base_uri) do
+  defp attributes(attributes, ns_declarations, base_uri) do
     Enum.reduce_while(attributes, {:ok, %{}, %{}, false}, fn
       attribute, {:ok, rdf_attributes, property_attrs, excl_attr_present} ->
         case attribute(attribute, ns_declarations, base_uri) do
@@ -138,31 +139,31 @@ defmodule RDF.XML.Decoder.ElementNode do
     end)
   end
 
-  def attribute({"rdf:ID", value}, _, base), do: {:id, rdf_id(value, base)}
+  defp attribute({"rdf:ID", value}, _, base), do: {:id, rdf_id(value, base)}
 
-  def attribute({"rdf:nodeID", value}, _, _) do
+  defp attribute({"rdf:nodeID", value}, _, _) do
     {:node_id,
      with {:ok, name} <- nc_name(value) do
        name
      end}
   end
 
-  def attribute({"rdf:about", value}, ns, base), do: {:about, uri_reference(value, ns, base)}
+  defp attribute({"rdf:about", value}, ns, base), do: {:about, uri_reference(value, ns, base)}
 
-  def attribute({"rdf:resource", value}, ns, base),
+  defp attribute({"rdf:resource", value}, ns, base),
     do: {:resource, uri_reference(value, ns, base)}
 
-  def attribute({"rdf:datatype", value}, ns, base),
+  defp attribute({"rdf:datatype", value}, ns, base),
     do: {:datatype, uri_reference(value, ns, base)}
 
-  def attribute({"rdf:parseType", "Literal"}, _, _), do: {:parseLiteral, true}
-  def attribute({"rdf:parseType", "Resource"}, _, _), do: {:parseResource, true}
-  def attribute({"rdf:parseType", "Collection"}, _, _), do: {:parseCollection, true}
-  def attribute({"rdf:parseType", value}, _, _), do: {:parseOther, value}
+  defp attribute({"rdf:parseType", "Literal"}, _, _), do: {:parseLiteral, true}
+  defp attribute({"rdf:parseType", "Resource"}, _, _), do: {:parseResource, true}
+  defp attribute({"rdf:parseType", "Collection"}, _, _), do: {:parseCollection, true}
+  defp attribute({"rdf:parseType", value}, _, _), do: {:parseOther, value}
 
   ~w[rdf:li rdf:RDF rdf:Description]
   |> Enum.each(fn term ->
-    def attribute({unquote(term), _}, _, _) do
+    defp attribute({unquote(term), _}, _, _) do
       {unquote(term),
        {:error,
         %RDF.XML.ParseError{message: "#{unquote(term)} is not allowed as as an attribute"}}}
@@ -170,13 +171,13 @@ defmodule RDF.XML.Decoder.ElementNode do
   end)
 
   Enum.each(Decoder.old_terms(), fn term ->
-    def attribute({unquote(term), _}, _, _) do
+    defp attribute({unquote(term), _}, _, _) do
       {unquote(term),
        {:error, %RDF.XML.ParseError{message: "#{unquote(term)} not supported in RDF/XML 1.1"}}}
     end
   end)
 
-  def attribute({property_attribute_name, value}, ns, _base) do
+  defp attribute({property_attribute_name, value}, ns, _base) do
     case qname_to_iri(property_attribute_name, ns) do
       {:ok, property_attribute_uri} ->
         {property_attribute_uri, value}
@@ -187,6 +188,7 @@ defmodule RDF.XML.Decoder.ElementNode do
     end
   end
 
+  @doc false
   def uri_reference(value, _ns_decl, base) do
     if IRI.absolute?(value) do
       RDF.iri(value)
@@ -195,7 +197,7 @@ defmodule RDF.XML.Decoder.ElementNode do
     end
   end
 
-  def rdf_id(value, nil) do
+  defp rdf_id(value, nil) do
     {:error,
      %RDF.XML.ParseError{
        message: "use of rdf:ID without a base URI #{value}",
@@ -204,7 +206,7 @@ defmodule RDF.XML.Decoder.ElementNode do
      }}
   end
 
-  def rdf_id(value, base) do
+  defp rdf_id(value, base) do
     with {:ok, name} <- nc_name(value) do
       base <> "#" <> name
     end

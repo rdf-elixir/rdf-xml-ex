@@ -37,7 +37,7 @@ defmodule RDF.XML.Encoder do
     ])
   end
 
-  def input(data, opts) do
+  defp input(data, opts) do
     case Keyword.get(opts, :input) do
       fun when is_function(fun) -> fun.(data)
       nil -> data
@@ -169,13 +169,13 @@ defmodule RDF.XML.Encoder do
     {"rdf:about", attr_val_uri(uri, base)}
   end
 
-  def predications(description, base, prefixes) do
+  defp predications(description, base, prefixes) do
     flat_map_while_ok(description.predications, fn {predicate, objects} ->
       predications_for_property(predicate, objects, base, prefixes)
     end)
   end
 
-  def predications_for_property(property, objects, base, prefixes) do
+  defp predications_for_property(property, objects, base, prefixes) do
     if property_name = qname(property, prefixes) do
       {:ok,
        objects

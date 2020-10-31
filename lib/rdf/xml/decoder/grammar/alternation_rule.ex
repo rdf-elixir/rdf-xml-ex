@@ -1,4 +1,6 @@
 defmodule RDF.XML.Decoder.Grammar.AlternationRule do
+  @moduledoc false
+
   alias RDF.XML.Decoder.Grammar.ControlRule
 
   defdelegate apply(new_cxt, new_element, graph, bnodes), to: ControlRule

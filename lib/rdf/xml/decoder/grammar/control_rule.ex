@@ -1,4 +1,6 @@
 defmodule RDF.XML.Decoder.Grammar.ControlRule do
+  @moduledoc false
+
   alias RDF.XML.Decoder.Grammar.Rule
   alias RDF.XML.Decoder.ElementNode
 

@@ -1,4 +1,6 @@
 defmodule RDF.XML.Decoder.Grammar.Rule do
+  @moduledoc false
+
   alias RDF.XML.Decoder.ElementNode
 
   @type t :: module
@@ -98,10 +100,12 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   # Note, that we're adding the children here in reverse order for performance reasons.
   defp update_children(cxt, result), do: %{cxt | children: [result | cxt.children]}
 
-  def finish(list) when is_list(list), do: list
-  def finish(cxt), do: %{cxt | parent_cxt: nil}
+  defp finish(list) when is_list(list), do: list
+  defp finish(cxt), do: %{cxt | parent_cxt: nil}
 
   defmodule Shared do
+    @moduledoc false
+
     alias RDF.{Description, BlankNode, Literal, LangString}
 
     @rdf_type RDF.type()
@@ -164,6 +168,8 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
     production = Keyword.get(opts, :production)
 
     quote do
+      @moduledoc false
+
       @behaviour unquote(__MODULE__)
 
       import unquote(__MODULE__).Shared
