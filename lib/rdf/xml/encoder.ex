@@ -38,7 +38,7 @@ defmodule RDF.XML.Encoder do
   end
 
   defp input(data, opts) do
-    case Keyword.get(opts, :input) do
+    case Keyword.get(opts, :producer) do
       fun when is_function(fun) -> fun.(data)
       nil -> data
     end

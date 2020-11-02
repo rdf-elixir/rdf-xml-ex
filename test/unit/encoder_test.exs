@@ -52,13 +52,13 @@ defmodule RDF.XML.EncoderTest do
     assert RDF.XML.Decoder.decode(result) == {:ok, @example_graph}
   end
 
-  test "with custom input function" do
-    input_fun = fn graph ->
+  test "with custom producer function" do
+    producer_fun = fn graph ->
       {first, rest} = Graph.pop(graph, ~I<http://www.w3.org/People/EM/contact#me>)
       Stream.concat([first], Graph.descriptions(rest))
     end
 
-    assert (result = RDF.XML.Encoder.encode!(@example_graph, input: input_fun)) ==
+    assert (result = RDF.XML.Encoder.encode!(@example_graph, producer: producer_fun)) ==
              ~S[<?xml version="1.0" encoding="utf-8"?>] <>
                ~S[<rdf:RDF ] <>
                ~S[xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" ] <>
@@ -100,12 +100,12 @@ defmodule RDF.XML.EncoderTest do
         ~s[</rdf:Description>\n] <>
         ~S[</rdf:RDF>]
 
-    assert RDF.XML.Encoder.stream(@example_graph, input: input_fun, mode: :string)
+    assert RDF.XML.Encoder.stream(@example_graph, producer: producer_fun, mode: :string)
            |> Enum.to_list()
            |> IO.iodata_to_binary() ==
              expected_stream_result
 
-    assert RDF.XML.Encoder.stream(@example_graph, input: input_fun, mode: :iodata)
+    assert RDF.XML.Encoder.stream(@example_graph, producer: producer_fun, mode: :iodata)
            |> Enum.to_list()
            |> IO.iodata_to_binary() ==
              expected_stream_result
