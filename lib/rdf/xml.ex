@@ -5,7 +5,13 @@ defmodule RDF.XML do
   It is implemented as a `RDF.Serialization.Format`, so it can be used like any other
   serialization format of RDF.ex.
 
-  see <http://www.w3.org/TR/rdf-syntax-grammar/>
+      graph = RDF.XML.read_file!("file.rdf")
+      RDF.XML.write_file!(graph, "file.rdf")
+
+  For a description of the capabilities and options (which can be passed also to
+  the `read` and `write` functions) see `RDF.XML.Decoder` and `RDF.XML.Encoder` respectively.
+
+  See also <http://www.w3.org/TR/rdf-syntax-grammar/>.
   """
 
   use RDF.Serialization.Format

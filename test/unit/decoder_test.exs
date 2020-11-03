@@ -1,6 +1,8 @@
 defmodule RDF.XML.DecoderTest do
   use ExUnit.Case, async: false
 
+  doctest RDF.XML.Decoder
+
   alias RDF.XML.Decoder
   alias RDF.Turtle
 

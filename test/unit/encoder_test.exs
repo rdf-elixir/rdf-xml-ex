@@ -1,13 +1,15 @@
 defmodule RDF.XML.EncoderTest do
   use ExUnit.Case, async: false
 
+  use RDF.Vocabulary.Namespace
+  defvocab EX, base_iri: "http://example.com/", terms: [], strict: false
+
+  doctest RDF.XML.Encoder
+
   alias RDF.XML.Encoder
   alias RDF.{Graph, IRI, XSD, Turtle}
 
   import RDF.Sigils
-
-  use RDF.Vocabulary.Namespace
-  defvocab EX, base_iri: "http://example.com/", terms: [], strict: false
 
   @example_graph """
                  @prefix eric:    <http://www.w3.org/People/EM/contact#> .

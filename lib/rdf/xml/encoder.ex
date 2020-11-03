@@ -1,10 +1,51 @@
 defmodule RDF.XML.Encoder do
+  @moduledoc """
+  An encoder for RDF/XML serializations of the RDF.ex data structures.
+
+  ## Options
+
+  Apart from the usual `:base` and `prefixes` options of all RDF.ex serialization encoders,
+  all `RDF.XML.Encoder` functions support the following options:
+
+  - `:use_rdf_id`: Use `rdf:ID` when possible (default: `false`).
+  - `:producer`: This option allows you to provide a producer function, which will get
+    the input data (usually a `RDF.Graph`) and should produce a stream of the descriptions
+    to be encoded. This allows you to control the order of the descriptions, apply filters
+    etc.
+
+          iex> RDF.Graph.new([
+          ...>   EX.S1 |> EX.p1(EX.O1),
+          ...>   EX.S2 |> EX.p2(EX.O2),
+          ...> ])
+          ...> |> RDF.XML.write_string!(
+          ...>     prefixes: [ex: EX],
+          ...>     producer: fn graph ->
+          ...>       {first, rest} = RDF.Graph.pop(graph, EX.S2)
+          ...>       Stream.concat([first], RDF.Graph.descriptions(rest))
+          ...>     end)
+          ~S(<?xml version="1.0" encoding="utf-8"?><rdf:RDF xmlns:ex="http://example.com/">\
+  <rdf:Description rdf:about="http://example.com/S2"><ex:p2 rdf:resource="http://example.com/O2"/></rdf:Description>\
+  <rdf:Description rdf:about="http://example.com/S1"><ex:p1 rdf:resource="http://example.com/O1"/></rdf:Description>\
+  </rdf:RDF>)
+
+  """
+
   use RDF.Serialization.Encoder
 
   alias RDF.{Description, Graph, Dataset, IRI, BlankNode, Literal, LangString, XSD, PrefixMap}
   import RDF.Utils
   import Saxy.XML
 
+  @doc """
+  Encodes the given RDF `data` structure to a RDF/XML string.
+
+  The result is returned in an `:ok` tuple or an `:error` tuple in case of an error.
+
+  As for all encoders of `RDF.Serialization.Format`s, you normally won't use this
+  function directly, but via one of the `write_` functions on the `RDF.XML` format module.
+
+  For a description of the available options see the [module documentation](`RDF.XML.Encoder`).
+  """
   @impl RDF.Serialization.Encoder
   @spec encode(Graph.t(), keyword) :: {:ok, String.t()} | {:error, any}
   def encode(data, opts \\ []) do
@@ -17,6 +58,15 @@ defmodule RDF.XML.Encoder do
     end
   end
 
+  @doc """
+  Encodes the given RDF `data` structure to a RDF/XML stream.
+
+  By default the RDF/XML stream will emit single line strings for each of the
+  descriptions in the given `data`. But you can also receive the serialized RDF/XML
+  description as IO lists aka iodata by setting the `:mode` option to `:iodata`.
+
+  For a description of the other available options see the [module documentation](`RDF.XML.Encoder`).
+  """
   @spec stream(Graph.t(), keyword) :: Enumerable.t()
   def stream(data, opts \\ []) do
     base = Keyword.get(opts, :base, Keyword.get(opts, :base_iri)) |> base_iri(data)
