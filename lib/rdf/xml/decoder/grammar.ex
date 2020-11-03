@@ -8,7 +8,8 @@ defmodule RDF.XML.Decoder.Grammar do
   @type state :: {
           Rule.context() | [Rule.context()] | nil,
           Graph.t(),
-          BlankNode.Increment.state()
+          BlankNode.Increment.state(),
+          MapSet.t()
         }
 
   def initial_state(opts) do
