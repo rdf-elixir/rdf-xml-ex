@@ -1,6 +1,9 @@
 defmodule RDF.XML.DecoderTest do
   use ExUnit.Case, async: false
 
+  alias RDF.XML.Decoder
+  alias RDF.Turtle
+
   test "single triple with a literal as objects" do
     example_graph =
       """
@@ -10,9 +13,9 @@ defmodule RDF.XML.DecoderTest do
 
       eric:me contact:fullName "Eric Miller" .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
-    assert RDF.XML.Decoder.decode("""
+    assert Decoder.decode("""
            <?xml version="1.0" encoding="utf-8"?>
            <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
              <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
@@ -34,9 +37,9 @@ defmodule RDF.XML.DecoderTest do
         contact:personalTitle "Dr."
       .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
-    assert RDF.XML.Decoder.decode("""
+    assert Decoder.decode("""
            <?xml version="1.0" encoding="utf-8"?>
            <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
              <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
@@ -56,9 +59,9 @@ defmodule RDF.XML.DecoderTest do
 
       eric:me rdfs:comment "Foo"@en .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
-    assert RDF.XML.Decoder.decode("""
+    assert Decoder.decode("""
            <?xml version="1.0" encoding="utf-8"?>
            <rdf:RDF xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
              <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
@@ -77,9 +80,9 @@ defmodule RDF.XML.DecoderTest do
 
       eric:me contact:age 42 .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
-    assert RDF.XML.Decoder.decode("""
+    assert Decoder.decode("""
            <?xml version="1.0" encoding="utf-8"?>
            <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
              <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
@@ -98,9 +101,9 @@ defmodule RDF.XML.DecoderTest do
 
       eric:me contact:mailbox <mailto:e.miller123(at)example> .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
-    assert RDF.XML.Decoder.decode("""
+    assert Decoder.decode("""
            <?xml version="1.0" encoding="utf-8"?>
            <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
              <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
@@ -123,9 +126,9 @@ defmodule RDF.XML.DecoderTest do
           a contact:Mailbox ;
           ex:p "foo" .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
-    assert RDF.XML.Decoder.decode("""
+    assert Decoder.decode("""
            <?xml version="1.0" encoding="utf-8"?>
            <rdf:RDF xmlns:ex="http://example.org/" xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
              <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
@@ -147,9 +150,9 @@ defmodule RDF.XML.DecoderTest do
 
       eric:me contact:mailbox <mailto:e.miller123(at)example> .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
-    assert RDF.XML.Decoder.decode("""
+    assert Decoder.decode("""
            <?xml version="1.0" encoding="utf-8"?>
            <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
              <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
@@ -177,9 +180,9 @@ defmodule RDF.XML.DecoderTest do
           rdf:predicate contact:mailbox ;
           rdf:object <mailto:e.miller123(at)example> .
       """
-      |> RDF.Turtle.read_string!(base: "http://example.org/")
+      |> Turtle.read_string!(base: "http://example.org/")
 
-    assert RDF.XML.Decoder.decode(
+    assert Decoder.decode(
              """
              <?xml version="1.0" encoding="utf-8"?>
              <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
@@ -206,9 +209,9 @@ defmodule RDF.XML.DecoderTest do
         a contact:Person ;
         contact:fullName "Eric Miller" .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
-    assert RDF.XML.Decoder.decode("""
+    assert Decoder.decode("""
            <?xml version="1.0" encoding="utf-8"?>
            <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
              <contact:Person rdf:about="http://www.w3.org/People/EM/contact#me" contact:fullName="Eric Miller" />
@@ -230,9 +233,9 @@ defmodule RDF.XML.DecoderTest do
         contact:personalTitle "Dr."
       .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
-    assert RDF.XML.Decoder.decode("""
+    assert Decoder.decode("""
            <?xml version="1.0" encoding="utf-8"?>
            <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
              <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me">
@@ -260,9 +263,9 @@ defmodule RDF.XML.DecoderTest do
 
       eric:me contact:fullName "Eric Miller" .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
-    assert RDF.XML.Decoder.decode("""
+    assert Decoder.decode("""
            <?xml version="1.0" encoding="utf-8"?>
            <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
              <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me" contact:fullName="Eric Miller">
@@ -275,7 +278,7 @@ defmodule RDF.XML.DecoderTest do
          "TODO: unfortunately Saxy doesn't raise an error but silently ignores the first occurrences"
   test "multiple occurrences of the same attribute in an element lead to an error" do
     assert {:error, _} =
-             RDF.XML.Decoder.decode("""
+             Decoder.decode("""
              <?xml version="1.0" encoding="utf-8"?>
              <rdf:RDF xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:eric="http://www.w3.org/People/EM/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
                <rdf:Description rdf:about="http://www.w3.org/People/EM/contact#me" contact:fullName="Eric Miller" contact:fullName="Foo">
@@ -296,7 +299,7 @@ defmodule RDF.XML.DecoderTest do
         contact:personalTitle "Dr."
       .
       """
-      |> RDF.Turtle.read_string!()
+      |> Turtle.read_string!()
 
     assert """
            <?xml version="1.0" encoding="utf-8"?>
@@ -308,7 +311,7 @@ defmodule RDF.XML.DecoderTest do
            </rdf:RDF>
            """
            |> string_to_stream()
-           |> RDF.XML.Decoder.decode() == {:ok, example_graph}
+           |> Decoder.decode() == {:ok, example_graph}
   end
 
   defp string_to_stream(string) do
