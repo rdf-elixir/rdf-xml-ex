@@ -56,22 +56,28 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     def conform?(_), do: true
 
     def at_start(cxt, _graph, bnodes) do
-      {subject, new_bnodes} =
-        cond do
-          id = cxt.element.rdf_attributes[:id] ->
-            {id, bnodes}
+      cond do
+        id = cxt.element.rdf_attributes[:id] ->
+          {id, bnodes}
 
-          node_id = cxt.element.rdf_attributes[:node_id] ->
-            bnodeid(node_id, bnodes)
+        node_id = cxt.element.rdf_attributes[:node_id] ->
+          bnodeid(node_id, bnodes)
 
-          about = cxt.element.rdf_attributes[:about] ->
-            {resolve(about, cxt.element), bnodes}
+        about = cxt.element.rdf_attributes[:about] ->
+          with {:ok, subject} <- resolve(about, cxt.element) do
+            {subject, bnodes}
+          end
 
-          true ->
-            generated_blank_node_id(bnodes)
-        end
+        true ->
+          generated_blank_node_id(bnodes)
+      end
+      |> case do
+        {:error, _} = error ->
+          error
 
-      {:ok, %{cxt | subject: subject}, new_bnodes}
+        {subject, new_bnodes} ->
+          {:ok, %{cxt | subject: subject}, new_bnodes}
+      end
     end
 
     def at_end(cxt, graph, bnodes) do
@@ -84,9 +90,9 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
           description
         end
 
-      description = description_from_property_attrs(cxt, description)
-
-      {:ok, Graph.add(graph, description), bnodes}
+      with {:ok, description} <- description_from_property_attrs(cxt, description) do
+        {:ok, Graph.add(graph, description), bnodes}
+      end
     end
   end
 
@@ -232,31 +238,39 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     end
 
     def at_end(cxt, graph, bnodes) do
-      {r, new_bnodes} =
-        cond do
-          resource = cxt.element.rdf_attributes[:resource] ->
-            {resolve(resource, cxt.element), bnodes}
+      cond do
+        resource = cxt.element.rdf_attributes[:resource] ->
+          with {:ok, uri} <- resolve(resource, cxt.element) do
+            {uri, bnodes}
+          end
 
-          node_id = cxt.element.rdf_attributes[:node_id] ->
-            bnodeid(node_id, bnodes)
+        node_id = cxt.element.rdf_attributes[:node_id] ->
+          bnodeid(node_id, bnodes)
 
-          true ->
-            generated_blank_node_id(bnodes)
-        end
+        true ->
+          generated_blank_node_id(bnodes)
+      end
+      |> case do
+        {:error, _} = error ->
+          error
 
-      statements = [
-        statement = {parent(cxt).subject, cxt.element.uri, r},
-        description_from_property_attrs(cxt, r)
-      ]
+        {r, new_bnodes} ->
+          with {:ok, description} <- description_from_property_attrs(cxt, r) do
+            statements = [
+              statement = {parent(cxt).subject, cxt.element.uri, r},
+              description
+            ]
 
-      statements =
-        if rdf_id = cxt.element.rdf_attributes[:id] do
-          [reify(statement, rdf_id) | statements]
-        else
-          statements
-        end
+            statements =
+              if rdf_id = cxt.element.rdf_attributes[:id] do
+                [reify(statement, rdf_id) | statements]
+              else
+                statements
+              end
 
-      {:ok, Graph.add(graph, statements), new_bnodes}
+            {:ok, Graph.add(graph, statements), new_bnodes}
+          end
+      end
     end
   end
 

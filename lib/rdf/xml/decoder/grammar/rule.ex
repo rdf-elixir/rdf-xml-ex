@@ -111,7 +111,10 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
     @rdf_type RDF.type()
 
     def resolve(string, element) do
-      ElementNode.uri_reference(string, element.ns_declarations, element.base_uri)
+      case ElementNode.uri_reference(string, element.ns_declarations, element.base_uri) do
+        {:error, _} = error -> error
+        uri -> {:ok, uri}
+      end
     end
 
     def generated_blank_node_id(bnodes) do
@@ -137,22 +140,28 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
     end
 
     def description_from_property_attrs(cxt, %Description{} = description) do
-      Enum.reduce(cxt.element.property_attributes, description, fn
-        {@rdf_type, value}, desc ->
-          Description.add(desc, {@rdf_type, resolve(value, cxt.element)})
+      Enum.reduce_while(cxt.element.property_attributes, {:ok, description}, fn
+        {@rdf_type, value}, {:ok, desc} ->
+          with {:ok, type} <- resolve(value, cxt.element) do
+            {:cont, {:ok, Description.add(desc, {@rdf_type, type})}}
+          else
+            error -> {:halt, error}
+          end
 
-        {uri, value}, desc ->
-          Description.add(
-            desc,
-            {
-              uri,
-              if language = cxt.element.language do
-                LangString.new(value, language: language)
-              else
-                Literal.new(value)
-              end
-            }
-          )
+        {uri, value}, {:ok, desc} ->
+          {:cont,
+           {:ok,
+            Description.add(
+              desc,
+              {
+                uri,
+                if language = cxt.element.language do
+                  LangString.new(value, language: language)
+                else
+                  Literal.new(value)
+                end
+              }
+            )}}
       end)
     end
 

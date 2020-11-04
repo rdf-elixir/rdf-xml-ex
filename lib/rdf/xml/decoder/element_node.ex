@@ -74,7 +74,7 @@ defmodule RDF.XML.Decoder.ElementNode do
     extract_xml_namespaces(
       attributes,
       PrefixMap.new(),
-      to_string(Graph.base_iri(graph)),
+      (base = Graph.base_iri(graph)) && to_string(base),
       graph
     )
   end
@@ -190,10 +190,20 @@ defmodule RDF.XML.Decoder.ElementNode do
 
   @doc false
   def uri_reference(value, _ns_decl, base) do
-    if IRI.absolute?(value) do
-      RDF.iri(value)
-    else
-      IRI.absolute(value, base)
+    cond do
+      IRI.absolute?(value) ->
+        RDF.iri(value)
+
+      is_nil(base) ->
+        {:error,
+         %RDF.XML.ParseError{
+           message: "use of a relative URI without providing a base URI: #{value}",
+           help:
+             "specify one in the RDF/XML document or provide one on the decoder call with the :base opt"
+         }}
+
+      true ->
+        IRI.absolute(value, base)
     end
   end
 
