@@ -67,6 +67,7 @@ defmodule RDF.XML.Encoder do
 
   For a description of the other available options see the [module documentation](`RDF.XML.Encoder`).
   """
+  @impl RDF.Serialization.Encoder
   @spec stream(Graph.t(), keyword) :: Enumerable.t()
   def stream(data, opts \\ []) do
     base = Keyword.get(opts, :base, Keyword.get(opts, :base_iri)) |> base_iri(data)

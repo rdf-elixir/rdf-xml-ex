@@ -222,6 +222,10 @@ defmodule RDF.XML.EncoderTest do
              expected_result
   end
 
+  test "stream_support?/0" do
+    assert Encoder.stream_support?()
+  end
+
   def xml_description(triples) do
     ~S[<?xml version="1.0" encoding="utf-8"?>] <>
       ~S[<rdf:RDF xmlns:ex="http://example.com/">] <>

@@ -36,12 +36,12 @@ defmodule RDF.XML.Decoder do
   """
   @impl RDF.Serialization.Decoder
   @spec decode(String.t() | Enumerable.t(), keyword) :: {:ok, Graph.t()} | {:error, any}
-  def decode(input, opts \\ [])
-
-  def decode(string, opts) when is_binary(string),
+  def decode(string, opts \\ []),
     do: do_decode(&Saxy.parse_string/3, string, opts)
 
-  def decode(stream, opts),
+  @impl RDF.Serialization.Decoder
+  @spec decode_from_stream(Enumerable.t(), keyword) :: RDF.Graph.t() | RDF.Dataset.t()
+  def decode_from_stream(stream, opts \\ []),
     do: do_decode(&Saxy.parse_stream/3, stream, opts)
 
   defp do_decode(decoder_fun, input, opts) do

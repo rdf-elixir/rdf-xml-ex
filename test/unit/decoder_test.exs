@@ -300,7 +300,7 @@ defmodule RDF.XML.DecoderTest do
              """)
   end
 
-  test "decode from stream" do
+  test "decode_from_stream/2" do
     example_graph =
       """
       @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -324,7 +324,11 @@ defmodule RDF.XML.DecoderTest do
            </rdf:RDF>
            """
            |> string_to_stream()
-           |> Decoder.decode() == {:ok, example_graph}
+           |> Decoder.decode_from_stream() == {:ok, example_graph}
+  end
+
+  test "stream_support?/0" do
+    assert Decoder.stream_support?()
   end
 
   defp string_to_stream(string) do
