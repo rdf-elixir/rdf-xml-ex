@@ -2,6 +2,9 @@ defmodule RDF.XML.Encoder do
   @moduledoc """
   An encoder for RDF/XML serializations of the RDF.ex data structures.
 
+  As for all encoders of `RDF.Serialization.Format`s, you normally won't use these
+  function directly, but via one of the `write_` functions on the `RDF.XML` format module.
+
   ## Options
 
   Apart from the usual `:base` and `prefixes` options of all RDF.ex serialization encoders,
@@ -40,9 +43,6 @@ defmodule RDF.XML.Encoder do
   Encodes the given RDF `data` structure to a RDF/XML string.
 
   The result is returned in an `:ok` tuple or an `:error` tuple in case of an error.
-
-  As for all encoders of `RDF.Serialization.Format`s, you normally won't use this
-  function directly, but via one of the `write_` functions on the `RDF.XML` format module.
 
   For a description of the available options see the [module documentation](`RDF.XML.Encoder`).
   """

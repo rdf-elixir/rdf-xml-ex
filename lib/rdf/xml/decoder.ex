@@ -1,6 +1,19 @@
 defmodule RDF.XML.Decoder do
   @moduledoc """
   A decoder for RDF/XML serializations from strings or streams to `RDF.Graph`s.
+
+  As for all decoders of `RDF.Serialization.Format`s, you normally won't use these
+  function directly, but via one of the `read_` functions on the `RDF.XML` format module.
+
+
+  ## Options
+
+  Apart from the usual `:base` option of most RDF.ex serialization decoders,
+  the following options are supported:
+
+  - `:bnode_prefix`: allows to specify the prefix which auto-generated blank nodes
+    should get (default: `"b"`)
+
   """
 
   use RDF.Serialization.Decoder
@@ -18,27 +31,22 @@ defmodule RDF.XML.Decoder do
   def old_terms, do: @old_terms
 
   @doc """
-  Decodes an RDF/XML string or stream to a `RDF.Graph`.
+  Decodes an RDF/XML string to a `RDF.Graph`.
 
   The result is returned in an `:ok` tuple or an `:error` tuple in case of an error.
 
-  As for all decoders of `RDF.Serialization.Format`s, you normally won't use this
-  function directly, but via one of the `read_` functions on the `RDF.XML` format module.
-
-  ## Options
-
-  Apart from the usual `:base` option of most RDF.ex serialization decoders,
-  the following options are supported:
-
-  - `:bnode_prefix`: allows to specify the prefix which auto-generated blank nodes
-    should get (default: `"b"`)
-
+  For a description of the available options see the [module documentation](`RDF.XML.Encoder`).
   """
   @impl RDF.Serialization.Decoder
   @spec decode(String.t() | Enumerable.t(), keyword) :: {:ok, Graph.t()} | {:error, any}
   def decode(string, opts \\ []),
     do: do_decode(&Saxy.parse_string/3, string, opts)
 
+  @doc """
+  Decodes an RDF/XML stream to a `RDF.Graph`.
+
+  For a description of the available options see the [module documentation](`RDF.XML.Encoder`).
+  """
   @impl RDF.Serialization.Decoder
   @spec decode_from_stream(Enumerable.t(), keyword) :: RDF.Graph.t() | RDF.Dataset.t()
   def decode_from_stream(stream, opts \\ []),
