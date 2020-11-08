@@ -105,18 +105,18 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       production: [
         Rules.ParseTypeResourcePropertyElt,
         Rules.ParseTypeCollectionPropertyElt,
-        # TODO: Rules.ParseTypeLiteralPropertyElt,
-        # TODO: Rules.ParseTypeOtherPropertyElt,
+        Rules.ParseTypeLiteralPropertyElt,
+        Rules.ParseTypeOtherPropertyElt,
         Rules.LiteralPropertyElt,
         Rules.ResourcePropertyElt,
         Rules.EmptyPropertyElt
       ]
 
-    # TODO: not implemented yet
-    def select_production(_, %{rdf_attributes: %{parseLiteral: true}}), do: []
+    def select_production(_, %{rdf_attributes: %{parseLiteral: true}}),
+      do: Rules.ParseTypeLiteralPropertyElt
 
-    # TODO: not implemented yet
-    def select_production(_, %{rdf_attributes: %{parseOther: true}}), do: []
+    def select_production(_, %{rdf_attributes: %{parseOther: true}}),
+      do: Rules.ParseTypeOtherPropertyElt
 
     def select_production(_, %{rdf_attributes: %{parseResource: true}}),
       do: Rules.ParseTypeResourcePropertyElt
@@ -389,4 +389,46 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     end
   end
 
+  defmodule ParseTypeLiteralPropertyElt do
+    use ElementRule
+
+    def conform?(element) do
+      Rules.property_element_uri?(element.name) &&
+        Enum.empty?(element.property_attributes) &&
+        element.rdf_attributes
+        |> Map.drop(~w[id parseLiteral]a)
+        |> Map.keys()
+        |> Enum.empty?()
+    end
+
+    def at_start(_element, _cxt, _graph, _bnodes) do
+      raise ~S[parseType="Literal" is not supported yet]
+    end
+
+    def characters(_characters, _cxt) do
+      raise ~S[parseType="Literal" is not supported yet]
+    end
+  end
+
+  defmodule ParseTypeOtherPropertyElt do
+    use ElementRule,
+      production: Rules.PropertyEltList
+
+    def conform?(element) do
+      Rules.property_element_uri?(element.name) &&
+        Enum.empty?(element.property_attributes) &&
+        element.rdf_attributes
+        |> Map.drop(~w[id parseOther]a)
+        |> Map.keys()
+        |> Enum.empty?()
+    end
+
+    def at_start(_element, _cxt, _graph, _bnodes) do
+      raise ~S[parseType="Other" is not supported yet]
+    end
+
+    def characters(_characters, _cxt) do
+      raise ~S[parseType="Other" is not supported yet]
+    end
+  end
 end
