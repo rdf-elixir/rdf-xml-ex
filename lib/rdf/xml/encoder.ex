@@ -3,7 +3,9 @@ defmodule RDF.XML.Encoder do
   An encoder for RDF/XML serializations of the RDF.ex data structures.
 
   As for all encoders of `RDF.Serialization.Format`s, you normally won't use these
-  function directly, but via one of the `write_` functions on the `RDF.XML` format module.
+  functions directly, but via one of the `write_` functions on the `RDF.XML` format
+  module or the generic `RDF.Serialization` module.
+
 
   ## Options
 

@@ -3,7 +3,8 @@ defmodule RDF.XML.Decoder do
   A decoder for RDF/XML serializations from strings or streams to `RDF.Graph`s.
 
   As for all decoders of `RDF.Serialization.Format`s, you normally won't use these
-  function directly, but via one of the `read_` functions on the `RDF.XML` format module.
+  functions directly, but via one of the `read_` functions on the `RDF.XML` format
+  module or the generic `RDF.Serialization` module.
 
 
   ## Options
@@ -48,7 +49,7 @@ defmodule RDF.XML.Decoder do
   For a description of the available options see the [module documentation](`RDF.XML.Encoder`).
   """
   @impl RDF.Serialization.Decoder
-  @spec decode_from_stream(Enumerable.t(), keyword) :: RDF.Graph.t() | RDF.Dataset.t()
+  @spec decode_from_stream(Enumerable.t(), keyword) :: {:ok, Graph.t()} | {:error, any}
   def decode_from_stream(stream, opts \\ []),
     do: do_decode(&Saxy.parse_stream/3, stream, opts)
 
