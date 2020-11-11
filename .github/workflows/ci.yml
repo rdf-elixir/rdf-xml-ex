@@ -40,7 +40,7 @@ jobs:
             elixir: 1.11.1
           - erlang: 22.2
             elixir: 1.10.4
-          - erlang: 20.3.1
+          - erlang: 21.3
             elixir: 1.9.4
     steps:
       - uses: actions/checkout@v2
