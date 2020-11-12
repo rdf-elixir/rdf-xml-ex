@@ -16,6 +16,8 @@ defmodule RDF.XML.Encoder do
     anything from which a `RDF.PrefixMap` can be created with `RDF.PrefixMap.new/2`.
     If not specified the ones from the given graph are used or if these are also not
     present the `RDF.default_prefixes/0`.
+  - `:implicit_base`: Allows to specify that the used base URI should not be encoded
+    in the generated serialization (default: `false`).
   - `:use_rdf_id`: Use `rdf:ID` when possible (default: `false`).
   - `:producer`: This option allows you to provide a producer function, which will get
     the input data (usually a `RDF.Graph`) and should produce a stream of the descriptions
@@ -83,7 +85,9 @@ defmodule RDF.XML.Encoder do
     input = input(data, opts)
 
     {rdf_close, rdf_open} =
-      Saxy.encode_to_iodata!({"rdf:RDF", ns_declarations(prefixes, base), [{:characters, "\n"}]})
+      Saxy.encode_to_iodata!(
+        {"rdf:RDF", ns_declarations(prefixes, base, implicit_base(opts)), [{:characters, "\n"}]}
+      )
       |> List.pop_at(-1)
 
     Stream.concat([
@@ -99,6 +103,10 @@ defmodule RDF.XML.Encoder do
       fun when is_function(fun) -> fun.(data)
       nil -> data
     end
+  end
+
+  defp implicit_base(opts) do
+    Keyword.get(opts, :implicit_base, false)
   end
 
   defp base_iri(nil, %Graph{base_iri: base}) when not is_nil(base), do: validate_base_iri(base)
@@ -127,15 +135,19 @@ defmodule RDF.XML.Encoder do
   defp prefix_map(nil, _), do: RDF.default_prefixes()
   defp prefix_map(prefixes, _), do: PrefixMap.new(prefixes)
 
-  defp ns_declarations(prefixes, nil) do
+  defp ns_declarations(prefixes, nil, _) do
     Enum.map(prefixes, fn
       {nil, namespace} -> {"xmlns", to_string(namespace)}
       {prefix, namespace} -> {"xmlns:#{prefix}", to_string(namespace)}
     end)
   end
 
-  defp ns_declarations(prefixes, base) do
-    [{"xml:base", to_string(base)} | ns_declarations(prefixes, nil)]
+  defp ns_declarations(prefixes, _, true) do
+    ns_declarations(prefixes, nil, true)
+  end
+
+  defp ns_declarations(prefixes, base, implicit_base) do
+    [{"xml:base", to_string(base)} | ns_declarations(prefixes, nil, implicit_base)]
   end
 
   defp document(graph, base, prefixes, use_rdf_id, opts) do
@@ -146,7 +158,7 @@ defmodule RDF.XML.Encoder do
       {:ok,
        element(
          "rdf:RDF",
-         ns_declarations(prefixes, base),
+         ns_declarations(prefixes, base, implicit_base(opts)),
          descriptions
        )}
     end

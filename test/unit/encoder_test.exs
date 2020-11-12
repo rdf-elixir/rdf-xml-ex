@@ -141,6 +141,25 @@ defmodule RDF.XML.EncoderTest do
              )
   end
 
+  test "resource URI against base with implicit_base: true" do
+    assert Graph.new({EX.S, EX.p(), EX.O}, prefixes: [ex: EX])
+           |> Encoder.encode!(base_iri: EX, implicit_base: true) ==
+             xml_description(~S[<ex:p rdf:resource="O"/>], subject: ~S[rdf:about="S"])
+
+    assert Graph.new({EX.S, EX.p(), EX.O}, prefixes: [ex: EX], base_iri: EX)
+           |> Encoder.encode!(implicit_base: true) ==
+             xml_description(~S[<ex:p rdf:resource="O"/>], subject: ~S[rdf:about="S"])
+
+    assert Graph.new({EX.__base_iri__() <> "#S", EX.p(), RDF.iri(EX.__base_iri__() <> "#O")},
+             prefixes: [ex: EX],
+             base_iri: EX
+           )
+           |> Encoder.encode!(use_rdf_id: true, implicit_base: true) ==
+             xml_description(~S[<ex:p rdf:resource="#O"/>],
+               subject: ~S[rdf:ID="S"]
+             )
+  end
+
   test "when base URI contains fragments (which are essentially ignored)" do
     assert Graph.new({EX.S, EX.p(), EX.O},
              prefixes: [ex: EX],
@@ -226,10 +245,12 @@ defmodule RDF.XML.EncoderTest do
     assert Encoder.stream_support?()
   end
 
-  def xml_description(triples) do
+  def xml_description(triples, opts \\ []) do
+    subject = Keyword.get(opts, :subject, ~S[rdf:about="http://example.com/S"])
+
     ~S[<?xml version="1.0" encoding="utf-8"?>] <>
       ~S[<rdf:RDF xmlns:ex="http://example.com/">] <>
-      ~S[<rdf:Description rdf:about="http://example.com/S">] <>
+      ~s[<rdf:Description #{subject}>] <>
       triples <>
       ~S[</rdf:Description>] <>
       ~S[</rdf:RDF>]
