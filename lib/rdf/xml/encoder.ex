@@ -9,9 +9,13 @@ defmodule RDF.XML.Encoder do
 
   ## Options
 
-  Apart from the usual `:base` and `prefixes` options of all RDF.ex serialization encoders,
-  all `RDF.XML.Encoder` functions support the following options:
-
+  - `:base`: : Allows to specify the base URI to be used for a `xml:base` declaration.
+    If not specified the one from the given graph is used or if there is also none
+    specified for the graph the `RDF.default_base_iri/0`.
+  - `:prefixes`: Allows to specify the prefixes to be used as a `RDF.PrefixMap` or
+    anything from which a `RDF.PrefixMap` can be created with `RDF.PrefixMap.new/2`.
+    If not specified the ones from the given graph are used or if these are also not
+    present the `RDF.default_prefixes/0`.
   - `:use_rdf_id`: Use `rdf:ID` when possible (default: `false`).
   - `:producer`: This option allows you to provide a producer function, which will get
     the input data (usually a `RDF.Graph`) and should produce a stream of the descriptions

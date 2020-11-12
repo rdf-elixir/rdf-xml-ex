@@ -9,9 +9,9 @@ defmodule RDF.XML do
       RDF.XML.write_file!(graph, "file.rdf")
 
   For a description of the capabilities and options (which can be passed also to
-  the `read` and `write` functions) see `RDF.XML.Decoder` and `RDF.XML.Encoder` respectively.
+  the `read` and `write` functions) see `RDF.XML.Decoder` and `RDF.XML.Encoder`.
 
-  See also <http://www.w3.org/TR/rdf-syntax-grammar/>.
+  For more on the RDF-XML format see <http://www.w3.org/TR/rdf-syntax-grammar/>.
   """
 
   use RDF.Serialization.Format

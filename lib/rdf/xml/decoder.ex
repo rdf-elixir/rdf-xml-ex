@@ -1,6 +1,6 @@
 defmodule RDF.XML.Decoder do
   @moduledoc """
-  A decoder for RDF/XML serializations from strings or streams to `RDF.Graph`s.
+  A decoder for RDF/XML serializations to `RDF.Graph`s.
 
   As for all decoders of `RDF.Serialization.Format`s, you normally won't use these
   functions directly, but via one of the `read_` functions on the `RDF.XML` format
@@ -9,9 +9,8 @@ defmodule RDF.XML.Decoder do
 
   ## Options
 
-  Apart from the usual `:base` option of most RDF.ex serialization decoders,
-  the following options are supported:
-
+  - `:base`: allows to specify the base URI to be used in contexts where relative
+    URIs are used and no base URI is defined with a `xml:base` definition
   - `:bnode_prefix`: allows to specify the prefix which auto-generated blank nodes
     should get (default: `"b"`)
 
