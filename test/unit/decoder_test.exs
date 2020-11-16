@@ -4,7 +4,9 @@ defmodule RDF.XML.DecoderTest do
   doctest RDF.XML.Decoder
 
   alias RDF.XML.Decoder
-  alias RDF.Turtle
+  alias RDF.{Turtle, Graph}
+
+  import RDF.Sigils
 
   test "single triple with a literal as objects" do
     example_graph =
@@ -92,6 +94,41 @@ defmodule RDF.XML.DecoderTest do
              </rdf:Description>
            </rdf:RDF>
            """) == {:ok, example_graph}
+  end
+
+  test "parseType=Literal" do
+    assert Decoder.decode("""
+           <?xml version="1.0"?>
+           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+            xmlns:ex="http://example.org/stuff/1.0/">
+             <rdf:Description rdf:about="http://example.org/item01">
+               <ex:prop rdf:parseType="Literal" xmlns:a="http://example.org/a#">
+                 <a:Box required="true">
+                   <a:widget size="10"/>
+                   <a:grommit id="23"/>
+                 </a:Box>
+               </ex:prop>
+             </rdf:Description>
+           </rdf:RDF>
+           """) ==
+             {:ok,
+              Graph.new(
+                prefixes: [rdf: RDF, ex: "http://example.org/stuff/1.0/"],
+                init: {
+                  ~I<http://example.org/item01>,
+                  ~I<http://example.org/stuff/1.0/prop>,
+                  RDF.literal(
+                    """
+
+                          <a:Box required="true">
+                            <a:widget size="10"></a:widget>
+                            <a:grommit id="23"></a:grommit>
+                          </a:Box>
+                    """ <> "    ",
+                    datatype: RDF.XMLLiteral
+                  )
+                }
+              )}
   end
 
   test "single triple with a resource as object with rdf:resource" do

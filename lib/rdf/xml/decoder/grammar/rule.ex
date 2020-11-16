@@ -100,8 +100,8 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   # Note, that we're adding the children here in reverse order for performance reasons.
   defp update_children(cxt, result), do: %{cxt | children: [result | cxt.children]}
 
-  defp finish(list) when is_list(list), do: list
-  defp finish(cxt), do: %{cxt | parent_cxt: nil}
+  defp finish(cxt) when is_map(cxt), do: %{cxt | parent_cxt: nil}
+  defp finish(result), do: result
 
   defmodule Shared do
     @moduledoc false

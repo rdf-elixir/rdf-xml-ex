@@ -3,7 +3,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
 
   alias RDF.XML.Decoder
   alias RDF.XML.Decoder.ElementNode
-  alias RDF.XML.Decoder.Grammar.{ElementRule, AlternationRule, SequenceRule}
+  alias RDF.XML.Decoder.Grammar.{ElementRule, AlternationRule, SequenceRule, LiteralRule}
   alias RDF.{Graph, Description, Literal, LangString}
 
   alias __MODULE__
@@ -390,7 +390,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
   end
 
   defmodule ParseTypeLiteralPropertyElt do
-    use ElementRule
+    use ElementRule, production: LiteralRule
 
     def conform?(element) do
       Rules.property_element_uri?(element.name) &&
@@ -401,12 +401,29 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
         |> Enum.empty?()
     end
 
-    def at_start(_element, _cxt, _graph, _bnodes) do
-      raise ~S[parseType="Literal" is not supported yet]
-    end
+    defdelegate characters(characters, cxt), to: LiteralRule
 
-    def characters(_characters, _cxt) do
-      raise ~S[parseType="Literal" is not supported yet]
+    def at_end(cxt, graph, bnodes) do
+      xml_literal =
+        cxt.children
+        |> List.wrap()
+        |> Enum.reverse()
+        |> Enum.map_join(fn
+          {_, _, _} = element -> Saxy.encode!(element)
+          {_, characters} -> characters
+        end)
+        |> Literal.new(datatype: RDF.XMLLiteral)
+
+      statement = {parent(cxt).subject, cxt.element.uri, xml_literal}
+
+      statements =
+        if rdf_id = cxt.element.rdf_attributes[:id] do
+          [statement, reify(statement, rdf_id)]
+        else
+          statement
+        end
+
+      {:ok, Graph.add(graph, statements), bnodes}
     end
   end
 

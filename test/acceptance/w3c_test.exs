@@ -27,13 +27,6 @@ defmodule RDF.XML.W3C.Test do
     end
 
     if TestSuite.test_name(test_case) in [
-         "xml-canon-test001",
-         "rdf-containers-syntax-vs-schema-test004"
-       ] do
-      @tag skip: "TODO: parseType=Literal"
-    end
-
-    if TestSuite.test_name(test_case) in [
          "rdf-charmod-literals-test001",
          "rdf-element-not-mandatory-test001",
          "rdf-ns-prefix-confusion-test0005",
@@ -55,6 +48,7 @@ defmodule RDF.XML.W3C.Test do
          "rdf-containers-syntax-vs-schema-test001",
          "rdf-containers-syntax-vs-schema-test002",
          "rdf-containers-syntax-vs-schema-test003",
+         "rdf-containers-syntax-vs-schema-test004",
          "rdf-containers-syntax-vs-schema-test006",
          "rdf-containers-syntax-vs-schema-test007"
        ] do

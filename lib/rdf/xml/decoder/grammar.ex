@@ -1,7 +1,7 @@
 defmodule RDF.XML.Decoder.Grammar do
   @moduledoc false
 
-  alias RDF.XML.Decoder.Grammar.{Rule, Rules}
+  alias RDF.XML.Decoder.Grammar.{Rule, Rules, LiteralRule}
   alias RDF.XML.Decoder.ElementNode
   alias RDF.{Graph, BlankNode}
 
@@ -37,6 +37,17 @@ defmodule RDF.XML.Decoder.Grammar do
           state
         ) :: {:ok, state} | {:error, any}
   def apply_production(event_name, event_data, state)
+
+  def apply_production(
+        :start_element,
+        {name, attributes},
+        {%rule{} = cxt, graph, bnodes, rdf_ids}
+      )
+      when rule in [LiteralRule, Rules.ParseTypeLiteralPropertyElt] do
+    with {:ok, next_cxt} <- LiteralRule.apply(cxt, name, attributes) do
+      {:ok, {next_cxt, graph, bnodes, rdf_ids}}
+    end
+  end
 
   def apply_production(:start_element, {name, attributes}, {cxt, graph, bnodes, rdf_ids}) do
     parent_element =
