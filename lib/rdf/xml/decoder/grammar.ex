@@ -43,7 +43,11 @@ defmodule RDF.XML.Decoder.Grammar do
         {name, attributes},
         {%rule{} = cxt, graph, bnodes, rdf_ids}
       )
-      when rule in [LiteralRule, Rules.ParseTypeLiteralPropertyElt] do
+      when rule in [
+             LiteralRule,
+             Rules.ParseTypeLiteralPropertyElt,
+             Rules.ParseTypeOtherPropertyElt
+           ] do
     with {:ok, next_cxt} <- LiteralRule.apply(cxt, name, attributes) do
       {:ok, {next_cxt, graph, bnodes, rdf_ids}}
     end

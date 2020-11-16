@@ -115,7 +115,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     def select_production(_, %{rdf_attributes: %{parseLiteral: true}}),
       do: Rules.ParseTypeLiteralPropertyElt
 
-    def select_production(_, %{rdf_attributes: %{parseOther: true}}),
+    def select_production(_, %{rdf_attributes: %{parseOther: other}}) when not is_nil(other),
       do: Rules.ParseTypeOtherPropertyElt
 
     def select_production(_, %{rdf_attributes: %{parseResource: true}}),
@@ -428,8 +428,8 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
   end
 
   defmodule ParseTypeOtherPropertyElt do
-    use ElementRule,
-      production: Rules.PropertyEltList
+    # TODO: The spec specifies the production to be Rules.PropertyEltList ... Why is that if it should behave like ParseTypeLiteralPropertyElt?
+    use ElementRule, production: LiteralRule
 
     def conform?(element) do
       Rules.property_element_uri?(element.name) &&
@@ -440,12 +440,10 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
         |> Enum.empty?()
     end
 
-    def at_start(_element, _cxt, _graph, _bnodes) do
-      raise ~S[parseType="Other" is not supported yet]
-    end
+    defdelegate characters(characters, cxt), to: LiteralRule
 
-    def characters(_characters, _cxt) do
-      raise ~S[parseType="Other" is not supported yet]
+    def at_end(_cxt, graph, bnodes) do
+      {:ok, graph, bnodes}
     end
   end
 end

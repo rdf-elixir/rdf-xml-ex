@@ -131,6 +131,24 @@ defmodule RDF.XML.DecoderTest do
               )}
   end
 
+  test "parseType=Other" do
+    assert Decoder.decode("""
+           <?xml version="1.0"?>
+           <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+            xmlns:ex="http://example.org/stuff/1.0/">
+             <rdf:Description rdf:about="http://example.org/item01">
+               <ex:prop rdf:parseType="Other" xmlns:a="http://example.org/a#">
+                 <a:Box required="true">
+                   <a:widget size="10"/>
+                   <a:grommit id="23"/>
+                 </a:Box>
+               </ex:prop>
+             </rdf:Description>
+           </rdf:RDF>
+           """) ==
+             {:ok, Graph.new(prefixes: [rdf: RDF, ex: "http://example.org/stuff/1.0/"])}
+  end
+
   test "single triple with a resource as object with rdf:resource" do
     example_graph =
       """
