@@ -44,10 +44,16 @@ Above the common options of all RDF.ex encoders and decoders, the encoder and de
 
 
 
-
 ## Contributing
 
 see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+
+
+## Acknowledgements
+
+The development of this project was sponsored by [NetzeBW](https://www.netze-bw.de/) for [NETZlive](https://www.netze-bw.de/unsernetz/netzinnovationen/digitalisierung/netzlive).
+
 
 
 ## License and Copyright
