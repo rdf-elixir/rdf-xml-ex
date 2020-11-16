@@ -13,7 +13,7 @@ defmodule RDF.XML.Encoder do
     If not specified the one from the given graph is used or if there is also none
     specified for the graph the `RDF.default_base_iri/0`.
   - `:prefixes`: Allows to specify the prefixes to be used as a `RDF.PrefixMap` or
-    anything from which a `RDF.PrefixMap` can be created with `RDF.PrefixMap.new/2`.
+    anything from which a `RDF.PrefixMap` can be created with `RDF.PrefixMap.new/1`.
     If not specified the ones from the given graph are used or if these are also not
     present the `RDF.default_prefixes/0`.
   - `:implicit_base`: Allows to specify that the used base URI should not be encoded
