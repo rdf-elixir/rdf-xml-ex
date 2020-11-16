@@ -198,6 +198,14 @@ defmodule RDF.XML.EncoderTest do
              )
   end
 
+  test "rdf:XMLLiteral" do
+    assert Graph.new({EX.S, EX.p(), RDF.literal("<b>Foo</b>", datatype: RDF.XMLLiteral)},
+             prefixes: [ex: EX]
+           )
+           |> Encoder.encode!() ==
+             xml_description(~S[<ex:p rdf:parseType="Literal"><b>Foo</b></ex:p>])
+  end
+
   test "empty xmlns" do
     assert Graph.new([{EX.S, EX.p(), EX.O}, {EX.S, RDF.type(), EX.Class}], prefixes: [nil: EX])
            |> Encoder.encode!() ==

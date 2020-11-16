@@ -14,10 +14,9 @@ The API documentation can be found [here](https://hexdocs.pm/rdf_xml/). For a gu
 
 
 
-## TODO
+## Limitations
 
-- `parseType="Literal"` and `parseType="Other"` 
-- xmlns for `rdf` to shorten the syntax terms
+- xmlns for `rdf` to shorten the syntax terms is not supported
 
 
 

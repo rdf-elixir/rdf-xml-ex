@@ -1,6 +1,6 @@
 defmodule RDF.XML.Encoder do
   @moduledoc """
-  An encoder for RDF/XML serializations of the RDF.ex data structures.
+  An encoder for RDF/XML serializations of RDF.ex data structures.
 
   As for all encoders of `RDF.Serialization.Format`s, you normally won't use these
   functions directly, but via one of the `write_` functions on the `RDF.XML` format
@@ -262,6 +262,16 @@ defmodule RDF.XML.Encoder do
 
   defp statement(property_name, %BlankNode{value: value}, _base, _) do
     element(property_name, [{"rdf:nodeID", value}], [])
+  end
+
+  @xml_literal IRI.to_string(RDF.XMLLiteral)
+
+  defp statement(property_name, %Literal{literal: %{datatype: @xml_literal}} = literal, _, _) do
+    element(
+      property_name,
+      [{"rdf:parseType", "Literal"}],
+      Literal.lexical(literal)
+    )
   end
 
   defp statement(property_name, %Literal{} = literal, base, _) do
