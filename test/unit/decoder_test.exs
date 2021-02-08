@@ -331,6 +331,28 @@ defmodule RDF.XML.DecoderTest do
            """) == {:ok, example_graph}
   end
 
+  test "the xml:base is stored in the base_uri field of the graph" do
+    base = "http://www.w3.org/People/EM/contact"
+
+    example_graph =
+      """
+      @base <#{base}> .
+      @prefix contact: <http://www.w3.org/2000/10/swap/pim/contact#> .
+      @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+      <#me> contact:fullName "Eric Miller" .
+      """
+      |> Turtle.read_string!()
+
+    assert Decoder.decode("""
+           <?xml version="1.0" encoding="utf-8"?>
+           <rdf:RDF xml:base="#{base}" xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+             <rdf:Description rdf:about="#me" contact:fullName="Eric Miller">
+             </rdf:Description>
+           </rdf:RDF>
+           """) == {:ok, example_graph}
+  end
+
   test "use of relative URIs without a base results in an error" do
     assert {:error, %RDF.XML.ParseError{}} =
              Decoder.decode("""

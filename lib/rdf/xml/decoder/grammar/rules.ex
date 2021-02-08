@@ -34,7 +34,15 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     def conform?(_), do: false
 
     def at_end(cxt, graph, bnodes) do
-      {:ok, Graph.add_prefixes(graph, cxt.element.ns_declarations), bnodes}
+      graph =
+        if cxt.element.base_uri do
+          Graph.set_base_iri(graph, cxt.element.base_uri)
+        else
+          graph
+        end
+        |> Graph.add_prefixes(cxt.element.ns_declarations)
+
+      {:ok, graph, bnodes}
     end
   end
 
