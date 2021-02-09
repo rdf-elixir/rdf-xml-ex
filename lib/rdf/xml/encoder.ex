@@ -90,6 +90,13 @@ defmodule RDF.XML.Encoder do
       )
       |> List.pop_at(-1)
 
+    {rdf_close, rdf_open} =
+      if stream_mode == :string do
+        {IO.iodata_to_binary(rdf_close), IO.iodata_to_binary(rdf_open)}
+      else
+        {rdf_close, rdf_open}
+      end
+
     Stream.concat([
       [~s[<?xml version="1.0" encoding="utf-8"?>\n]],
       [rdf_open],
@@ -184,7 +191,7 @@ defmodule RDF.XML.Encoder do
     Stream.map(input, fn description ->
       case description(description, base, prefixes, use_rdf_id) do
         {:ok, simple_form} when stream_mode == :string ->
-          [Saxy.encode!(simple_form) | "\n"]
+          Saxy.encode!(simple_form) <> "\n"
 
         {:ok, simple_form} when stream_mode == :iodata ->
           [Saxy.encode_to_iodata!(simple_form) | "\n"]

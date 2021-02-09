@@ -104,8 +104,7 @@ defmodule RDF.XML.EncoderTest do
         ~S[</rdf:RDF>]
 
     assert Encoder.stream(@example_graph, producer: producer_fun, mode: :string)
-           |> Enum.to_list()
-           |> IO.iodata_to_binary() ==
+           |> Enum.join() ==
              expected_stream_result
 
     assert Encoder.stream(@example_graph, producer: producer_fun, mode: :iodata)
@@ -238,15 +237,14 @@ defmodule RDF.XML.EncoderTest do
         ~s[</contact:Person>\n] <>
         ~S[</rdf:RDF>]
 
-    assert Encoder.stream(@example_graph, mode: :string)
-           |> Enum.to_list()
-           |> IO.iodata_to_binary() ==
-             expected_result
-
     assert Encoder.stream(@example_graph, mode: :iodata)
            |> Enum.to_list()
            |> IO.iodata_to_binary() ==
              expected_result
+
+    string_stream = Encoder.stream(@example_graph, mode: :string)
+    assert Enum.all?(string_stream, &is_binary/1)
+    assert Enum.join(string_stream) == expected_result
   end
 
   test "stream_support?/0" do

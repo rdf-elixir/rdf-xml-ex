@@ -12,6 +12,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 - the `xml:base` specified on the `rdf:RDF` element is stored in the `base_uri`
   field of the decoded `RDF.Graph` 
 
+### Fixed
+
+- when encoding to a stream in string mode not all elements where strings 
+  (but still iolists) 
+
+
 [Compare v0.1.0...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.0...HEAD)
 
 
