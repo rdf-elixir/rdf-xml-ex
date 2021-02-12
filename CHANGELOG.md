@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
-## Unreleased
+## v0.1.1 - 2021-02-12
 
 ### Changed
 
@@ -15,10 +15,10 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 ### Fixed
 
 - when encoding to a stream in string mode not all elements where strings 
-  (but still iolists) 
+  (some were still iolists) 
 
 
-[Compare v0.1.0...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.0...HEAD)
+[Compare v0.1.0...v0.1.1](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.0...v0.1.1)
 
 
 
