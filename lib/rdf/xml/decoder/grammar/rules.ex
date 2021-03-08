@@ -179,8 +179,12 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       {:ok, %{cxt | t: characters}}
     end
 
+    def at_end(%{t: nil}, _, _) do
+      {:error, "this case should happen only during elimination of alternative productions"}
+    end
+
     def at_end(cxt, graph, bnodes) do
-      t = cxt.t || ""
+      t = cxt.t
 
       o =
         cond do
@@ -246,38 +250,59 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     end
 
     def at_end(cxt, graph, bnodes) do
-      cond do
-        resource = cxt.element.rdf_attributes[:resource] ->
-          with {:ok, uri} <- resolve(resource, cxt.element) do
-            {uri, bnodes}
+      if Enum.empty?(cxt.element.rdf_attributes) or
+           (Enum.count(cxt.element.rdf_attributes) == 1 && cxt.element.rdf_attributes[:id]) do
+        o =
+          if cxt.element.language do
+            LangString.new("", language: cxt.element.language)
+          else
+            ""
           end
 
-        node_id = cxt.element.rdf_attributes[:node_id] ->
-          bnodeid(node_id, bnodes)
+        statement = {parent(cxt).subject, cxt.element.uri, o}
 
-        true ->
-          generated_blank_node_id(bnodes)
-      end
-      |> case do
-        {:error, _} = error ->
-          error
-
-        {r, new_bnodes} ->
-          with {:ok, description} <- description_from_property_attrs(cxt, r) do
-            statements = [
-              statement = {parent(cxt).subject, cxt.element.uri, r},
-              description
-            ]
-
-            statements =
-              if rdf_id = cxt.element.rdf_attributes[:id] do
-                [reify(statement, rdf_id) | statements]
-              else
-                statements
-              end
-
-            {:ok, Graph.add(graph, statements), new_bnodes}
+        statements =
+          if rdf_id = cxt.element.rdf_attributes[:id] do
+            [statement, reify(statement, rdf_id)]
+          else
+            statement
           end
+
+        {:ok, Graph.add(graph, statements), bnodes}
+      else
+        cond do
+          resource = cxt.element.rdf_attributes[:resource] ->
+            with {:ok, uri} <- resolve(resource, cxt.element) do
+              {uri, bnodes}
+            end
+
+          node_id = cxt.element.rdf_attributes[:node_id] ->
+            bnodeid(node_id, bnodes)
+
+          true ->
+            generated_blank_node_id(bnodes)
+        end
+        |> case do
+          {:error, _} = error ->
+            error
+
+          {r, new_bnodes} ->
+            with {:ok, description} <- description_from_property_attrs(cxt, r) do
+              statements = [
+                statement = {parent(cxt).subject, cxt.element.uri, r},
+                description
+              ]
+
+              statements =
+                if rdf_id = cxt.element.rdf_attributes[:id] do
+                  [reify(statement, rdf_id) | statements]
+                else
+                  statements
+                end
+
+              {:ok, Graph.add(graph, statements), new_bnodes}
+            end
+        end
       end
     end
   end

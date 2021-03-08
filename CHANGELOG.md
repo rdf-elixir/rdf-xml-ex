@@ -5,6 +5,16 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
+## Unreleased
+
+### Fixed
+
+- a bug which prevented some valid RDF/XML serializations from successful decoding 
+
+[Compare v0.1.1...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.1...HEAD)
+
+
+
 ## v0.1.1 - 2021-02-12
 
 ### Changed

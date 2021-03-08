@@ -377,6 +377,22 @@ defmodule RDF.XML.DecoderTest do
              """)
   end
 
+  test "unresolved branching bug (2021-03-05)" do
+    assert {:ok, _} =
+             Decoder.decode("""
+             <?xml version="1.0" encoding="UTF-8"?>
+             <rdf:RDF
+                 xmlns:ex="http://exmple.com/#"
+                 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                 <ex:Foo rdf:about="http://exmple.com/#Thing">
+                     <ex:foo></ex:foo>
+                     <ex:bar></ex:bar>
+                     <ex:baz>foo</ex:baz>
+                 </ex:Foo>
+             </rdf:RDF>
+             """)
+  end
+
   test "decode_from_stream/2" do
     example_graph =
       """
