@@ -222,6 +222,26 @@ defmodule RDF.XML.DecoderTest do
            """) == {:ok, example_graph}
   end
 
+  test "nested description of a blank node" do
+    example_graph =
+      """
+      @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+      @prefix ex:  <http://example.com/#> .
+
+      ex:S ex:p1 [ ex:p2 "foo" ] .
+      """
+      |> Turtle.read_string!()
+
+    assert Decoder.decode("""
+           <?xml version="1.0" encoding="utf-8"?>
+           <rdf:RDF xmlns:ex="http://example.com/#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+             <rdf:Description rdf:about="http://example.com/#S">
+                 <ex:p1 ex:p2="foo" />
+             </rdf:Description>
+           </rdf:RDF>
+           """) == {:ok, example_graph}
+  end
+
   # Note: This tests reification via the ResourcePropertyElt rule which is not covered in the W3C test suite
   test "single reified triple with a resource as object in a nested node" do
     example_graph =
@@ -382,7 +402,7 @@ defmodule RDF.XML.DecoderTest do
              Decoder.decode("""
              <?xml version="1.0" encoding="UTF-8"?>
              <rdf:RDF
-                 xmlns:ex="http://exmple.com/#"
+                 xmlns:ex="http://example.com/#"
                  xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
                  <ex:Foo rdf:about="http://exmple.com/#Thing">
                      <ex:foo></ex:foo>

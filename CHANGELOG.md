@@ -12,6 +12,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 - the `:use_rdf_id` option of the encoder now accepts a function which allows determining
   for every `RDF.Description` individually if it should be encoded with `rdf:ID`  
 
+### Fixed
+
+- a bug in the decoder introduced by the changes in the last version causing production
+  of erroneous empty strings as objects when property attributes on a nested blank nodes 
+  are used
+
 
 [Compare v0.1.2...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.2...HEAD)
 

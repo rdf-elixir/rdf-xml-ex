@@ -250,8 +250,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
     end
 
     def at_end(cxt, graph, bnodes) do
-      if Enum.empty?(cxt.element.rdf_attributes) or
-           (Enum.count(cxt.element.rdf_attributes) == 1 && cxt.element.rdf_attributes[:id]) do
+      if empty_literal?(cxt.element) do
         o =
           if cxt.element.language do
             LangString.new("", language: cxt.element.language)
@@ -304,6 +303,12 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
             end
         end
       end
+    end
+
+    defp empty_literal?(element) do
+      Enum.empty?(element.property_attributes) and
+        (Enum.empty?(element.rdf_attributes) or
+           (Enum.count(element.rdf_attributes) == 1 && element.rdf_attributes[:id]))
     end
   end
 
