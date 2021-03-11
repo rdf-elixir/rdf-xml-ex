@@ -9,9 +9,9 @@ on:
 jobs:
   format:
     name: Check Formatting
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     steps:
-      - uses: actions/checkout@v2
+      - uses: erlef/setup-elixir@v1
 
       - name: Set up Elixir
         uses: actions/setup-elixir@v1
@@ -27,7 +27,7 @@ jobs:
 
   test:
     name: Build and test
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-16.04
     strategy:
       fail-fast: false
       matrix:
@@ -43,7 +43,7 @@ jobs:
           - erlang: 21.3
             elixir: 1.9.4
     steps:
-      - uses: actions/checkout@v2
+      - uses: erlef/setup-elixir@v1
 
       - name: Set up Elixir
         uses: actions/setup-elixir@v1
