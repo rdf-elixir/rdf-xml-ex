@@ -140,6 +140,35 @@ defmodule RDF.XML.EncoderTest do
              )
   end
 
+  test "resource URI against base with a use_rdf_id function" do
+    assert Graph.new(
+             [
+               {EX.__base_iri__() <> "#S1", EX.p(), RDF.iri(EX.__base_iri__() <> "#O1")},
+               {EX.__base_iri__() <> "#S2",
+                %{
+                  RDF.type() => EX.UseRdfId,
+                  EX.p() => RDF.iri(EX.__base_iri__() <> "#O2")
+                }}
+             ],
+             prefixes: [ex: EX],
+             base_iri: EX
+           )
+           |> Encoder.encode!(
+             use_rdf_id: fn description ->
+               RDF.iri(EX.UseRdfId) in RDF.Description.get(description, RDF.type(), [])
+             end
+           ) ==
+             ~S[<?xml version="1.0" encoding="utf-8"?>] <>
+               ~s[<rdf:RDF xml:base="#{EX.__base_iri__()}" xmlns:ex="http://example.com/">] <>
+               ~s[<rdf:Description rdf:about="#S1">] <>
+               ~s[<ex:p rdf:resource="#O1"/>] <>
+               ~S[</rdf:Description>] <>
+               ~s[<ex:UseRdfId rdf:ID="S2">] <>
+               ~s[<ex:p rdf:resource="#O2"/>] <>
+               ~S[</ex:UseRdfId>] <>
+               ~S[</rdf:RDF>]
+  end
+
   test "resource URI against base with implicit_base: true" do
     assert Graph.new({EX.S, EX.p(), EX.O}, prefixes: [ex: EX])
            |> Encoder.encode!(base_iri: EX, implicit_base: true) ==

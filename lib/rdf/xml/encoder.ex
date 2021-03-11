@@ -18,7 +18,9 @@ defmodule RDF.XML.Encoder do
     present the `RDF.default_prefixes/0`.
   - `:implicit_base`: Allows to specify that the used base URI should not be encoded
     in the generated serialization (default: `false`).
-  - `:use_rdf_id`: Use `rdf:ID` when possible (default: `false`).
+  - `:use_rdf_id`: Allows to determine if `rdf:ID` should be used when possible.
+     You can either provide a boolean value or a function which should return a boolean
+     value for a given `RDF.Description`. (default: `false`)
   - `:producer`: This option allows you to provide a producer function, which will get
     the input data (usually a `RDF.Graph`) and should produce a stream of the descriptions
     to be encoded. This allows you to control the order of the descriptions, apply filters
@@ -203,13 +205,13 @@ defmodule RDF.XML.Encoder do
   end
 
   defp description(%Description{} = description, base, prefixes, use_rdf_id) do
-    {type_node, description} = type_node(description, prefixes)
+    {type_node, stripped_description} = type_node(description, prefixes)
 
-    with {:ok, predications} <- predications(description, base, prefixes) do
+    with {:ok, predications} <- predications(stripped_description, base, prefixes) do
       {:ok,
        element(
          type_node || "rdf:Description",
-         [description_id(description.subject, base, use_rdf_id)],
+         [description_id(description.subject, base, use_rdf_id, description)],
          predications
        )}
     end
@@ -230,18 +232,22 @@ defmodule RDF.XML.Encoder do
     end
   end
 
-  defp description_id(%BlankNode{value: bnode}, _base, _) do
+  defp description_id(%BlankNode{value: bnode}, _base, _, _) do
     {"rdf:nodeID", bnode}
   end
 
-  defp description_id(%IRI{value: uri}, base, true) do
+  defp description_id(%IRI{} = iri, base, fun, description) when is_function(fun) do
+    description_id(iri, base, fun.(description), description)
+  end
+
+  defp description_id(%IRI{value: uri}, base, true, _) do
     case attr_val_uri(uri, base) do
       "#" <> value -> {"rdf:ID", value}
       value -> {"rdf:about", value}
     end
   end
 
-  defp description_id(%IRI{value: uri}, base, false) do
+  defp description_id(%IRI{value: uri}, base, false, _) do
     {"rdf:about", attr_val_uri(uri, base)}
   end
 

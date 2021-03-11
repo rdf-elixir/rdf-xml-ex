@@ -5,11 +5,24 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
+## Unreleased
+
+### Added
+
+- the `:use_rdf_id` option of the encoder now accepts a function which allows determining
+  for every `RDF.Description` individually if it should be encoded with `rdf:ID`  
+
+
+[Compare v0.1.2...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.2...HEAD)
+
+
+
 ## v0.1.2 - 2021-03-09
 
 ### Fixed
 
 - a bug which prevented some valid RDF/XML serializations from successful decoding 
+
 
 [Compare v0.1.1...v0.1.2](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.1...v0.1.2)
 
