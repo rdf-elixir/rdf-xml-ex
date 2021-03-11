@@ -11,10 +11,10 @@ jobs:
     name: Check Formatting
     runs-on: ubuntu-16.04
     steps:
-      - uses: erlef/setup-elixir@v1
+      - uses: actions/checkout@v2
 
       - name: Set up Elixir
-        uses: actions/setup-elixir@v1
+        uses: erlef/setup-elixir@v1
         with:
           otp-version: 22.2
           elixir-version: 1.10.4
@@ -43,10 +43,10 @@ jobs:
           - erlang: 21.3
             elixir: 1.9.4
     steps:
-      - uses: erlef/setup-elixir@v1
+      - uses: actions/checkout@v2
 
       - name: Set up Elixir
-        uses: actions/setup-elixir@v1
+        uses: erlef/setup-elixir@v1
         with:
           otp-version: ${{matrix.pair.erlang}}
           elixir-version: ${{matrix.pair.elixir}}
