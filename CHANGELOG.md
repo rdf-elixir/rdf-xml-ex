@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
-## Unreleased
+## v0.1.3 - 2021-03-12
 
 ### Added
 
@@ -19,7 +19,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
   are used
 
 
-[Compare v0.1.2...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.2...HEAD)
+[Compare v0.1.2...v0.1.3](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.2...v0.1.3)
 
 
 
