@@ -5,6 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
+## Unreleased
+
+### Fixed
+
+- encoding of typed literals failed when a base URI was present
+
+
+[Compare v0.1.3...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.3...HEAD)
+
+
+
 ## v0.1.3 - 2021-03-12
 
 ### Added

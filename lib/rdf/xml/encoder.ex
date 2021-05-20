@@ -240,15 +240,15 @@ defmodule RDF.XML.Encoder do
     description_id(iri, base, fun.(description), description)
   end
 
-  defp description_id(%IRI{value: uri}, base, true, _) do
-    case attr_val_uri(uri, base) do
+  defp description_id(%IRI{} = iri, base, true, _) do
+    case attr_val_uri(iri, base) do
       "#" <> value -> {"rdf:ID", value}
       value -> {"rdf:about", value}
     end
   end
 
-  defp description_id(%IRI{value: uri}, base, false, _) do
-    {"rdf:about", attr_val_uri(uri, base)}
+  defp description_id(%IRI{} = iri, base, false, _) do
+    {"rdf:about", attr_val_uri(iri, base)}
   end
 
   defp predications(description, base, prefixes) do
@@ -269,8 +269,8 @@ defmodule RDF.XML.Encoder do
     end
   end
 
-  defp statement(property_name, %IRI{value: uri}, base, _) do
-    element(property_name, [{"rdf:resource", attr_val_uri(uri, base)}], [])
+  defp statement(property_name, %IRI{} = iri, base, _) do
+    element(property_name, [{"rdf:resource", attr_val_uri(iri, base)}], [])
   end
 
   defp statement(property_name, %BlankNode{value: value}, _base, _) do
@@ -308,6 +308,7 @@ defmodule RDF.XML.Encoder do
   defp literal_attributes(_, _), do: []
 
   defp attr_val_uri(iri, nil), do: iri
+  defp attr_val_uri(%IRI{value: uri}, base), do: attr_val_uri(uri, base)
 
   defp attr_val_uri(iri, base) do
     String.replace_prefix(iri, base, "")

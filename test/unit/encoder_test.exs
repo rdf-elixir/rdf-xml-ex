@@ -224,6 +224,14 @@ defmodule RDF.XML.EncoderTest do
              xml_description(
                ~S[<ex:p rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">42</ex:p>]
              )
+
+    assert Graph.new({EX.S, EX.p(), XSD.integer(42)}, prefixes: [ex: EX])
+           |> Encoder.encode!(base_iri: "http://example.com/foo") ==
+             xml_description_with_base(
+               ~S[<ex:p rdf:datatype="http://www.w3.org/2001/XMLSchema#integer">42</ex:p>],
+               base: "http://example.com/foo",
+               subject: ~S[rdf:about="http://example.com/S"]
+             )
   end
 
   test "rdf:XMLLiteral" do
