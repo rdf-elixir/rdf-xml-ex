@@ -189,6 +189,7 @@ defmodule RDF.XML.Encoder do
     |> description_stream(base, prefixes, use_rdf_id, stream_mode)
   end
 
+  @dialyzer {:nowarn_function, description_stream: 5}
   defp description_stream(input, base, prefixes, use_rdf_id, stream_mode) do
     Stream.map(input, fn description ->
       case description(description, base, prefixes, use_rdf_id) do
