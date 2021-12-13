@@ -63,7 +63,7 @@ defmodule RDF.XML.MixProject do
 
   defp deps do
     [
-      {:rdf, "~> 0.9.1"},
+      {:rdf, "~> 0.9.1 or ~> 0.10"},
       {:saxy, "~> 1.2"},
       {:dialyxir, "~> 1.1", only: :dev, runtime: false},
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
