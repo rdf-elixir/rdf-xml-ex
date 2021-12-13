@@ -5,6 +5,15 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
+## Unreleased
+
+Elixir versions < 1.10 are no longer supported
+
+
+[Compare v0.1.4...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.4...HEAD)
+
+
+
 ## v0.1.4 - 2021-05-21
 
 ### Fixed
