@@ -5,12 +5,14 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
-## Unreleased
+## v0.1.5 - 2021-12-23
+
+This version just fixes the RDF.ex dependency specification to support RDF.ex 0.10.
 
 Elixir versions < 1.10 are no longer supported
 
 
-[Compare v0.1.4...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.4...HEAD)
+[Compare v0.1.4...v0.1.5](https://github.com/rdf-elixir/rdf-xml-ex/compare/v0.1.4...v0.1.5)
 
 
 
