@@ -61,7 +61,7 @@ defmodule RDF.XML.Encoder do
   def encode(data, opts \\ []) do
     base = Keyword.get(opts, :base, Keyword.get(opts, :base_iri)) |> base_iri(data)
     prefixes = Keyword.get(opts, :prefixes) |> prefix_map(data)
-    use_rdf_id = Keyword.get(opts, :use_rdf_id, false)
+    use_rdf_id = Keyword.get(opts, :use_rdf_id) || false
 
     with {:ok, root} <- document(data, base, prefixes, use_rdf_id, opts) do
       {:ok, Saxy.encode!(root, version: "1.0", encoding: :utf8)}
