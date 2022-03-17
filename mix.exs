@@ -63,13 +63,20 @@ defmodule RDF.XML.MixProject do
 
   defp deps do
     [
-      {:rdf, "~> 0.9.1 or ~> 0.10"},
+      rdf_ex_dep(:rdf, "~> 0.9.1 or ~> 0.10"),
       {:saxy, "~> 1.2"},
       {:dialyxir, "~> 1.1", only: :dev, runtime: false},
       {:ex_doc, "~> 0.26", only: :dev, runtime: false},
       {:excoveralls, "~> 0.14", only: :test},
       {:benchee, "~> 1.0", only: :dev}
     ]
+  end
+
+  defp rdf_ex_dep(dep, version) do
+    case System.get_env("RDF_EX_PACKAGES_SRC") do
+      "LOCAL" -> {dep, path: "../#{dep}"}
+      _ -> {dep, version}
+    end
   end
 
   defp dialyzer do
