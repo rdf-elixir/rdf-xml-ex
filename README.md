@@ -60,6 +60,12 @@ The development of this project was sponsored by [NetzeBW](https://www.netze-bw.
 
 
 
+## Consulting
+
+If you need help with your Elixir and Linked Data projects, just contact [NinjaConcept](https://www.ninjaconcept.com/) via <contact@ninjaconcept.com>.
+
+
+
 ## License and Copyright
 
 (c) 2020 Marcel Otto. MIT Licensed, see [LICENSE](LICENSE.md) for details.
