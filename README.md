@@ -30,7 +30,7 @@ The [RDF-XML.ex](https://hex.pm/packages/rdf_xml) Hex package can be installed a
 
 ```elixir
 def deps do
-  [{:rdf_xml, "~> 0.1"}]
+  [{:rdf_xml, "~> 1.0"}]
 end
 ```
 
@@ -68,7 +68,7 @@ If you need help with your Elixir and Linked Data projects, just contact [NinjaC
 
 ## License and Copyright
 
-(c) 2020 Marcel Otto. MIT Licensed, see [LICENSE](LICENSE.md) for details.
+(c) 2020-present Marcel Otto. MIT Licensed, see [LICENSE](LICENSE.md) for details.
 
 
 
