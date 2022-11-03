@@ -8,9 +8,9 @@ defmodule RDF.XML.Decoder.Grammar.ControlRule do
               ElementNode.t(),
               Rule.context(),
               RDF.Graph.t(),
-              RDF.BlankNode.Increment.state()
+              RDF.BlankNode.Generator.Increment.state()
             ) ::
-              {:ok, ElementNode.t(), Rule.context(), RDF.BlankNode.Increment.state()}
+              {:ok, ElementNode.t(), Rule.context(), RDF.BlankNode.Generator.Increment.state()}
               | {:error, any}
 
   def apply(%rule{} = new_cxt, new_element, graph, bnodes) do

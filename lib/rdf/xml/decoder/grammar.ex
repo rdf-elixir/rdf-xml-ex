@@ -8,7 +8,7 @@ defmodule RDF.XML.Decoder.Grammar do
   @type state :: {
           Rule.context() | [Rule.context()] | nil,
           Graph.t(),
-          BlankNode.Increment.state(),
+          BlankNode.Generator.Increment.state(),
           MapSet.t()
         }
 
@@ -16,7 +16,7 @@ defmodule RDF.XML.Decoder.Grammar do
     {
       Rules.Doc.new(nil),
       Graph.new(base_iri: initial_base_uri(opts)),
-      BlankNode.Increment.init(%{prefix: Keyword.get(opts, :bnode_prefix, "b")}),
+      BlankNode.Generator.Increment.init(%{prefix: Keyword.get(opts, :bnode_prefix, "b")}),
       MapSet.new()
     }
   end

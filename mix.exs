@@ -9,7 +9,7 @@ defmodule RDF.XML.MixProject do
     [
       app: :rdf_xml,
       version: @version,
-      elixir: "~> 1.10",
+      elixir: "~> 1.11",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
@@ -63,7 +63,7 @@ defmodule RDF.XML.MixProject do
 
   defp deps do
     [
-      rdf_ex_dep(:rdf, "~> 0.9.1 or ~> 0.10"),
+      rdf_ex_dep(:rdf, "~> 1.0"),
       {:saxy, "~> 1.2"},
       {:dialyxir, "~> 1.1", only: :dev, runtime: false},
       {:ex_doc, "~> 0.26", only: :dev, runtime: false},

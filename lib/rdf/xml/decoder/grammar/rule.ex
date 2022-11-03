@@ -7,8 +7,8 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
   @type context :: %{:__struct__ => t(), :children => any(), optional(atom()) => any()}
 
   # should return the result which should be set on the children field of the parent
-  @callback at_end(context(), RDF.Graph.t(), RDF.BlankNode.Increment.state()) ::
-              {:ok, RDF.Graph.t(), RDF.BlankNode.Increment.state()} | {:error, any}
+  @callback at_end(context(), RDF.Graph.t(), RDF.BlankNode.Generator.Increment.state()) ::
+              {:ok, RDF.Graph.t(), RDF.BlankNode.Generator.Increment.state()} | {:error, any}
 
   # should return update Rule struct
   @callback characters(characters :: String.t(), context()) ::
@@ -118,11 +118,11 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
     end
 
     def generated_blank_node_id(bnodes) do
-      BlankNode.Increment.generate(bnodes)
+      BlankNode.Generator.Increment.generate(bnodes)
     end
 
     def bnodeid(value, bnodes) do
-      BlankNode.Increment.generate_for(value, bnodes)
+      BlankNode.Generator.Increment.generate_for(value, bnodes)
     end
 
     def reify({subject, predicate, object}, id) do
