@@ -1,9 +1,15 @@
 defmodule RDF.XML.TestData do
+  @moduledoc """
+  Functions for accessing test data.
+  """
+
   @dir Path.join(File.cwd!(), "test/data/")
   def dir, do: @dir
 
   def file(name) do
-    if (path = Path.join(@dir, name)) |> File.exists?() do
+    path = Path.join(@dir, name)
+
+    if File.exists?(path) do
       path
     else
       raise "Test data file '#{name}' not found"

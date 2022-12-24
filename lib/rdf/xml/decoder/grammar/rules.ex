@@ -1,3 +1,5 @@
+# credo:disable-for-this-file Credo.Check.Readability.ModuleDoc
+
 defmodule RDF.XML.Decoder.Grammar.Rules do
   @moduledoc false
 
@@ -92,7 +94,7 @@ defmodule RDF.XML.Decoder.Grammar.Rules do
       description = Description.new(cxt.subject)
 
       description =
-        unless cxt.element.name == "rdf:Description" do
+        if cxt.element.name != "rdf:Description" do
           Description.add(description, {RDF.type(), cxt.element.uri})
         else
           description

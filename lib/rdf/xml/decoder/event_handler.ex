@@ -9,9 +9,8 @@ defmodule RDF.XML.Decoder.EventHandler do
   def handle_event(:end_document, _data, state), do: {:ok, state}
 
   def handle_event(event_type, data, state) do
-    with {:ok, state} <- Grammar.apply_production(event_type, data, state) do
-      {:ok, state}
-    else
+    case Grammar.apply_production(event_type, data, state) do
+      {:ok, state} -> {:ok, state}
       error -> {:halt, error}
     end
   end

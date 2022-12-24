@@ -1,5 +1,10 @@
 defmodule RDF.XML.TestSuite do
+  @moduledoc """
+  Helpers for running the W3C test suite.
+  """
+
   defmodule NS do
+    @moduledoc false
     use RDF.Vocabulary.Namespace
 
     defvocab MF,

@@ -60,7 +60,7 @@ defmodule RDF.XML.Decoder.ElementNode do
   end
 
   @doc false
-  def normalize_base_uri(base_uri = "http" <> _) do
+  def normalize_base_uri("http" <> _ = base_uri) do
     case String.split(base_uri, "#") do
       [base_uri] -> {:ok, base_uri}
       [base_uri, _fragment] -> {:ok, base_uri}

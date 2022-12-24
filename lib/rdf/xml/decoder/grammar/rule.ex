@@ -142,9 +142,8 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
     def description_from_property_attrs(cxt, %Description{} = description) do
       Enum.reduce_while(cxt.element.property_attributes, {:ok, description}, fn
         {@rdf_type, value}, {:ok, desc} ->
-          with {:ok, type} <- resolve(value, cxt.element) do
-            {:cont, {:ok, Description.add(desc, {@rdf_type, type})}}
-          else
+          case resolve(value, cxt.element) do
+            {:ok, type} -> {:cont, {:ok, Description.add(desc, {@rdf_type, type})}}
             error -> {:halt, error}
           end
 
