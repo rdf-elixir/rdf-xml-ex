@@ -2,8 +2,13 @@
 
 # RDF-XML.ex
 
-[![CI](https://github.com/rdf-elixir/rdf-xml-ex/workflows/CI/badge.svg?branch=master)](https://github.com/rdf-elixir/rdf-xml-ex/actions?query=branch%3Amaster+workflow%3ACI)
 [![Hex.pm](https://img.shields.io/hexpm/v/rdf_xml.svg?style=flat-square)](https://hex.pm/packages/rdf_xml)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg)](https://hexdocs.pm/rdf_xml/)
+[![License](https://img.shields.io/hexpm/l/rdf_xml.svg)](https://github.com/rdf-elixir/rdf-xml-ex/blob/master/LICENSE.md)
+
+[![ExUnit Tests](https://github.com/rdf-elixir/rdf-xml-ex/actions/workflows/elixir-build-and-test.yml/badge.svg)](https://github.com/rdf-elixir/rdf-xml-ex/actions/workflows/elixir-build-and-test.yml)
+[![Dialyzer](https://github.com/rdf-elixir/rdf-xml-ex/actions/workflows/elixir-dialyzer.yml/badge.svg)](https://github.com/rdf-elixir/rdf-xml-ex/actions/workflows/elixir-dialyzer.yml)
+[![Quality Checks](https://github.com/rdf-elixir/rdf-xml-ex/actions/workflows/elixir-quality-checks.yml/badge.svg)](https://github.com/rdf-elixir/rdf-xml-ex/actions/workflows/elixir-quality-checks.yml)
 
 
 An implementation of the [W3C RDF 1.1 XML](http://www.w3.org/TR/rdf-syntax-grammar/) serialization format for Elixir and [RDF.ex].
