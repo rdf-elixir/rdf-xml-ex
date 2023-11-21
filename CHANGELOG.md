@@ -5,6 +5,17 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
+## Unreleased
+
+### Added
+
+- option `:xml_declaration` on `RDF.XML.encode/2` and `RDF.XML.stream/2` to
+  customize or omit the generation of the XML declaration
+
+[Compare v1.0.0...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v1.0.0...HEAD)
+
+
+
 ## v1.0.0 - 2022-11-03
 
 This version is just upgraded to RDF.ex 1.0.

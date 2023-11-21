@@ -55,6 +55,29 @@ defmodule RDF.XML.EncoderTest do
     assert RDF.XML.Decoder.decode(result) == {:ok, @example_graph}
   end
 
+  test "with xml_declaration: false option" do
+    assert (result = Encoder.encode!(@example_graph, xml_declaration: false)) ==
+             ~S[<rdf:RDF ] <>
+               ~S[xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" ] <>
+               ~S[xmlns:eric="http://www.w3.org/People/EM/contact#" ] <>
+               ~S[xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" ] <>
+               ~S[xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">] <>
+               ~S[<rdf:Description rdf:about="http://example.com/Foo">] <>
+               ~S[<rdf:type rdf:resource="http://example.com/Bar"/>] <>
+               ~S[<rdf:type rdf:resource="http://example.com/Baz"/>] <>
+               ~S[<rdfs:comment xml:lang="de">Kommentar</rdfs:comment>] <>
+               ~S[<rdfs:comment>Comment</rdfs:comment>] <>
+               ~S[</rdf:Description>] <>
+               ~S[<contact:Person rdf:about="http://www.w3.org/People/EM/contact#me">] <>
+               ~S[<contact:fullName>Eric Miller</contact:fullName>] <>
+               ~S[<contact:mailbox rdf:resource="mailto:e.miller123(at)example"/>] <>
+               ~S[<contact:personalTitle>Dr.</contact:personalTitle>] <>
+               ~S[</contact:Person>] <>
+               ~S[</rdf:RDF>]
+
+    assert RDF.XML.Decoder.decode(result) == {:ok, @example_graph}
+  end
+
   test "with custom producer function" do
     producer_fun = fn graph ->
       {first, rest} = Graph.pop(graph, ~I<http://www.w3.org/People/EM/contact#me>)
@@ -280,6 +303,36 @@ defmodule RDF.XML.EncoderTest do
              expected_result
 
     string_stream = Encoder.stream(@example_graph, mode: :string)
+    assert Enum.all?(string_stream, &is_binary/1)
+    assert Enum.join(string_stream) == expected_result
+  end
+
+  test "stream/2 with xml_declaration: false option" do
+    expected_result =
+      ~S[<rdf:RDF ] <>
+        ~S[xmlns:contact="http://www.w3.org/2000/10/swap/pim/contact#" ] <>
+        ~S[xmlns:eric="http://www.w3.org/People/EM/contact#" ] <>
+        ~S[xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" ] <>
+        ~s[xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">\n] <>
+        ~S[<rdf:Description rdf:about="http://example.com/Foo">] <>
+        ~S[<rdf:type rdf:resource="http://example.com/Bar"/>] <>
+        ~S[<rdf:type rdf:resource="http://example.com/Baz"/>] <>
+        ~S[<rdfs:comment xml:lang="de">Kommentar</rdfs:comment>] <>
+        ~S[<rdfs:comment>Comment</rdfs:comment>] <>
+        ~s[</rdf:Description>\n] <>
+        ~S[<contact:Person rdf:about="http://www.w3.org/People/EM/contact#me">] <>
+        ~S[<contact:fullName>Eric Miller</contact:fullName>] <>
+        ~S[<contact:mailbox rdf:resource="mailto:e.miller123(at)example"/>] <>
+        ~S[<contact:personalTitle>Dr.</contact:personalTitle>] <>
+        ~s[</contact:Person>\n] <>
+        ~S[</rdf:RDF>]
+
+    assert Encoder.stream(@example_graph, mode: :iodata, xml_declaration: false)
+           |> Enum.to_list()
+           |> IO.iodata_to_binary() ==
+             expected_result
+
+    string_stream = Encoder.stream(@example_graph, mode: :string, xml_declaration: false)
     assert Enum.all?(string_stream, &is_binary/1)
     assert Enum.join(string_stream) == expected_result
   end

@@ -21,6 +21,11 @@ defmodule RDF.XML.Encoder do
   - `:use_rdf_id`: Allows to determine if `rdf:ID` should be used when possible.
      You can either provide a boolean value or a function which should return a boolean
      value for a given `RDF.Description`. (default: `false`)
+  - `:xml_declaration`: Allows to specify the XML declaration. Possible values:
+    - `true` (default): produces the default `<?xml version="1.0" encoding="utf-8"?>` declaration
+    - `false`: omits the XML declaration
+    - any value supported for `prolog` argument of `Saxy.encode!/2`
+      (only available on `encode/2`, not on `stream/2`)
   - `:producer`: This option allows you to provide a producer function, which will get
     the input data (usually a `RDF.Graph`) and should produce a stream of the descriptions
     to be encoded. This allows you to control the order of the descriptions, apply filters
@@ -63,8 +68,15 @@ defmodule RDF.XML.Encoder do
     prefixes = Keyword.get(opts, :prefixes) |> prefix_map(data)
     use_rdf_id = Keyword.get(opts, :use_rdf_id) || false
 
+    xml_declaration =
+      case Keyword.get(opts, :xml_declaration, true) do
+        true -> [version: "1.0", encoding: :utf8]
+        false -> nil
+        xml_declaration when is_list(xml_declaration) -> xml_declaration
+      end
+
     with {:ok, root} <- document(data, base, prefixes, use_rdf_id, opts) do
-      {:ok, Saxy.encode!(root, version: "1.0", encoding: :utf8)}
+      {:ok, Saxy.encode!(root, xml_declaration)}
     end
   end
 
@@ -100,7 +112,10 @@ defmodule RDF.XML.Encoder do
       end
 
     Stream.concat([
-      [~s[<?xml version="1.0" encoding="utf-8"?>\n]],
+      if(Keyword.get(opts, :xml_declaration, true),
+        do: [~s[<?xml version="1.0" encoding="utf-8"?>\n]],
+        else: []
+      ),
       [rdf_open],
       description_stream(input, base, prefixes, use_rdf_id, stream_mode),
       [rdf_close]
