@@ -253,7 +253,7 @@ defmodule RDF.XML.EncoderTest do
                ~S[</rdf:RDF>]
   end
 
-  describe "stream/2" do
+  test "stream/2" do
     expected_result =
       ~s[<?xml version="1.0" encoding="utf-8"?>\n] <>
         ~S[<rdf:RDF ] <>
