@@ -12,6 +12,12 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 - option `:xml_declaration` on `RDF.XML.encode/2` and `RDF.XML.stream/2` to
   customize or omit the generation of the XML declaration
 
+### Fixed
+
+- inconsistent encodings with OTP 26 by generally enforcing alphanumeric 
+  ordering of namespace declarations during encoding
+
+
 [Compare v1.0.0...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v1.0.0...HEAD)
 
 

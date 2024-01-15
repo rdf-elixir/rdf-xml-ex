@@ -160,7 +160,10 @@ defmodule RDF.XML.Encoder do
   defp prefix_map(prefixes, _), do: PrefixMap.new(prefixes)
 
   defp ns_declarations(prefixes, nil, _) do
-    Enum.map(prefixes, fn
+    prefixes
+    |> PrefixMap.to_list()
+    |> Enum.sort(fn {prefix1, _}, {prefix2, _} -> prefix1 < prefix2 end)
+    |> Enum.map(fn
       {nil, namespace} -> {"xmlns", to_string(namespace)}
       {prefix, namespace} -> {"xmlns:#{prefix}", to_string(namespace)}
     end)
