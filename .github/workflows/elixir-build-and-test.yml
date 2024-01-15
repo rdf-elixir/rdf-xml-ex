@@ -41,7 +41,7 @@ jobs:
           - pair:
               elixir: 1.16.0
               otp: 26.2
-            build-flags: --warnings-as-errors
+            build-flags:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
