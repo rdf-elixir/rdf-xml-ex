@@ -69,6 +69,8 @@ defmodule RDF.XML.MixProject do
       {:dialyxir, "~> 1.2", only: :dev, runtime: false},
       {:ex_doc, "~> 0.29", only: :dev, runtime: false},
       {:excoveralls, "~> 0.15", only: :test},
+      # This dependency is needed for ExCoveralls when OTP < 25
+      {:castore, "~> 1.0", only: :test},
       {:benchee, "~> 1.1", only: :dev}
     ]
   end
