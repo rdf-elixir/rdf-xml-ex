@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 
 ## Unreleased
 
+Elixir versions < 1.12 are no longer supported
+
 ### Added
 
 - option `:xml_declaration` on `RDF.XML.encode/2` and `RDF.XML.stream/2` to
