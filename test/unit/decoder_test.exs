@@ -121,8 +121,8 @@ defmodule RDF.XML.DecoderTest do
                     """
 
                           <a:Box required="true">
-                            <a:widget size="10"></a:widget>
-                            <a:grommit id="23"></a:grommit>
+                            <a:widget size="10"/>
+                            <a:grommit id="23"/>
                           </a:Box>
                     """ <> "    ",
                     datatype: RDF.XMLLiteral
