@@ -34,6 +34,11 @@ defmodule RDF.XML.W3C.Test do
       @tag skip: "TODO: handle xmlns for syntax terms"
     end
 
+    if TestSuite.test_name(test_case) in ["xml-canon-test001"] do
+      # Note, that this seems to have passed with Saxy < 1.5 just accidentally due to a bug in Saxy
+      @tag skip: "TODO: XML canonicalization is not support"
+    end
+
     test TestSuite.test_title(test_case), %{test_case: test_case} do
       base = to_string(TestSuite.test_input_file(test_case))
 
