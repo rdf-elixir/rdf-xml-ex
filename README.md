@@ -18,7 +18,7 @@ The API documentation can be found [here](https://hexdocs.pm/rdf_xml/). For a gu
 
 ## Features
 
-- fully conforming RDF/XML implementation passing all of the official tests (apart from the currently unsupported features below)
+- fully conforming RDF/XML implementation passing all the official tests (apart from the currently unsupported features below)
 - reader/writer for [RDF.ex] with support for reading and writing to streams
 
 
@@ -36,7 +36,7 @@ The [RDF-XML.ex](https://hex.pm/packages/rdf_xml) Hex package can be installed a
 
 ```elixir
 def deps do
-  [{:rdf_xml, "~> 1.0"}]
+  [{:rdf_xml, "~> 1.1"}]
 end
 ```
 

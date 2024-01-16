@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
-## Unreleased
+## v1.1.0 - 2024-01-16
 
 Elixir versions < 1.12 are no longer supported
 
@@ -20,7 +20,7 @@ Elixir versions < 1.12 are no longer supported
   ordering of namespace declarations during encoding
 
 
-[Compare v1.0.0...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v1.0.0...HEAD)
+[Compare v1.0.0...v1.1.0](https://github.com/rdf-elixir/rdf-xml-ex/compare/v1.0.0...v1.1.0)
 
 
 
