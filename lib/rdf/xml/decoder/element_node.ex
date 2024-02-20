@@ -21,7 +21,7 @@ defmodule RDF.XML.Decoder.ElementNode do
           uri: RDF.IRI.t(),
           rdf_attributes: %{atom => any},
           property_attributes: %{RDF.IRI.t() => any},
-          base_uri: String.t() | nil,
+          base_uri: URI.t() | nil,
           ns_declarations: PrefixMap.t(),
           language: String.t() | nil,
           li_counter: pos_integer
@@ -62,13 +62,16 @@ defmodule RDF.XML.Decoder.ElementNode do
   @doc false
   def normalize_base_uri("http" <> _ = base_uri) do
     case String.split(base_uri, "#") do
-      [base_uri] -> {:ok, base_uri}
-      [base_uri, _fragment] -> {:ok, base_uri}
+      [base_uri] -> {:ok, IRI.parse(base_uri)}
+      [base_uri, _fragment] -> {:ok, IRI.parse(base_uri)}
       _ -> {:error, %RDF.XML.ParseError{message: "invalid base URI: #{base_uri}"}}
     end
   end
 
-  def normalize_base_uri(base_uri), do: {:ok, base_uri}
+  def normalize_base_uri(%URI{} = base_uri), do: {:ok, base_uri}
+  def normalize_base_uri(%IRI{} = base_uri), do: {:ok, IRI.parse(base_uri)}
+  def normalize_base_uri(base_uri) when is_binary(base_uri), do: {:ok, IRI.parse(base_uri)}
+  def normalize_base_uri(nil), do: {:ok, nil}
 
   defp extract_xml_namespaces(attributes, nil, graph) do
     extract_xml_namespaces(
@@ -218,7 +221,7 @@ defmodule RDF.XML.Decoder.ElementNode do
 
   defp rdf_id(value, base) do
     with {:ok, name} <- nc_name(value) do
-      base <> "#" <> name
+      URI.to_string(base) <> "#" <> name
     end
   end
 

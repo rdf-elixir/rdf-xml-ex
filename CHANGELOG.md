@@ -5,6 +5,18 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
+## Unreleased
+
+### Added 
+
+- optimizations of relative URI resolution against the base URI 
+  (in non-`rdf:ID` cases)  
+
+
+[Compare v1.1.0...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v1.1.0...HEAD)
+
+
+
 ## v1.1.0 - 2024-01-16
 
 Elixir versions < 1.12 are no longer supported
