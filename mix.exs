@@ -13,6 +13,7 @@ defmodule RDF.XML.MixProject do
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      aliases: aliases(),
       elixirc_paths: elixirc_paths(Mix.env()),
 
       # Hex
@@ -34,6 +35,7 @@ defmodule RDF.XML.MixProject do
       # ExCoveralls
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
+        check: :test,
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
@@ -85,6 +87,19 @@ defmodule RDF.XML.MixProject do
   defp dialyzer do
     [
       plt_file: {:no_warn, "priv/plts/dialyzer.plt"}
+    ]
+  end
+
+  defp aliases do
+    [
+      check: [
+        "clean",
+        "deps.unlock --check-unused",
+        "compile --warnings-as-errors",
+        "format --check-formatted",
+        "test --warnings-as-errors",
+        "credo"
+      ]
     ]
   end
 
