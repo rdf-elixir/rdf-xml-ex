@@ -55,7 +55,7 @@ defmodule RDF.XML.Encoder do
   import Saxy.XML
 
   @doc """
-  Encodes the given RDF `data` structure to a RDF/XML string.
+  Encodes the given RDF `data` structure to an RDF/XML string.
 
   The result is returned in an `:ok` tuple or an `:error` tuple in case of an error.
 
@@ -81,9 +81,9 @@ defmodule RDF.XML.Encoder do
   end
 
   @doc """
-  Encodes the given RDF `data` structure to a RDF/XML stream.
+  Encodes the given RDF `data` structure to an RDF/XML stream.
 
-  By default the RDF/XML stream will emit single line strings for each of the
+  By default, the RDF/XML stream will emit single line strings for each of the
   descriptions in the given `data`. But you can also receive the serialized RDF/XML
   description as IO lists aka iodata by setting the `:mode` option to `:iodata`.
 
