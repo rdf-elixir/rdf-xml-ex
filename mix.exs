@@ -36,6 +36,7 @@ defmodule RDF.XML.MixProject do
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         check: :test,
+        earl_reports: :test,
         coveralls: :test,
         "coveralls.detail": :test,
         "coveralls.post": :test,
@@ -92,6 +93,7 @@ defmodule RDF.XML.MixProject do
 
   defp aliases do
     [
+      earl_reports: &earl_reports/1,
       check: [
         "clean",
         "deps.unlock --check-unused",
@@ -101,6 +103,12 @@ defmodule RDF.XML.MixProject do
         "credo"
       ]
     ]
+  end
+
+  defp earl_reports(_) do
+    files = ["test/acceptance/w3c_test.exs"]
+
+    Mix.Task.run("test", ["--formatter", "RDF.EarlFormatter", "--seed", "0"] ++ files)
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
