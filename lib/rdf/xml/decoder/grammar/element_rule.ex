@@ -4,8 +4,8 @@ defmodule RDF.XML.Decoder.Grammar.ElementRule do
   alias RDF.XML.Decoder.Grammar.Rule
   alias RDF.XML.Decoder.ElementNode
 
-  @callback at_start(Rule.context(), RDF.Graph.t(), RDF.BlankNode.Generator.Increment.state()) ::
-              {:ok, Rule.context(), RDF.BlankNode.Generator.Increment.state()} | {:error, any}
+  @callback at_start(Rule.context(), RDF.Graph.t(), RDF.BlankNode.Generator.Increment.t()) ::
+              {:ok, Rule.context(), RDF.BlankNode.Generator.Increment.t()} | {:error, any}
 
   @callback conform?(element :: ElementNode.t()) :: boolean
 

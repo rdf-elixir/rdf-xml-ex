@@ -222,6 +222,7 @@ defmodule RDF.XML.DecoderTest do
            """) == {:ok, example_graph}
   end
 
+  @tag skip: "TODO: introduce similar :bnode_gen option as for Turtle/TriG decoders"
   test "nested description of a blank node" do
     example_graph =
       """

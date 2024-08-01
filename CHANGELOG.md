@@ -7,6 +7,8 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 
 ## Unreleased
 
+This version upgrades to RDF.ex v2.0.
+
 Elixir versions < 1.13 and OTP version < 23 are no longer supported.
 
 
@@ -47,7 +49,7 @@ Elixir versions < 1.12 are no longer supported
 
 ## v1.0.0 - 2022-11-03
 
-This version is just upgraded to RDF.ex 1.0.
+This version is just upgraded to RDF.ex v1.0.
 
 Elixir versions < 1.11 are no longer supported
 
@@ -57,7 +59,7 @@ Elixir versions < 1.11 are no longer supported
 
 ## v0.1.5 - 2021-12-23
 
-This version just fixes the RDF.ex dependency specification to support RDF.ex 0.10.
+This version just fixes the RDF.ex dependency specification to support RDF.ex v0.10.
 
 Elixir versions < 1.10 are no longer supported
 
