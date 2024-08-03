@@ -68,10 +68,10 @@ defmodule RDF.XML.MixProject do
     [
       rdf_ex_dep(:rdf, "~> 2.0"),
       {:saxy, "~> 1.2"},
-      {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.2", only: :dev, runtime: false},
-      {:ex_doc, "~> 0.29", only: :dev, runtime: false},
-      {:excoveralls, "~> 0.15", only: :test},
+      {:credo, "~> 1.7", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.4", only: :dev, runtime: false},
+      {:ex_doc, "~> 0.34", only: :dev, runtime: false},
+      {:excoveralls, "~> 0.18", only: :test},
       # This dependency is needed for ExCoveralls when OTP < 25
       {:castore, "~> 1.0", only: :test},
       {:benchee, "~> 1.1", only: :dev}
