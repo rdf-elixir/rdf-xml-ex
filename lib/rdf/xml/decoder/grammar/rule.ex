@@ -64,7 +64,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
     cxt
     # Note that the new_element becomes only part of the new cxt on ElementRules (:element is not a member of the non-ElementRule-structs)
     |> next_rule.new(element: new_element)
-    |> next_rule.type.apply(new_element, graph, bnodes)
+    |> next_rule.type().apply(new_element, graph, bnodes)
   end
 
   def end_element(%rule{} = cxt, name, graph, bnodes, element_deleted \\ false) do
@@ -211,7 +211,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
       end
 
       @impl true
-      def select_production(cxt, _), do: cxt.production
+      def select_production(cxt, _), do: cxt.production()
 
       defoverridable unquote(__MODULE__)
 
