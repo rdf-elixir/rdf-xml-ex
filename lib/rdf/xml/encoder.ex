@@ -297,8 +297,6 @@ defmodule RDF.XML.Encoder do
 
   @xml_literal IRI.to_string(RDF.XMLLiteral)
 
-  # TODO: This dialyzer exception rule can be removed when this got merged: https://github.com/qcam/saxy/pull/82
-  @dialyzer {:nowarn_function, statement: 4}
   defp statement(property_name, %Literal{literal: %{datatype: @xml_literal}} = literal, _, _) do
     element(
       property_name,

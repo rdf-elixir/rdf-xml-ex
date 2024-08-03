@@ -215,7 +215,6 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
 
       defoverridable unquote(__MODULE__)
 
-      @dialyzer {:nowarn_function, element: 1}
       def element(cxt) do
         if element_cxt = element_cxt(cxt) do
           element_cxt.element
