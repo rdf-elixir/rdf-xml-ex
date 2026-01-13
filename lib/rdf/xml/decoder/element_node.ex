@@ -242,12 +242,16 @@ defmodule RDF.XML.Decoder.ElementNode do
     end
   end
 
-  defp nc_name(name) do
-    # TODO: NCNames are actually more restrictive; see https://www.w3.org/TR/REC-xml-names/#NT-NCName
-    if String.match?(name, ~r/^[a-zA-Z_]/) and not String.contains?(name, ~w[: /]) do
-      {:ok, name}
-    else
+  # TODO: NCNames are actually more restrictive; see https://www.w3.org/TR/REC-xml-names/#NT-NCName
+  defp nc_name(<<c, _::binary>> = name) when c in ?a..?z or c in ?A..?Z or c == ?_ do
+    if String.contains?(name, ~w[: /]) do
       {:error, %RDF.XML.ParseError{message: "invalid NCName #{name}"}}
+    else
+      {:ok, name}
     end
+  end
+
+  defp nc_name(name) do
+    {:error, %RDF.XML.ParseError{message: "invalid NCName #{name}"}}
   end
 end

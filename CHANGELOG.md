@@ -5,6 +5,19 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
+## Unreleased
+
+Elixir versions < 1.14 and OTP version < 23 are no longer supported.
+
+### Added
+
+- optimization of `rdf:ID`/`rdf:nodeID` handling
+
+
+[Compare v1.2.0...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v1.2.0...HEAD)
+
+
+
 ## v1.2.0 - 2024-08-07
 
 This version upgrades to RDF.ex v2.0.
