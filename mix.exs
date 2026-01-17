@@ -108,7 +108,7 @@ defmodule RDF.XML.MixProject do
   defp earl_reports(_) do
     files = ["test/acceptance/w3c_test.exs"]
 
-    Mix.Task.run("test", ["--formatter", "RDF.EarlFormatter", "--seed", "0"] ++ files)
+    Mix.Task.run("test", ["--formatter", "RDF.Test.EarlFormatter", "--seed", "0"] ++ files)
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]

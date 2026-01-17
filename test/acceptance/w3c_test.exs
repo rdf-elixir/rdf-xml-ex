@@ -6,7 +6,7 @@ defmodule RDF.XML.W3C.Test do
   """
 
   use ExUnit.Case, async: false
-  use RDF.EarlFormatter, test_suite: :rdf_xml
+  use RDF.Test.EarlFormatter, test_suite: :rdf_xml
 
   ExUnit.Case.register_attribute(__ENV__, :test_case)
 
