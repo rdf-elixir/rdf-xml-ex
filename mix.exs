@@ -9,7 +9,7 @@ defmodule RDF.XML.MixProject do
     [
       app: :rdf_xml,
       version: @version,
-      elixir: "~> 1.14",
+      elixir: "~> 1.15",
       build_embedded: Mix.env() == :prod,
       start_permanent: Mix.env() == :prod,
       deps: deps(),
