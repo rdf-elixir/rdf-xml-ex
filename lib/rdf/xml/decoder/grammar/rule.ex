@@ -18,6 +18,12 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
 
   @default_attributes [:parent_cxt, :children]
 
+  def element(%rule{} = cxt) do
+    if element_cxt = rule.element_cxt(cxt) do
+      element_cxt.element
+    end
+  end
+
   def parent_element_cxt(%{parent_cxt: nil}), do: nil
 
   def parent_element_cxt(%{parent_cxt: %parent_rule{} = parent_cxt}) do
@@ -215,12 +221,7 @@ defmodule RDF.XML.Decoder.Grammar.Rule do
 
       defoverridable unquote(__MODULE__)
 
-      @dialyzer {:nowarn_function, element: 1}
-      def element(cxt) do
-        if element_cxt = element_cxt(cxt) do
-          Map.get(element_cxt, :element)
-        end
-      end
+      defdelegate element(cxt), to: unquote(__MODULE__)
     end
   end
 
