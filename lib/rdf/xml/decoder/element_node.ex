@@ -27,16 +27,18 @@ defmodule RDF.XML.Decoder.ElementNode do
           li_counter: pos_integer
         }
 
+  @rdf_ns RDF.NS.RDF.__base_iri__()
+
   def new(name, attributes, parent_element, graph) do
     with {:ok, attributes, ns_declarations, base_uri, language} <-
            extract_xml_namespaces(attributes, parent_element, graph),
          {:ok, base_uri} <- normalize_base_uri(base_uri),
-         {:ok, uri} <- qname_to_iri(name, ns_declarations),
+         {:ok, uri} <- element_name_to_iri(name, ns_declarations),
          {:ok, rdf_attributes, property_attributes, _} <-
            attributes(attributes, ns_declarations, base_uri) do
       {:ok,
        %__MODULE__{
-         name: name,
+         name: canonical_name(name, uri),
          uri: uri,
          rdf_attributes: rdf_attributes,
          property_attributes: property_attributes,
@@ -48,16 +50,18 @@ defmodule RDF.XML.Decoder.ElementNode do
     end
   end
 
-  def update_name(element, name) do
-    case qname_to_iri(name, element.ns_declarations) do
-      {:ok, uri} ->
-        %{
-          element
-          | name: name,
-            uri: uri
-        }
-    end
+  def update_name(element, "rdf:" <> local_name = name) do
+    %{
+      element
+      | name: name,
+        uri: RDF.iri(@rdf_ns <> local_name)
+    }
   end
+
+  # The grammar rules recognize RDF syntax terms by their rdf:-prefixed names, so elements
+  # in the RDF namespace get this name, regardless of the prefix or default namespace used.
+  defp canonical_name(_name, %IRI{value: @rdf_ns <> local_name}), do: "rdf:" <> local_name
+  defp canonical_name(name, _uri), do: name
 
   @doc false
   def normalize_base_uri("http" <> _ = base_uri) do
@@ -102,8 +106,11 @@ defmodule RDF.XML.Decoder.ElementNode do
       {"xmlns:" <> prefix, value}, {:ok, attrs, ns_declarations, base_uri, language} ->
         {:cont, {:ok, attrs, PrefixMap.put(ns_declarations, prefix, value), base_uri, language}}
 
+      {"xmlns", ""}, {:ok, attrs, ns_declarations, base_uri, language} ->
+        {:cont, {:ok, attrs, PrefixMap.delete(ns_declarations, ""), base_uri, language}}
+
       {"xmlns", value}, {:ok, attrs, ns_declarations, base_uri, language} ->
-        {:cont, {:ok, attrs, PrefixMap.put(ns_declarations, nil, value), base_uri, language}}
+        {:cont, {:ok, attrs, PrefixMap.put(ns_declarations, "", value), base_uri, language}}
 
       {name, value}, {:ok, attrs, ns_declarations, base_uri, language} ->
         {:cont, {:ok, Map.put(attrs, name, value), ns_declarations, base_uri, language}}
@@ -225,20 +232,25 @@ defmodule RDF.XML.Decoder.ElementNode do
     end
   end
 
-  defp qname_to_iri(name, ns_declarations) do
-    cond do
-      iri = PrefixMap.prefixed_name_to_iri(ns_declarations, name) ->
-        {:ok, iri}
+  # Default namespace declarations apply to unprefixed element names, but not to attribute names.
+  # See https://www.w3.org/TR/xml-names/#defaulting
+  defp element_name_to_iri(name, ns_declarations) do
+    if String.contains?(name, ":") do
+      qname_to_iri(name, ns_declarations)
+    else
+      qname_to_iri(":" <> name, ns_declarations, name)
+    end
+  end
 
-      iri = PrefixMap.prefixed_name_to_iri(ns_declarations, ":" <> name) ->
-        {:ok, iri}
-
-      true ->
-        {:error,
-         %RDF.XML.ParseError{
-           message: "can't resolve name #{name} to URI reference",
-           help: "provide a xmlns declaration"
-         }}
+  defp qname_to_iri(qname, ns_declarations, name \\ nil) do
+    if iri = PrefixMap.prefixed_name_to_iri(ns_declarations, qname) do
+      {:ok, iri}
+    else
+      {:error,
+       %RDF.XML.ParseError{
+         message: "can't resolve name #{name || qname} to URI reference",
+         help: "provide a xmlns declaration"
+       }}
     end
   end
 

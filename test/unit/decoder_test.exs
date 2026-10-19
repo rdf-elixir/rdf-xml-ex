@@ -352,6 +352,81 @@ defmodule RDF.XML.DecoderTest do
            """) == {:ok, example_graph}
   end
 
+  test "unprefixed element names are resolved against the default namespace" do
+    example_graph =
+      """
+      @prefix :    <http://example.org/ont#> .
+      @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+      <http://example.org/x> a :SomeClass ;
+          :name "x" ;
+          <http://example.org/other#name> "y" .
+      """
+      |> Turtle.read_string!()
+
+    assert Decoder.decode("""
+           <?xml version="1.0" encoding="utf-8"?>
+           <rdf:RDF xmlns="http://example.org/ont#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+             <SomeClass rdf:about="http://example.org/x">
+               <name>x</name>
+               <name xmlns="http://example.org/other#">y</name>
+             </SomeClass>
+           </rdf:RDF>
+           """) == {:ok, example_graph}
+  end
+
+  test "the default namespace doesn't apply to attribute names" do
+    example_graph =
+      """
+      @prefix :    <http://example.org/ont#> .
+      @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+      <http://example.org/x> a :SomeClass .
+      """
+      |> Turtle.read_string!()
+
+    assert Decoder.decode("""
+           <?xml version="1.0" encoding="utf-8"?>
+           <rdf:RDF xmlns="http://example.org/ont#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+             <SomeClass rdf:about="http://example.org/x" name="x" xml:space="preserve" />
+           </rdf:RDF>
+           """) == {:ok, example_graph}
+  end
+
+  test "RDF syntax terms in the default namespace" do
+    example_graph =
+      """
+      @prefix : <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+      _:b0 a :Seq ; :_1 "bar" .
+      """
+      |> Turtle.read_string!()
+
+    assert Decoder.decode(
+             """
+             <?xml version="1.0" encoding="utf-8"?>
+             <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+               <Seq>
+                 <li>bar</li>
+               </Seq>
+             </RDF>
+             """,
+             bnode_prefix: "b"
+           ) == {:ok, example_graph}
+  end
+
+  test "an empty default namespace declaration removes the default namespace" do
+    assert {:error, %RDF.XML.ParseError{message: "can't resolve name name to URI reference"}} =
+             Decoder.decode("""
+             <?xml version="1.0" encoding="utf-8"?>
+             <rdf:RDF xmlns="http://example.org/ont#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+               <SomeClass rdf:about="http://example.org/x">
+                 <name xmlns="">x</name>
+               </SomeClass>
+             </rdf:RDF>
+             """)
+  end
+
   test "the xml:base is stored in the base_uri field of the graph" do
     base = "http://www.w3.org/People/EM/contact"
 

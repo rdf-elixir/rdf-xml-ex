@@ -276,6 +276,29 @@ defmodule RDF.XML.EncoderTest do
                ~S[</rdf:RDF>]
   end
 
+  test "empty prefix as xmlns" do
+    assert Graph.new([{EX.S, EX.p(), EX.O}, {EX.S, RDF.type(), EX.Class}], prefixes: ["": EX])
+           |> Encoder.encode!() ==
+             ~S[<?xml version="1.0" encoding="utf-8"?>] <>
+               ~s[<rdf:RDF xmlns="#{EX.__base_iri__()}">] <>
+               ~s[<Class rdf:about="#{IRI.to_string(EX.S)}">] <>
+               ~s[<p rdf:resource="#{IRI.to_string(EX.O)}"/>] <>
+               ~S[</Class>] <>
+               ~S[</rdf:RDF>]
+  end
+
+  test "roundtrip of a document with a default namespace" do
+    xml =
+      ~S[<?xml version="1.0" encoding="utf-8"?>] <>
+        ~S[<rdf:RDF xmlns="http://example.org/ont#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">] <>
+        ~S[<SomeClass rdf:about="http://example.org/x">] <>
+        ~S[<name>x</name>] <>
+        ~S[</SomeClass>] <>
+        ~S[</rdf:RDF>]
+
+    assert xml |> RDF.XML.Decoder.decode!() |> Encoder.encode!() == xml
+  end
+
   test "stream/2" do
     expected_result =
       ~s[<?xml version="1.0" encoding="utf-8"?>\n] <>

@@ -163,7 +163,7 @@ defmodule RDF.XML.Encoder do
     prefixes
     |> PrefixMap.to_sorted_list()
     |> Enum.map(fn
-      {nil, namespace} -> {"xmlns", to_string(namespace)}
+      {prefix, namespace} when prefix in [nil, :""] -> {"xmlns", to_string(namespace)}
       {prefix, namespace} -> {"xmlns:#{prefix}", to_string(namespace)}
     end)
   end

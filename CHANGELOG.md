@@ -9,6 +9,16 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 
 Elixir versions < 1.16 are no longer supported.
 
+### Fixed
+
+- default namespace declarations weren't applied to unprefixed element names, so 
+  documents using them failed to decode
+  (see [#2](https://github.com/rdf-elixir/rdf-xml-ex/issues/2))
+- RDF syntax elements (e.g. `rdf:Description` or `rdf:li`) were only recognized with 
+  the `rdf` prefix, but not via the default namespace or another prefix
+- the encoder produced an invalid `xmlns:` declaration for the empty prefix (e.g. from 
+  a Turtle `@prefix :` declaration) instead of a default namespace declaration
+
 
 [Compare v1.2.1...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v1.2.1...HEAD)
 

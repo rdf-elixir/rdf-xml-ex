@@ -18,25 +18,9 @@ defmodule RDF.XML.W3C.Test do
   |> Enum.each(fn test_case ->
     @tag test_case: test_case
 
-    if TestSuite.test_name(test_case) == "rdf-element-not-mandatory-test001" do
-      @tag earl_result: :failed
-      @tag skip: "TODO: the rdf:RDF element is no longer mandatory"
-    end
-
     if TestSuite.test_name(test_case) == "rdfms-syntax-incomplete-test004" do
       @tag earl_result: :failed
       @tag skip: "TODO: On a property element rdf:nodeID behaves similarly to rdf:resource."
-    end
-
-    if TestSuite.test_name(test_case) in [
-         "rdf-ns-prefix-confusion-test0010",
-         "rdf-ns-prefix-confusion-test0011",
-         "rdf-ns-prefix-confusion-test0012",
-         "rdf-ns-prefix-confusion-test0013",
-         "rdf-ns-prefix-confusion-test0014"
-       ] do
-      @tag earl_result: :failed
-      @tag skip: "TODO: handle xmlns for syntax terms"
     end
 
     if TestSuite.test_name(test_case) in ["xml-canon-test001"] do
