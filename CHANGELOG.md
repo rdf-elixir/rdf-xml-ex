@@ -18,6 +18,9 @@ Elixir versions < 1.16 are no longer supported.
   the `rdf` prefix, but not via the default namespace or another prefix
 - the encoder produced an invalid `xmlns:` declaration for the empty prefix (e.g. from 
   a Turtle `@prefix :` declaration) instead of a default namespace declaration
+- the encoder didn't declare the `rdf` namespace prefix when it wasn't part of the 
+  prefixes (e.g. of a graph read from a Turtle document without a `rdf` prefix 
+  declaration), so the produced document wasn't parsable
 
 
 [Compare v1.2.1...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v1.2.1...HEAD)

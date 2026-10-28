@@ -41,7 +41,7 @@ defmodule RDF.XML.Encoder do
           ...>       {first, rest} = RDF.Graph.pop(graph, EX.S2)
           ...>       Stream.concat([first], RDF.Graph.descriptions(rest))
           ...>     end)
-          ~S(<?xml version="1.0" encoding="utf-8"?><rdf:RDF xmlns:ex="http://example.com/">\
+          ~S(<?xml version="1.0" encoding="utf-8"?><rdf:RDF xmlns:ex="http://example.com/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\
   <rdf:Description rdf:about="http://example.com/S2"><ex:p2 rdf:resource="http://example.com/O2"/></rdf:Description>\
   <rdf:Description rdf:about="http://example.com/S1"><ex:p1 rdf:resource="http://example.com/O1"/></rdf:Description>\
   </rdf:RDF>)
@@ -144,9 +144,15 @@ defmodule RDF.XML.Encoder do
     to_string(%{uri | fragment: nil})
   end
 
-  defp prefix_map(nil, %Graph{prefixes: prefixes}) when not is_nil(prefixes), do: prefixes
+  defp prefix_map(prefixes, data) do
+    prefixes
+    |> given_prefix_map(data)
+    |> ensure_rdf_prefix()
+  end
 
-  defp prefix_map(nil, %Dataset{} = dataset) do
+  defp given_prefix_map(nil, %Graph{prefixes: prefixes}) when not is_nil(prefixes), do: prefixes
+
+  defp given_prefix_map(nil, %Dataset{} = dataset) do
     prefixes = Dataset.prefixes(dataset)
 
     if Enum.empty?(prefixes) do
@@ -156,8 +162,18 @@ defmodule RDF.XML.Encoder do
     end
   end
 
-  defp prefix_map(nil, _), do: RDF.default_prefixes()
-  defp prefix_map(prefixes, _), do: PrefixMap.new(prefixes)
+  defp given_prefix_map(nil, _), do: RDF.default_prefixes()
+  defp given_prefix_map(prefixes, _), do: PrefixMap.new(prefixes)
+
+  # The syntax terms are always written with the rdf prefix, so it must be declared
+  # even when the given prefixes don't contain it.
+  defp ensure_rdf_prefix(prefixes) do
+    if PrefixMap.has_prefix?(prefixes, :rdf) do
+      prefixes
+    else
+      PrefixMap.put(prefixes, :rdf, RDF.NS.RDF.__base_iri__())
+    end
+  end
 
   defp ns_declarations(prefixes, nil, _) do
     prefixes

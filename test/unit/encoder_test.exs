@@ -182,7 +182,7 @@ defmodule RDF.XML.EncoderTest do
              end
            ) ==
              ~S[<?xml version="1.0" encoding="utf-8"?>] <>
-               ~s[<rdf:RDF xml:base="#{EX.__base_iri__()}" xmlns:ex="http://example.com/">] <>
+               ~s[<rdf:RDF xml:base="#{EX.__base_iri__()}" xmlns:ex="http://example.com/" xmlns:rdf="#{RDF.__base_iri__()}">] <>
                ~s[<rdf:Description rdf:about="#S1">] <>
                ~s[<ex:p rdf:resource="#O1"/>] <>
                ~S[</rdf:Description>] <>
@@ -269,7 +269,7 @@ defmodule RDF.XML.EncoderTest do
     assert Graph.new([{EX.S, EX.p(), EX.O}, {EX.S, RDF.type(), EX.Class}], prefixes: [nil: EX])
            |> Encoder.encode!() ==
              ~S[<?xml version="1.0" encoding="utf-8"?>] <>
-               ~s[<rdf:RDF xmlns="#{EX.__base_iri__()}">] <>
+               ~s[<rdf:RDF xmlns="#{EX.__base_iri__()}" xmlns:rdf="#{RDF.__base_iri__()}">] <>
                ~s[<Class rdf:about="#{IRI.to_string(EX.S)}">] <>
                ~s[<p rdf:resource="#{IRI.to_string(EX.O)}"/>] <>
                ~S[</Class>] <>
@@ -280,7 +280,7 @@ defmodule RDF.XML.EncoderTest do
     assert Graph.new([{EX.S, EX.p(), EX.O}, {EX.S, RDF.type(), EX.Class}], prefixes: ["": EX])
            |> Encoder.encode!() ==
              ~S[<?xml version="1.0" encoding="utf-8"?>] <>
-               ~s[<rdf:RDF xmlns="#{EX.__base_iri__()}">] <>
+               ~s[<rdf:RDF xmlns="#{EX.__base_iri__()}" xmlns:rdf="#{RDF.__base_iri__()}">] <>
                ~s[<Class rdf:about="#{IRI.to_string(EX.S)}">] <>
                ~s[<p rdf:resource="#{IRI.to_string(EX.O)}"/>] <>
                ~S[</Class>] <>
@@ -297,6 +297,30 @@ defmodule RDF.XML.EncoderTest do
         ~S[</rdf:RDF>]
 
     assert xml |> RDF.XML.Decoder.decode!() |> Encoder.encode!() == xml
+  end
+
+  test "the rdf prefix is declared when it's missing in the prefixes" do
+    graph = Graph.new([{EX.S, EX.p(), EX.O}], prefixes: [ex: EX])
+
+    expected_result =
+      ~S[<?xml version="1.0" encoding="utf-8"?>] <>
+        ~S[<rdf:RDF xmlns:ex="http://example.com/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">] <>
+        ~S[<rdf:Description rdf:about="http://example.com/S">] <>
+        ~S[<ex:p rdf:resource="http://example.com/O"/>] <>
+        ~S[</rdf:Description>] <>
+        ~S[</rdf:RDF>]
+
+    assert Encoder.encode!(graph) == expected_result
+    assert Encoder.encode!(graph, prefixes: [ex: EX]) == expected_result
+    assert expected_result |> RDF.XML.Decoder.decode!() |> Graph.triples() == Graph.triples(graph)
+
+    assert Encoder.stream(graph) |> Enum.join() ==
+             ~s[<?xml version="1.0" encoding="utf-8"?>\n] <>
+               ~s[<rdf:RDF xmlns:ex="http://example.com/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">\n] <>
+               ~S[<rdf:Description rdf:about="http://example.com/S">] <>
+               ~S[<ex:p rdf:resource="http://example.com/O"/>] <>
+               ~s[</rdf:Description>\n] <>
+               ~S[</rdf:RDF>]
   end
 
   test "stream/2" do
@@ -368,7 +392,7 @@ defmodule RDF.XML.EncoderTest do
     subject = Keyword.get(opts, :subject, ~S[rdf:about="http://example.com/S"])
 
     ~S[<?xml version="1.0" encoding="utf-8"?>] <>
-      ~S[<rdf:RDF xmlns:ex="http://example.com/">] <>
+      ~S[<rdf:RDF xmlns:ex="http://example.com/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">] <>
       ~s[<rdf:Description #{subject}>] <>
       triples <>
       ~S[</rdf:Description>] <>
@@ -380,7 +404,7 @@ defmodule RDF.XML.EncoderTest do
     subject = Keyword.get(opts, :subject, ~S[rdf:about="S"])
 
     ~S[<?xml version="1.0" encoding="utf-8"?>] <>
-      ~s[<rdf:RDF xml:base="#{base}" xmlns:ex="http://example.com/">] <>
+      ~s[<rdf:RDF xml:base="#{base}" xmlns:ex="http://example.com/" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">] <>
       ~s[<rdf:Description #{subject}>] <>
       triples <>
       ~S[</rdf:Description>] <>
