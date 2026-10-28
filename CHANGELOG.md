@@ -5,7 +5,7 @@ This project adheres to [Semantic Versioning](http://semver.org/) and
 [Keep a CHANGELOG](http://keepachangelog.com).
 
 
-## Unreleased
+## v1.2.2 - 2026-10-28
 
 Elixir versions < 1.16 are no longer supported.
 
@@ -23,7 +23,7 @@ Elixir versions < 1.16 are no longer supported.
   declaration), so the produced document wasn't parsable
 
 
-[Compare v1.2.1...HEAD](https://github.com/rdf-elixir/rdf-xml-ex/compare/v1.2.1...HEAD)
+[Compare v1.2.1...v1.2.2](https://github.com/rdf-elixir/rdf-xml-ex/compare/v1.2.1...v1.2.2)
 
 
 
