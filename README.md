@@ -26,7 +26,7 @@ The API documentation can be found [here](https://hexdocs.pm/rdf_xml/). For a gu
 ## Limitations
 
 - XML canonicalization of `rdf:XMLLiteral`s  (`rdf:parseType="Literal"`) is not supported
-- xmlns for `rdf` to shorten the syntax terms is not supported
+- a prefix other than `rdf` for the RDF namespace is only supported on elements, not on attributes
 
 
 
