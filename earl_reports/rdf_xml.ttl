@@ -8,7 +8,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 <>
-    dc:issued "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+    dc:issued "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
     foaf:maker <http://marcelotto.net/#me> ;
     foaf:primaryTopic <https://hex.pm/packages/rdf_xml> .
 
@@ -20,27 +20,27 @@
 <https://hex.pm/packages/rdf_xml>
     a doap:Project, earl:Software, earl:TestSubject ;
     dc:creator <http://marcelotto.net/#me> ;
-    <http://usefulinc.com/ns/doap#bug-database> <https://github.com/rdf-elixir/rdf-xml-ex/issues> ;
+    doap:bug-database <https://github.com/rdf-elixir/rdf-xml-ex/issues> ;
     doap:category <http://dbpedia.org/resource/Elixir_(programming_language)>, <http://dbpedia.org/resource/Resource_Description_Framework> ;
     doap:created "2020-11-16"^^xsd:date ;
     doap:description "RDF-XML.ex is a pure-Elixir library implementation RDF-XML as an RDF.ex serializer"@en ;
     doap:developer <http://marcelotto.net/#me> ;
     doap:documenter <http://marcelotto.net/#me> ;
-    <http://usefulinc.com/ns/doap#download-page> <https://hex.pm/packages/rdf-xml> ;
+    doap:download-page <https://hex.pm/packages/rdf-xml> ;
     doap:homepage <https://rdf-elixir.dev/> ;
     doap:implements <http://www.w3.org/TR/rdf-syntax-grammar/> ;
     doap:maintainer <http://marcelotto.net/#me> ;
     doap:name "RDF-XML.ex" ;
     doap:platform "Erlang/OTP" ;
-    <http://usefulinc.com/ns/doap#programming-language> "Elixir" ;
-    doap:release <https://hex.pm/packages/rdf_xml/1.1.1> ;
+    doap:programming-language "Elixir" ;
+    doap:release <https://hex.pm/packages/rdf_xml/1.2.2> ;
     doap:repository <https://github.com/rdf-elixir/rdf-xml-ex> ;
     doap:shortdesc "An implementation of RDF-XML for Elixir and RDF.ex" ;
     foaf:maker <http://marcelotto.net/#me> .
 
-<https://hex.pm/packages/rdf_xml/1.1.1>
-    doap:name "RDF-XML.ex 1.1.1" ;
-    doap:revision "1.1.1" .
+<https://hex.pm/packages/rdf_xml/1.2.2>
+    doap:name "RDF-XML.ex 1.2.2" ;
+    doap:revision "1.2.2" .
 
 [
     a earl:Assertion ;
@@ -48,579 +48,7 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-identity-anon-resources-test004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-014>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-031>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-difference-between-ID-and-about-test2>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#datatypes-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test005>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-015>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-034>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:failed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0011>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-021>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-warn-002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-xmllang-test004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#unrecognised-xml-attributes-test002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test017>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-008>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-005>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfs-domain-and-range-test002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-identity-anon-resources-test003>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test006>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-026>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-024>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-seq-representation-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-027>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-022>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-test003>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-029>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:failed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0012>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test013>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test010>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test003>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-xmllang-test005>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test009>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-xmllang-test006>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfs-domain-and-range-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-charmod-uris-test002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-030>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-012>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-025>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
@@ -633,1073 +61,7 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test006>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test011>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-not-id-and-resource-attr-test004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-011>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-warn-003>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-017>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-018>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0009>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test015>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:failed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0014>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-033>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-032>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0006>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-test002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-028>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test010>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-identity-anon-resources-test005>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-035>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test014>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:failed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-element-not-mandatory-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-023>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-not-id-and-resource-attr-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-019>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-warn-001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-identity-anon-resources-test002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-010>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-para196-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-009>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-016>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:failed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xml-canon-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#amp-in-url-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test008>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-difference-between-ID-and-about-test1>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-xmllang-test003>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0005>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-not-id-and-resource-attr-test002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test008>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test007>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#unrecognised-xml-attributes-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test007>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-003>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:failed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0010>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-036>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test008>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-037>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-020>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-charmod-uris-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test013>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-013>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-reification-required-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0003>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-uri-substructure-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:failed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0013>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test014>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-difference-between-ID-and-about-test3>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#datatypes-test002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-016>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-008>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-error002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-009>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-007>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-014>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test003>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-identity-anon-resources-test001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-abouteach-error002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-018>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-005>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-010>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-error001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-020>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
@@ -1712,11 +74,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test004>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test008>
 ] .
 
 [
@@ -1725,11 +87,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-011>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-030>
 ] .
 
 [
@@ -1738,11 +100,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error005>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test003>
 ] .
 
 [
@@ -1751,11 +113,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-error001>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test011>
 ] .
 
 [
@@ -1764,24 +126,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:failed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-test004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-difference-between-ID-and-about-error1>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0011>
 ] .
 
 [
@@ -1790,11 +139,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-013>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test002>
 ] .
 
 [
@@ -1803,11 +152,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-003>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-identity-anon-resources-test004>
 ] .
 
 [
@@ -1816,11 +165,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-012>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test007>
 ] .
 
 [
@@ -1829,11 +178,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error006>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-charmod-uris-test002>
 ] .
 
 [
@@ -1842,11 +191,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error005>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-016>
 ] .
 
 [
@@ -1855,11 +204,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error003>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-011>
 ] .
 
 [
@@ -1868,11 +217,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-test001>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-015>
 ] .
 
 [
@@ -1881,11 +230,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-007>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-identity-anon-resources-test001>
 ] .
 
 [
@@ -1894,11 +243,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-017>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test001>
 ] .
 
 [
@@ -1907,124 +256,7 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-004>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-006>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error006>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-abouteach-error001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-001>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-019>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error007>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error003>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
-        earl:outcome earl:passed
-    ] ;
-    earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-002>
-] .
-
-[
-    a earl:Assertion ;
-    earl:assertedBy <http://marcelotto.net/#me> ;
-    earl:mode earl:automatic ;
-    earl:result [
-        a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
@@ -2037,11 +269,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test006>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-difference-between-ID-and-about-test3>
 ] .
 
 [
@@ -2050,11 +282,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-error002>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-para196-test001>
 ] .
 
 [
@@ -2063,11 +295,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-015>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-seq-representation-test001>
 ] .
 
 [
@@ -2076,11 +308,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test016>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-005>
 ] .
 
 [
@@ -2089,7 +321,137 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0013>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-029>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-021>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#unrecognised-xml-attributes-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-032>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0012>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-031>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0014>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-003>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test005>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
@@ -2102,11 +464,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test011>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-020>
 ] .
 
 [
@@ -2115,11 +477,11 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
-    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test002>
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test010>
 ] .
 
 [
@@ -2128,7 +490,98 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0010>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-difference-between-ID-and-about-test2>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfs-domain-and-range-test002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-007>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-identity-anon-resources-test002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-022>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
@@ -2141,9 +594,1556 @@
     earl:mode earl:automatic ;
     earl:result [
         a earl:TestResult ;
-        dc:date "2024-03-24T22:00:59.280770Z"^^xsd:dateTime ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-023>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-warn-002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-025>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-identity-anon-resources-test005>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-difference-between-ID-and-about-test1>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-027>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-warn-003>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0003>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-xmllang-test006>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-uri-substructure-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-026>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-019>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test013>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-035>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test006>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0009>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#datatypes-test002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-test003>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
         earl:outcome earl:passed
     ] ;
     earl:subject <https://hex.pm/packages/rdf_xml> ;
     earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test007>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-reification-required-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-017>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-xmllang-test004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test006>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test014>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-014>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test008>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test017>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-charmod-uris-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test011>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test014>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-warn-001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#unrecognised-xml-attributes-test002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-013>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#amp-in-url-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-element-not-mandatory-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-012>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0005>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-not-id-and-resource-attr-test004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfs-domain-and-range-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test008>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-018>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test015>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-028>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#datatypes-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-033>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-xmllang-test003>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-036>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-not-id-and-resource-attr-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-xmllang-test005>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-not-id-and-resource-attr-test002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-017>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-010>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error006>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-016>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-012>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-013>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-008>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error007>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-014>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-abouteach-error002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-015>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-error002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-003>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-error001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error005>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-019>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-020>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-difference-between-ID-and-about-error1>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-011>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-009>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-error002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-error001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-abouteach-error001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error005>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-007>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-005>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-018>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error006>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-006>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-id-error003>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-error-001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-error003>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:failed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xml-canon-test001>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:failed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-test004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test003>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-identity-anon-resources-test003>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-syntax-incomplete-test002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test016>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-010>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-empty-property-elements-test013>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0004>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test002>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-ns-prefix-confusion-test0006>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-034>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-037>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-024>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test009>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-008>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdf-containers-syntax-vs-schema-test007>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test010>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#xmlbase-test006>
+] .
+
+[
+    a earl:Assertion ;
+    earl:assertedBy <http://marcelotto.net/#me> ;
+    earl:mode earl:automatic ;
+    earl:result [
+        a earl:TestResult ;
+        dc:date "2026-10-28T21:52:15.964617Z"^^xsd:dateTime ;
+        earl:outcome earl:passed
+    ] ;
+    earl:subject <https://hex.pm/packages/rdf_xml> ;
+    earl:test <http://www.w3.org/2013/RDFXMLTests/#rdfms-rdf-names-use-test-009>
 ] .
