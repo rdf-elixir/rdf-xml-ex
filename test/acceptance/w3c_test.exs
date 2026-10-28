@@ -20,13 +20,14 @@ defmodule RDF.XML.W3C.Test do
 
     if TestSuite.test_name(test_case) == "rdfms-syntax-incomplete-test004" do
       @tag earl_result: :failed
-      @tag skip: "TODO: On a property element rdf:nodeID behaves similarly to rdf:resource."
+      @tag skip:
+             "TODO: rdf:ID and rdf:nodeID on the same property element are rejected as exclusive, although on a property element rdf:ID reifies the statement and rdf:nodeID is its object."
     end
 
     if TestSuite.test_name(test_case) in ["xml-canon-test001"] do
       # Note, that this seems to have passed with Saxy < 1.5 just accidentally due to a bug in Saxy
       @tag earl_result: :failed
-      @tag skip: "TODO: XML canonicalization is not support"
+      @tag skip: "TODO: XML canonicalization is not supported"
     end
 
     test TestSuite.test_title(test_case), %{test_case: test_case} do
